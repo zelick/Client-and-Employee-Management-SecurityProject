@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../model/user.model';
 import { UserRole } from '../model/userRole.model';
 import { ClientType } from '../model/clientType.model';
 import { ServicesPackage } from '../model/servicesPackage.model';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Dodajte ovu liniju
+import { UserService } from '../services/user.service';
+import { RegistrationStatus } from '../model/registrationStatus.model';
 
 @Component({
   selector: 'app-registration',
@@ -15,9 +13,16 @@ import { FormsModule } from '@angular/forms'; // Dodajte ovu liniju
 })
 
 export class RegistrationComponent {
+
+  constructor(private router: Router, 
+    private userService: UserService) {
+  }
+  
   userRoles = Object.values(UserRole);
   clientTypes = Object.values(ClientType);
   servicesPackages = Object.values(ServicesPackage);
+
+  passwordInvalid: boolean = false;
 
   userData = {
     email: '',
@@ -30,7 +35,8 @@ export class RegistrationComponent {
     phoneNumber: '',
     role: UserRole.CLIENT,
     clientType: ClientType.INDIVIDUAL,
-    servicesPackage: ServicesPackage.BASIC
+    servicesPackage: ServicesPackage.BASIC,
+    registrationStatus: RegistrationStatus.PENDING
   };
 
   confirmPassword: string = '';
@@ -40,7 +46,23 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    // Logika za slanje podataka na server ili dodatna obrada
-    console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+    if (!this.validatePassword(this.userData.password)) {
+      this.passwordInvalid = true;
+      return;
+    }
+
+    this.userService.registerUser(this.userData).subscribe(
+      (response) => {
+        console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+      },
+      (error) => {
+        console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);
+      }
+    );
+  }
+
+  validatePassword(password: string): boolean {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!]).{12,}$/;
+    return passwordRegex.test(password);
   }
 }

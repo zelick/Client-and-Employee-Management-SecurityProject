@@ -9,12 +9,13 @@
       <div class="form-group">
         <label>Password:</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="userData.password" required>
-      </div>
-  
-      <div class="form-group">
+        <div *ngIf="passwordInvalid" class="text-danger">The password must contain a minimum of 12 characters, at least one lowercase letter, at least one uppercase letter, at least one number and at least one special character.</div>
+    </div>
+    <div class="form-group">
         <label>Confirm Password:</label>
         <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-      </div>
+        <div *ngIf="passwordMismatch" class="text-danger">Passwords do not match.</div>
+    </div>
   
       <div class="form-group">
         <label>Name:</label>

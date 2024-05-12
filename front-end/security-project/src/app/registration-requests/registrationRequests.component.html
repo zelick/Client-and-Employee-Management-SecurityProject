@@ -1,0 +1,31 @@
+<h2>Registration requests</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Client Type</th>
+      <th>Request Status</th>
+      <th> </th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of usersRequests">
+      <td>{{ user.email }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.surname }}</td>
+      <td>{{ user.clientType }}</td>
+      <td>{{ user.registrationStatus }}</td>
+      <td>
+        <button class="accept-button" (click)="acceptRequest(user)">ACCEPT REQUEST</button>
+        <button class="reject-button" (click)="rejectRequest(user)">REJECT REQUEST</button>
+        <div *ngIf="showRejectForm && responseData">
+            <textarea [(ngModel)]="responseData.reason" placeholder="Enter rejection reason"></textarea>
+            <button (click)="submitRejection()">Submit</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
