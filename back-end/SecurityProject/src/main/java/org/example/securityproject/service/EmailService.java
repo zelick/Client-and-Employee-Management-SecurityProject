@@ -38,4 +38,18 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
+    public void sendPasswordlessMail(String email) {
+        String userEmail = email;
+        String subject = "Passwordless login";
+        String text = "Click on the following link to login";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("aplikacijemobilnea0gmail.com");
+        message.setTo(userEmail);
+        message.setSubject(subject);
+        message.setText(text);
+
+        javaMailSender.send(message);
+    }
 }

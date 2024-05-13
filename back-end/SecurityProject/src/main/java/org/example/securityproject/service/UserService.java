@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
 import org.example.securityproject.dto.UserDto;
 import org.example.securityproject.enums.RegistrationStatus;
+import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,18 @@ public class UserService {
         }
         userRepository.save(user);
         emailService.sendRegistrationEmail(responseData);
+    }
+
+    public boolean checkIfExists(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return user != null;
+    }
+
+    public boolean checkServicePackage(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return user.getServicesPackage() == ServicesPackage.STANDARD || user.getServicesPackage() == ServicesPackage.GOLDEN;
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku

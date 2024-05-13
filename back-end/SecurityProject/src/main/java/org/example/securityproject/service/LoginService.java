@@ -1,17 +1,18 @@
 package org.example.securityproject.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Service
 public class LoginService {
 
-    public String sendEmail(String email) {
-       return "s";
+    @Autowired
+    private EmailService emailService;
+
+    public void sendEmail(String email) {
+        // Ovde pozovite sendPasswordlessMail metodu iz EmailService
+        emailService.sendPasswordlessMail(email);
     }
 
     private String generateToken() {
