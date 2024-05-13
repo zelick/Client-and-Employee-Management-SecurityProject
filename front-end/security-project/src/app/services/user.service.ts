@@ -4,6 +4,7 @@ import { environment } from 'src/env/environment';
 import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
+import { ResponseMessage } from '../model/responseMessage.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user : User): Observable<String> {
-    return this.http.post<String>(this.apiUrl + 'users/registerUser', user);
+  registerUser(user: User): Observable<ResponseMessage> {
+    return this.http.post<ResponseMessage>(this.apiUrl + 'users/registerUser', user);
   }
 
   getAllRegistrationRequests(): Observable<User[]> {
@@ -22,6 +23,10 @@ export class UserService {
   }
 
   processRegistrationRequest(responseData: RegistrationRequestResponse): Observable<User[]> {
+    console.log(responseData.email);
+    console.log(responseData.accepted);
+    console.log(responseData.reason);
+    console.log(responseData);
     return this.http.put<User[]>(this.apiUrl + 'users/processRegistrationRequest', responseData);
   }
 

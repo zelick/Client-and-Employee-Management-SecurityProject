@@ -70,5 +70,6 @@
   
       <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid || passwordMismatch">Register</button>
     </form>
+    <div *ngIf="registrationMessage">{{ registrationMessage }}</div>
   </div>
   

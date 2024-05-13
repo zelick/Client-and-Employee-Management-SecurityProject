@@ -52,4 +52,11 @@ button {
     background-color: #f44336; /* Promenite boju pozadine dugmeta "REJECT REQUEST" */
     color: white; /* Promenite boju teksta na belo */
   }
+
+  button[disabled] {
+    background-color: #ccc; /* Siva boja pozadine */
+    color: #666; /* Tamnija boja teksta */
+    cursor: not-allowed; /* Kursor pokazuje da nije dozvoljeno kliknuti */
+  }
+  
   
