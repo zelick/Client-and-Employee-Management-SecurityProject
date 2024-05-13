@@ -1,19 +1,27 @@
 package org.example.securityproject.auth;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.example.securityproject.model.LoginToken;
 import org.example.securityproject.repository.LoginTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.UUID;
 
 public class TokenGenerator {
     public static LoginToken generateToken() {
-        UUID uuid = UUID.randomUUID();
-        String token = uuid.toString();
-        LocalDateTime expirationTime = LocalDateTime.now().plus(10, ChronoUnit.MINUTES);
+        LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(10);
+        Date expirationDate = Date.from(expirationTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        String token = Jwts.builder()
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS256, "milica")
+                .compact();
         LoginToken loginToken = new LoginToken(null, token, expirationTime, false);
         saveTokenToDatabase(token, expirationTime);
         return loginToken;
