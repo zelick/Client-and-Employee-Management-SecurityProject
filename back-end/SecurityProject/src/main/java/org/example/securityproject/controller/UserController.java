@@ -71,4 +71,9 @@ public class UserController {
     public String confirm(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
         return userService.confirmToken(token);
     }
+
+    @GetMapping("/httpsMessage")
+    public String httpMessage() {
+        return "USPESNO!";
+    }
 }
