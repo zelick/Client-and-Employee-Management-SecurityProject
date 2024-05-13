@@ -30,8 +30,6 @@ public class EmailService {
     private LoginTokenRepository loginTokenRepository;
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
-    private static final String HMAC_ALGORITHM = "HmacSHA256";
-    private static final String SECRET_KEY = "secretKey";
 
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
@@ -59,7 +57,7 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void sendPasswordlessMail(String email) {
+    public void sendPasswordlessMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
         LoginToken objectToken = TokenGenerator.generateToken();
         loginTokenRepository.save(objectToken);
         String userEmail = email;

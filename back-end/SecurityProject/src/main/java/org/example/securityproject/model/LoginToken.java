@@ -20,14 +20,18 @@ public class LoginToken {
     @Column(name = "visited", nullable = false)
     private boolean visited;
 
+    @Column(name = "hmac", nullable = false)
+    private String hmac;
+
 
     public LoginToken() {}
 
-    public LoginToken(Integer id, String token, LocalDateTime expirationTime, boolean visited) {
+    public LoginToken(Integer id, String token, LocalDateTime expirationTime, boolean visited, String hmac) {
         this.id = id;
         this.token = token;
         this.expirationTime = expirationTime;
         this.visited = visited;
+        this.hmac = hmac;
     }
 
     public Integer getId() {
@@ -60,5 +64,13 @@ public class LoginToken {
 
     public void setVisited(boolean visited){
         this.visited = visited;
+    }
+
+    public String getHmac() {
+        return hmac;
+    }
+
+    public void setHmac(String hmac) {
+        this.hmac = hmac;
     }
 }

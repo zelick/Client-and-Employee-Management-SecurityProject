@@ -1,5 +1,6 @@
 package org.example.securityproject.controllers;
 
+import org.example.securityproject.auth.TokenGenerator;
 import org.example.securityproject.model.LoginToken;
 import org.example.securityproject.repository.LoginTokenRepository;
 import org.example.securityproject.service.LoginService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +35,7 @@ public class LoginController {
     }
 
     @PostMapping("/send-email")
-    public ResponseEntity<String> sendEmail(@RequestBody String email) {
+    public ResponseEntity<String> sendEmail(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException {
         if (!userService.checkIfExists(email)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with the provided email address was not found.");
         }
@@ -45,11 +48,19 @@ public class LoginController {
         return ResponseEntity.ok().build();
     }
 
+    private boolean verifyHmac(String data, String key, String hmacToVerify) throws NoSuchAlgorithmException, InvalidKeyException {
+        String generatedHmac = TokenGenerator.generateHmac(data, key);
+        return hmacToVerify.equals(generatedHmac);
+    }
+
     @GetMapping
-    public ResponseEntity<String> handleLoginRequest(@RequestParam("token") String token) {
+    public ResponseEntity<String> handleLoginRequest(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
         LoginToken loginToken = loginTokenRepository.findByToken(token);
         if (loginToken == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found");
+        }
+        if (loginToken != null && !verifyHmac(token, "milica123", loginToken.getHmac())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Impaired integrity");
         }
         LocalDateTime expirationTime = loginToken.getExpirationTime();
         if (expirationTime.isBefore(LocalDateTime.now())) {
