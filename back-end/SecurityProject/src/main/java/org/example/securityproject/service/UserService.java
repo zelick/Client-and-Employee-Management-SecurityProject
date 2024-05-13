@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
 import org.example.securityproject.dto.UserDto;
 import org.example.securityproject.enums.RegistrationStatus;
+import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
+import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -12,8 +14,14 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -22,10 +30,32 @@ public class UserService {
     private UserRepository userRepository;
     private EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
-    public void registerUser (UserDto userDto) {
+    public String registerUser (UserDto userDto) {
         if (!validatePassword(userDto.getPassword())) {
-            throw new IllegalArgumentException("The password does not meet the requirements.");
+           return "The password does not meet the requirements.";
+        }
+
+        User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
+        if (existingUser != null) {
+           return "A user with this email is already registered.";
+        }
+
+        User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
+
+        if (existingRejectedUser != null && existingRejectedUser.getRequestProcessingDate() != null) {
+            Date requestProcessedDate = existingRejectedUser.getRequestProcessingDate();
+            LocalDateTime requestProcessedTime = LocalDateTime.ofInstant(requestProcessedDate.toInstant(), ZoneId.systemDefault());
+            LocalDateTime currentTime = LocalDateTime.now();
+            long minutesPassed = ChronoUnit.MINUTES.between(requestProcessedTime, currentTime);
+
+            if (minutesPassed < 5) {
+                return "It is not possible to register - your request was recently rejected.";
+            }
+            else {
+               userRepository.delete(existingRejectedUser);
+            }
         }
 
         User user = new User();
@@ -41,6 +71,7 @@ public class UserService {
         user.setClientType(userDto.getClientType());
         user.setRole(userDto.getRole());
         user.setServicesPackage(userDto.getServicesPackage());
+        user.setRequestProcessingDate(null);
 
         String salt = BCrypt.gensalt();
         String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -49,6 +80,7 @@ public class UserService {
         user.setSalt(salt);
 
         userRepository.save(user);
+        return "You have successfully registered.";
     }
 
     private boolean validatePassword(String password) {
@@ -60,16 +92,68 @@ public class UserService {
         return userRepository.findByRegistrationStatus(RegistrationStatus.PENDING);
     }
 
-    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) {
+    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         User user = userRepository.findByEmail(responseData.getEmail());
         if (!responseData.isAccepted()) {
-           user.setRegistrationStatus(RegistrationStatus.REJECTED);
+            user.setRegistrationStatus(RegistrationStatus.REJECTED);
         }
         else {
-            user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+            user.setRegistrationStatus(RegistrationStatus.WAITING);
         }
+        user.setRequestProcessingDate(new Date());
         userRepository.save(user);
         emailService.sendRegistrationEmail(responseData);
+    }
+
+    public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
+        ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token);
+        String htmlResponse = "";
+
+        if (confirmationToken != null) {
+            boolean hmacValid = verifyHmac(token, "ana123", confirmationToken.getHmac());
+
+            if (!hmacValid) {
+                return "HMAC signature invalid";
+            }
+
+            Date createdDate = confirmationToken.getCreatedDate();
+            int duration = confirmationToken.getDuration();
+            Date expiryDate = calculateExpiryDate(createdDate, duration);
+            User user = confirmationToken.getUser();
+
+            if (new Date().after(expiryDate)) {
+                htmlResponse = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Token Expired</title></head><body><h1>Token Expired</h1><p>The token has expired. Please register again.</p></body></html>";
+                confirmationTokenRepository.delete(confirmationToken);
+                userRepository.delete(user);
+            }
+            else {
+                user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+                user.setActive(true);
+                userRepository.save(user);
+                confirmationTokenRepository.delete(confirmationToken);
+                htmlResponse = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Confirmation Success</title></head><body><h1>Congratulations!</h1><p>You have successfully confirmed your registration. You can now log in.</p></body></html>";
+            }
+            return htmlResponse;
+        } else {
+            return"Token not found";
+        }
+    }
+    private boolean verifyHmac(String data, String key, String hmacToVerify) throws NoSuchAlgorithmException, InvalidKeyException {
+        String generatedHmac = generateHmac(data, key);
+        return hmacToVerify.equals(generatedHmac);
+    }
+
+    private String generateHmac(String data, String key) throws NoSuchAlgorithmException, InvalidKeyException {
+        Mac sha256Hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+        sha256Hmac.init(secretKey);
+        byte[] hmacData = sha256Hmac.doFinal(data.getBytes());
+        return Base64.getEncoder().encodeToString(hmacData);
+    }
+
+    private Date calculateExpiryDate(Date createdDate, int duration) {
+        long expiryTimeMillis = createdDate.getTime() + (duration * 60 * 1000);
+        return new Date(expiryTimeMillis);
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku

@@ -6,6 +6,8 @@ import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.enums.ClientType;
 import org.example.securityproject.enums.UserRole;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -55,9 +57,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "requestProcessingDate", nullable = true)
+    private Date requestProcessingDate;
+
     public User() {}
 
-    public User(Integer id, String email, String password, String salt, String name, String surname, String address, String city, String country, String phoneNumber, UserRole role, ClientType clientType, ServicesPackage servicesPackage, RegistrationStatus registrationStatus) {
+    public User(Integer id, String email, String password, String salt, String name, String surname, String address, String city, String country, String phoneNumber, UserRole role, ClientType clientType, ServicesPackage servicesPackage, RegistrationStatus registrationStatus, boolean active, Date requestProcessingDate) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -72,6 +81,8 @@ public class User {
         this.clientType = clientType;
         this.servicesPackage = servicesPackage;
         this.registrationStatus = registrationStatus;
+        this.active = active;
+        this.requestProcessingDate = requestProcessingDate;
     }
 
     public Integer getId() {
@@ -184,5 +195,21 @@ public class User {
 
     public void setRegistrationStatus(RegistrationStatus registrationStatus) {
         this.registrationStatus = registrationStatus;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getRequestProcessingDate() {
+        return requestProcessingDate;
+    }
+
+    public void setRequestProcessingDate(Date requestProcessingDate) {
+        this.requestProcessingDate = requestProcessingDate;
     }
 }

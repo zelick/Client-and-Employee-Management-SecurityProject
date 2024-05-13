@@ -3,26 +3,41 @@ package org.example.securityproject.service;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.model.ConfirmationToken;
+import org.example.securityproject.model.User;
+import org.example.securityproject.repository.ConfirmationTokenRepository;
+import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
 @Service
 @AllArgsConstructor
 public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
-
-    public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) {
+    private UserRepository userRepository;
+    private ConfirmationTokenRepository confirmationTokenRepository;
+    private static final String HMAC_ALGORITHM = "HmacSHA256";
+    private static final String SECRET_KEY = "secretKey";
+    public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
         String subject = "";
         String text = "";
 
         if (responseData.isAccepted()) {
             subject = "Confirmation of Registration";
-            text = "Your registration request has been accepted.";
+            text = "Your registration request has been accepted." +
+                    "To confirm your account, please click here: " +
+                    "http://localhost:8080/api/users/confirm-account?token=" + generateToken(userEmail);
         } else {
             subject = "Refusal of registration";
             text = "Your registration request has been rejected.\n" +
@@ -37,5 +52,39 @@ public class EmailService {
         message.setText(text);
 
         javaMailSender.send(message);
+    }
+
+    /*
+    private String generateToken(String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        confirmationTokenRepository.save(confirmationToken);
+
+        return confirmationToken.getToken();
+    }
+
+     */
+
+    private String generateToken(String userEmail) throws NoSuchAlgorithmException, InvalidKeyException {
+        User user = userRepository.findByEmail(userEmail);
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+        String token = confirmationToken.getToken();
+
+        String hmac = generateHmac(token, "ana123");
+        confirmationToken.setHmac(hmac);
+        confirmationTokenRepository.save(confirmationToken);
+
+        return token;
+    }
+
+    private String generateHmac(String data, String key) throws NoSuchAlgorithmException, InvalidKeyException {
+        Mac sha256Hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+        sha256Hmac.init(secretKey);
+        byte[] hmacData = sha256Hmac.doFinal(data.getBytes());
+        return Base64.getEncoder().encodeToString(hmacData);
     }
 }

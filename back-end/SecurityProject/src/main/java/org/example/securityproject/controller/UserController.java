@@ -1,16 +1,24 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.dto.ResponseDto;
 import org.example.securityproject.dto.UserDto;
+import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
+import org.example.securityproject.repository.ConfirmationTokenRepository;
+import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.security.cert.X509Certificate;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,19 +30,14 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserService userService;
+    private ConfirmationTokenRepository confirmationTokenRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/registerUser")
-    public ResponseEntity<Map<String, String>> registerUser(@RequestBody UserDto userDto) {
-        try {
-            userService.registerUser(userDto);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "User successfully registered");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Failed to register user: " + e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.registerUser(userDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/getAllRegistrationRequests")
@@ -55,12 +58,17 @@ public class UserController {
         try {
             userService.processRegistrationRequest(responseData);
             Map<String, String> response = new HashMap<>();
-            response.put("message", "User successfully rejected");
+            response.put("message", "Registration request successfully processed");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Failed to reject user: " + e.getMessage());
+            errorResponse.put("error", "Failed to process registration request: " + e.getMessage());
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/confirm-account")
+    public String confirm(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
+        return userService.confirmToken(token);
     }
 }

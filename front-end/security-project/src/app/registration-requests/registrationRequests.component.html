@@ -19,8 +19,8 @@
       <td>{{ user.clientType }}</td>
       <td>{{ user.registrationStatus }}</td>
       <td>
-        <button class="accept-button" (click)="acceptRequest(user)">ACCEPT REQUEST</button>
-        <button class="reject-button" (click)="rejectRequest(user)">REJECT REQUEST</button>
+        <button class="accept-button" (click)="acceptRequest(user)" [disabled]="user.registrationStatus === 'WAITING'">ACCEPT REQUEST</button>
+        <button class="reject-button" (click)="rejectRequest(user)" [disabled]="user.registrationStatus === 'WAITING'">REJECT REQUEST</button>
         <div *ngIf="showRejectForm && responseData">
             <textarea [(ngModel)]="responseData.reason" placeholder="Enter rejection reason"></textarea>
             <button (click)="submitRejection()">Submit</button>

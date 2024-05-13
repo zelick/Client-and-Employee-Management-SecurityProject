@@ -5,6 +5,7 @@ import { ClientType } from '../model/clientType.model';
 import { ServicesPackage } from '../model/servicesPackage.model';
 import { UserService } from '../services/user.service';
 import { RegistrationStatus } from '../model/registrationStatus.model';
+import { ResponseMessage } from '../model/responseMessage.model';
 
 @Component({
   selector: 'app-registration',
@@ -23,6 +24,7 @@ export class RegistrationComponent {
   servicesPackages = Object.values(ServicesPackage);
 
   passwordInvalid: boolean = false;
+  registrationMessage: string = '';
 
   userData = {
     email: '',
@@ -52,11 +54,15 @@ export class RegistrationComponent {
     }
 
     this.userService.registerUser(this.userData).subscribe(
-      (response) => {
+      (response: ResponseMessage) => {
         console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+        this.registrationMessage = response.responseMessage;
+        this.clearFields();
       },
       (error) => {
         console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);
+        //this.registrationMessage = error.text;
+        this.clearFields();
       }
     );
   }
@@ -64,5 +70,22 @@ export class RegistrationComponent {
   validatePassword(password: string): boolean {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*!]).{12,}$/;
     return passwordRegex.test(password);
+  }
+
+  clearFields() {
+    this.userData.email = '';
+    this.userData.password = '';
+    this.userData.name = '';
+    this.userData.surname = '';
+    this.userData.address = '';
+    this.userData.city = '';
+    this.userData.country = '';
+    this.userData.phoneNumber = '';
+    this.userData.role = UserRole.CLIENT;
+    this.userData.clientType = ClientType.INDIVIDUAL;
+    this.userData.servicesPackage = ServicesPackage.BASIC;
+    this.userData.registrationStatus = RegistrationStatus.PENDING;
+    this.confirmPassword = '';
+    this.passwordInvalid = false;
   }
 }
