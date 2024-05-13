@@ -15,13 +15,9 @@ import java.util.UUID;
 
 public class TokenGenerator {
     public static LoginToken generateToken() {
-        LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(10);
-        Date expirationDate = Date.from(expirationTime.atZone(ZoneId.systemDefault()).toInstant());
-
-        String token = Jwts.builder()
-                .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, "milica")
-                .compact();
+        UUID uuid = UUID.randomUUID();
+        String token = uuid.toString();
+        LocalDateTime expirationTime = LocalDateTime.now().plus(10, ChronoUnit.MINUTES);
         LoginToken loginToken = new LoginToken(null, token, expirationTime, false);
         saveTokenToDatabase(token, expirationTime);
         return loginToken;
