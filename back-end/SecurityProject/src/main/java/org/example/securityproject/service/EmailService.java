@@ -2,7 +2,10 @@ package org.example.securityproject.service;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.example.securityproject.auth.TokenGenerator;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.model.LoginToken;
+import org.example.securityproject.repository.LoginTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
+    private LoginTokenRepository loginTokenRepository;
 
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) {
         String userEmail = responseData.getEmail();
@@ -40,9 +44,11 @@ public class EmailService {
     }
 
     public void sendPasswordlessMail(String email) {
+        LoginToken objectToken = TokenGenerator.generateToken();
+        loginTokenRepository.save(objectToken);
         String userEmail = email;
         String subject = "Passwordless login";
-        String text = "Click on the following link to login";
+        String text = "Click on the following link to login: http://localhost:8080/api/login?token=" + objectToken.getToken();
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("aplikacijemobilnea0gmail.com");

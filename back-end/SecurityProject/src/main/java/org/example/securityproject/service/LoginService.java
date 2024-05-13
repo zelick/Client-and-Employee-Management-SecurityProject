@@ -1,5 +1,7 @@
 package org.example.securityproject.service;
 
+import org.example.securityproject.model.LoginToken;
+import org.example.securityproject.repository.LoginTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
