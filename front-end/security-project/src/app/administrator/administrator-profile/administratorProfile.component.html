@@ -28,14 +28,16 @@
       <label for="phoneNumber">Phone Number:</label>
       <input type="text" id="phoneNumber" formControlName="phoneNumber">
     </div>
+    <br>
     <div>
       <button type="submit">Save Changes</button>
     </div>
+    <br>
   </form>
 
   <div>
-    <button (click)="togglePasswordForm()">I want to change my password</button>
-</div>
+    <button (click)="togglePasswordForm()" class="change-password-button">I want to change my password</button>
+  </div>
 
 <div *ngIf="showPasswordForm">
     <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">

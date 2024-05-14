@@ -8,13 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
+import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     RegistrationRequestsComponent,
-    AdministratorProfileComponent
+    AdministratorProfileComponent,
+    AllEmployeesComponent
   ],
   imports: [
     BrowserModule,

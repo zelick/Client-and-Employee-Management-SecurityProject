@@ -22,13 +22,13 @@ export class AdministratorProfileComponent implements OnInit {
   ngOnInit(): void {
     this.administratorForm = this.fb.group({
       email: [{value: '', disabled: true}],
-      password: ['', Validators.required],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
+      password: [''],
+      name: [''],
+      surname: [''],
+      address: [''],
+      city: [''],
+      country: [''],
+      phoneNumber: ['']
     });
 
     this.passwordForm = this.fb.group({
@@ -37,12 +37,14 @@ export class AdministratorProfileComponent implements OnInit {
         confirmPassword: ['', Validators.required]
     });
 
+    this.getUserData();
+  }
+
+  getUserData() {
     this.userService.getUserData().subscribe(
       (data: any) => {
-        // Postavljanje vrednosti u formularu
         this.administratorForm.patchValue({
           email: data.email,
-          password: data.password,
           name: data.name,
           surname: data.surname,
           address: data.address,
@@ -58,11 +60,15 @@ export class AdministratorProfileComponent implements OnInit {
   }
 
   updateAdministratorData() {
+    console.log('USAO U U[ADTAE');
+    console.log(this.administratorForm.valid);
     if (this.administratorForm.valid) {
+      console.log('usao ovdeee');
       const updatedData = this.administratorForm.value;
       this.userService.updateUserData(updatedData).subscribe(
-        (response: any) => {
+        (response: ResponseMessage) => {
           console.log('Administrator data updated successfully:', response);
+          this.getUserData();
         },
         error => {
           console.error('Error updating administrator data:', error);

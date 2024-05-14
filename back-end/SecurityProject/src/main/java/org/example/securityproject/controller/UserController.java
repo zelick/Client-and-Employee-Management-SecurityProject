@@ -2,10 +2,7 @@ package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
-import org.example.securityproject.dto.PasswordDataDto;
-import org.example.securityproject.dto.RegistrationRequestResponseDto;
-import org.example.securityproject.dto.ResponseDto;
-import org.example.securityproject.dto.UserDto;
+import org.example.securityproject.dto.*;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
@@ -84,6 +81,13 @@ public class UserController {
     public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateUserData")
+    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserData(adminDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -34,8 +34,8 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + 'users/getUserData');
   }
 
-  updateUserData(userData: User): Observable<User> {
-    return this.http.put<User>(this.apiUrl + 'users/updateUserData', userData);
+  updateUserData(userData: any): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(this.apiUrl + 'users/updateUserData', userData);
   }
 
   changePassword(passwordData: any): Observable<ResponseMessage> {

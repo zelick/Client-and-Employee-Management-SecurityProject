@@ -40,3 +40,16 @@
     background-color: #0056b3;
   }
   
+  .change-password-button {
+    background-color: #007bff; /* Plava boja */
+    color: white; /* Bela boja teksta */
+    padding: 10px 20px; /* Prostor oko teksta */
+    border: none; /* Bez ivica */
+    border-radius: 5px; /* Zaobljeni ivici */
+    cursor: pointer; /* Promena kursora na pokazivač kada se pređe preko dugmeta */
+  }
+  
+  .change-password-button:hover {
+    background-color: #0056b3; /* Promena boje na hover */
+  }
+  

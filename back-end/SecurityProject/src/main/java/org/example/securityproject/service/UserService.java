@@ -1,10 +1,7 @@
 package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
-import org.example.securityproject.dto.PasswordDataDto;
-import org.example.securityproject.dto.RegistrationRequestResponseDto;
-import org.example.securityproject.dto.ResponseDto;
-import org.example.securityproject.dto.UserDto;
+import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
@@ -229,6 +226,23 @@ public class UserService {
         String hashedOldPassword = hashPassword(oldPassword, salt);
         //String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
         return hashedOldPassword.equals(user.getPassword());
+    }
+
+    public String updateUserData(EditAdminDto adminData) {
+        //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
+        //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
+        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+
+        user.setName(adminData.getName());
+        user.setSurname(adminData.getSurname());
+        user.setAddress(adminData.getAddress());
+        user.setCity(adminData.getCity());
+        user.setCountry(adminData.getCountry());
+        user.setPhoneNumber(adminData.getPhoneNumber());
+
+        userRepository.save(user);
+
+        return "User successfully updated.";
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
