@@ -31,6 +31,11 @@ public class UserController {
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
+        return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
+    }
+
     @PostMapping("/registerUser")
     public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
         ResponseDto response = new ResponseDto();

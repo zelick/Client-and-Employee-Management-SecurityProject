@@ -10,6 +10,7 @@ import { RegistrationRequestsComponent } from './registration-requests/registrat
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
 import { AllClientsComponent } from './administrator/all-clients/allClients.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AllClientsComponent } from './administrator/all-clients/allClients.comp
     RegistrationRequestsComponent,
     AdministratorProfileComponent,
     AllEmployeesComponent,
-    AllClientsComponent
+    AllClientsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
+import { LoginReponse } from '../model/loginResponse.model';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +49,13 @@ export class UserService {
 
   getAllClients(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl + 'users/getAllClients');
+  }
+
+  login(email: string, password: string): Observable<LoginReponse> { 
+    const loginData = {
+      email: email,
+      password: password
+    };
+    return this.http.post<LoginReponse>(this.apiUrl + 'users/login', loginData);
   }
 }

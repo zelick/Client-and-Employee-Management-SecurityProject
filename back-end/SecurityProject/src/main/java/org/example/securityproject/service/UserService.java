@@ -34,6 +34,22 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
 
+    public LoginReponseDto loginUser(UserLoginData loginData) {
+        LoginReponseDto loginReponseDto = new LoginReponseDto();
+
+        //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
+        User user = userRepository.findByEmail(loginData.getEmail());
+
+        if (!(user.getRole().equals(UserRole.CLIENT)) && !user.isLoggedInOnce()) {
+            loginReponseDto.setLoggedInOnce(false);
+            loginReponseDto.setResponse("This user must change his password because this is his first login.");
+            return loginReponseDto;
+        }
+
+        loginReponseDto.setLoggedInOnce(true);
+        loginReponseDto.setResponse("This user has successfully logged in.");
+        return loginReponseDto;
+    }
     public String registerUser (UserDto userDto) {
         if (!validatePassword(userDto.getPassword())) {
            return "The password does not meet the requirements.";
@@ -74,6 +90,7 @@ public class UserService {
         user.setRole(userDto.getRole());
         user.setServicesPackage(userDto.getServicesPackage());
         user.setRequestProcessingDate(null);
+        user.setLoggedInOnce(false);
 
         String salt = BCrypt.gensalt();
         //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -212,6 +229,10 @@ public class UserService {
             user.setPassword(hashedPassword);
             user.setSalt(salt);
         } catch (NoSuchAlgorithmException e) {
+        }
+
+        if (!user.isLoggedInOnce()) {
+            user.setLoggedInOnce(true);
         }
 
         userRepository.save(user);
