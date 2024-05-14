@@ -10,6 +10,8 @@ import { EmployeeProfileComponent } from './employee-profile/employee-profile.co
 import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
 import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
+import { AllAdsComponent } from './all-ads/all-ads.component';
+import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent}, 
@@ -21,7 +23,9 @@ const routes: Routes = [
   { path: 'employee-profile', component: EmployeeProfileComponent},
   { path: 'edit-employee-profile/:email', component: EditEmployeeProfileComponent},
   { path: 'ad-requests', component: AllAdRequestsComponent},
-  { path: 'ad-form/:id', component: AdFormComponent}
+  { path: 'ad-form/:id', component: AdFormComponent},
+  { path: 'ads', component: AllAdsComponent},
+  { path: 'client-ads', component: AllClientAdsComponent}
 ];
 
 @NgModule({

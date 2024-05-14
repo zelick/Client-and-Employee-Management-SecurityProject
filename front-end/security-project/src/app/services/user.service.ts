@@ -56,4 +56,12 @@ export class UserService {
     return this.http.get<AdRequest>(`${this.apiUrl}ad-requests/${id}`);
   }
 
+  getAllAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl + 'ads');
+  }
+
+  getAllAdsByEmail(email: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl + 'ads/by-email', { params: { email } });
+  }
+
 }

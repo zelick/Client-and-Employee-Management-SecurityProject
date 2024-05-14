@@ -9,6 +9,9 @@ import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class AdService {
@@ -25,5 +28,29 @@ public class AdService {
         ad1.setActiveTo(ad.getActiveTo());
         ad1.setDescription(ad.getDescription());
         adRepository.save(ad1);
+    }
+
+    public List<AdDto> getAllAds() {
+        List<Ad> ads = adRepository.findAll();
+        return ads.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<AdDto> getAllAdsByEmail(String email) {
+        List<Ad> ads = adRepository.findAllByUser_Email(email);
+        return ads.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    private AdDto mapToDto(Ad ad) {
+        AdDto adDto = new AdDto();
+        adDto.setEmail(ad.getUser().getEmail());
+        adDto.setSlogan(ad.getSlogan());
+        adDto.setActiveFrom(ad.getActiveFrom());
+        adDto.setActiveTo(ad.getActiveTo());
+        adDto.setDescription(ad.getDescription());
+        return adDto;
     }
 }
