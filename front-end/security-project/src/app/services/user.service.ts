@@ -41,6 +41,10 @@ export class UserService {
 
   createAdRequest(adRequest: AdRequest): Observable<string> {
     return this.http.post<string>(this.apiUrl + 'ad-requests', adRequest, { responseType: 'text' as 'json' });
-}
+  }
+
+  getAllAdRequests(): Observable<AdRequest[]> {
+    return this.http.get<AdRequest[]>(this.apiUrl + 'ad-requests');
+  }
 
 }

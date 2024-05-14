@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.repository.AdRequestRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AdRequestService {
@@ -15,6 +17,10 @@ public class AdRequestService {
 
     public void createAdRequest(AdRequest adRequest) {
         adRequestRepository.save(adRequest);
+    }
+
+    public List<AdRequest> getAllAdRequests() {
+        return adRequestRepository.findAll();
     }
 
 }

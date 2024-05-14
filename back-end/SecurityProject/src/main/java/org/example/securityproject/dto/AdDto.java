@@ -1,42 +1,32 @@
 package org.example.securityproject.dto;
 
-import jakarta.persistence.Column;
-
 import java.util.Date;
 
-public class AdRequestDto {
-    private String email;
-    private Date deadline;
+public class AdDto {
+    private UserDto user;
     private Date activeFrom;
     private Date activeTo;
     private String description;
+    private String slogan;
 
-    public AdRequestDto(String email, Date deadline, Date activeFrom, Date activeTo, String description) {
-        this.email = email;
-        this.deadline = deadline;
+    public AdDto(UserDto user, Date activeFrom, Date activeTo, String description, String slogan) {
+        this.user = user;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
         this.description = description;
+        this.slogan = slogan;
     }
 
-    public AdRequestDto() {
+    public AdDto() {
 
     }
 
-    public String getEmail() {
-        return email;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 
     public Date getActiveFrom() {
@@ -61,5 +51,13 @@ public class AdRequestDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
     }
 }

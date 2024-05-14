@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { AdRequest } from '../model/adRequest.model';
+import { UserService } from '../services/user.service';
+
+@Component({
+  selector: 'app-all-ad-requests',
+  templateUrl: './all-ad-requests.component.html',
+  styleUrls: ['./all-ad-requests.component.css']
+})
+export class AllAdRequestsComponent implements OnInit{
+  allAdRequests: AdRequest[] = [];
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.userService.getAllAdRequests().subscribe(
+      (data: AdRequest[]) => {
+        this.allAdRequests = data;
+      },
+      (error) => {
+        console.error('Error fetching ad requests: ', error);
+      }
+    );
+  }
+
+  createAd(adRequest: AdRequest)
+  {
+
+  }
+}

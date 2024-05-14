@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    text-align: center;
+    border-color: black;
+    border-radius: 5px;
+    border-style: solid;
+    width: 300px;
+    margin-left: 550px;
+    margin-top: 150px;
+    padding: 20px;
+  }
+  .dugme {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #3D9AF8;
+    border: 2px solid #3D9AF8;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.dugme:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.polje1
+{
+    margin-left: 71px;
+    width: 170px;
+}
+
+.polje2
+{
+    margin-left: 51px;
+    width: 170px;
+}
+
+.polje3
+{
+    margin-left: 72px;
+    width: 170px;
+}
+
+.polje4
+{
+    margin-left: 54px;
+    width: 170px;
+}
+
+.polje5
+{
+    margin-left: 77px;
+    width: 170px;
+    height: 15px;
+}
+
+.polje6
+{
+    margin-left: 54px;
+    width: 170px;
+}
+
+.polje7
+{
+    margin-left: 10px;
+    width: 170px;
+}
+
+.grupa2
+{
+    margin-top: 10px;
+}
+
+.grupa3
+{
+    margin-top: 10px;
+}
+
+.grupa4
+{
+    margin-top: 10px;
+}
+
+.grupa5
+{
+    margin-top: 10px;
+}
+
+.grupa6
+{
+    margin-top: 10px;
+}
+
+.grupa7
+{
+    margin-top: 10px;
+}

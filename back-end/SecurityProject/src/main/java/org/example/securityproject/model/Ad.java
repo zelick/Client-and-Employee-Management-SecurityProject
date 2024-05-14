@@ -5,17 +5,15 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "ad_requests")
-public class AdRequest {
+@Table(name = "ads")
+public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "deadline", nullable = false)
-    private Date deadline;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "active_from", nullable = false)
     private Date activeFrom;
@@ -26,15 +24,18 @@ public class AdRequest {
     @Column(name = "description", nullable = false)
     private String description;
 
-    public AdRequest(String email, Date deadline, Date activeFrom, Date activeTo, String description) {
-        this.email = email;
-        this.deadline = deadline;
+    @Column(name = "slogan", nullable = false)
+    private String slogan;
+
+    public Ad(User user, Date activeFrom, Date activeTo, String description, String slogan) {
+        this.user = user;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
         this.description = description;
+        this.slogan = slogan;
     }
 
-    public AdRequest() {
+    public Ad() {
 
     }
 
@@ -46,20 +47,12 @@ public class AdRequest {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getActiveFrom() {
@@ -84,5 +77,13 @@ public class AdRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan){
+        this.slogan = slogan;
     }
 }

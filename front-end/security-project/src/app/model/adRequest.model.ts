@@ -1,3 +1,5 @@
+import { User } from "./user.model"
+
 export interface AdRequest {
     id?: number,
     email: string,

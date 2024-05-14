@@ -1,0 +1,13 @@
+<div *ngFor="let adRequest of allAdRequests">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Request from: {{ adRequest.email }}</h5>
+        <p class="card-text">Deadline: {{ adRequest.deadline | date }}</p>
+        <p class="card-text">Active from: {{ adRequest.activeFrom | date }}</p>
+        <p class="card-text">Active to: {{ adRequest.activeTo | date }}</p>
+        <p class="card-text">Description: {{ adRequest.description }}</p>
+        <button class="dugme" (click)="createAd(adRequest)">Create ad</button>
+      </div>
+    </div>
+  </div>
+  
