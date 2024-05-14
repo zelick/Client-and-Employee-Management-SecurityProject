@@ -49,7 +49,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         // 1. Preuzimanje JWT tokena iz zahteva
         String authToken = tokenUtils.getToken(request);
-
+        System.out.println("NE BI TREBAO UCI OVDE");
         try {
 
             if (authToken != null) {

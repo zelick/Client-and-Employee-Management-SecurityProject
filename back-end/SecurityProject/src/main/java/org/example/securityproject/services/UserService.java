@@ -3,36 +3,38 @@ package org.example.securityproject.services;
 import org.example.securityproject.dto.UserRequest;
 import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.User;
+import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
+import java.util.List;
+
 @Service
 public class UserService {
 
-    //@Autowired
-   // private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 //    @Autowired
 //    private RoleService roleService;
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-       // return userRepository.findByUsername(username);
-       return new User(); //izmena
+        return userRepository.findByEmail(username);
     }
 
-    public User findById(Long id)  {
-       // return userRepository.findById(id).orElseGet(null);
-        return new User(); //izmena
+    public User findById(int id)  {
+       return userRepository.findById(id).orElseGet(null);
     }
 
-//    public List<User> findAll() throws AccessDeniedException {
-//        return userRepository.findAll();
-//    }
+    public List<User> findAll() throws AccessDeniedException {
+        return userRepository.findAll();
+    }
 
 
     public User save(UserRequest userRequest) {
