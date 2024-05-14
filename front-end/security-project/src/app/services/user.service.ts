@@ -42,4 +42,11 @@ export class UserService {
     return this.http.put<ResponseMessage>(this.apiUrl + 'users/updatePassword', passwordData);
   }
 
+  getAllEmployees(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'users/getAllEmployees');
+  }
+
+  getAllClients(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'users/getAllClients');
+  }
 }

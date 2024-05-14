@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
+import { AllClientsComponent } from './administrator/all-clients/allClients.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AllEmployeesComponent } from './administrator/all-employees/allEmployee
     RegistrationComponent,
     RegistrationRequestsComponent,
     AdministratorProfileComponent,
-    AllEmployeesComponent
+    AllEmployeesComponent,
+    AllClientsComponent
   ],
   imports: [
     BrowserModule,

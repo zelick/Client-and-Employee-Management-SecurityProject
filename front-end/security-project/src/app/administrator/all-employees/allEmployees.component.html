@@ -1,24 +1,18 @@
-<h1>All Employees</h1>
+<h1>Employees List</h1>
 
 <table>
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Ime</th>
-            <th>Prezime</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>email1@example.com</td>
-            <td>Ime1</td>
-            <td>Prezime1</td>
-        </tr>
-        <tr>
-            <td>email2@example.com</td>
-            <td>Ime2</td>
-            <td>Prezime2</td>
-        </tr>
-        <!-- Dodajte ostale redove ovdje -->
-    </tbody>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Surname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.surname }}</td>
+    </tr>
+  </tbody>
 </table>

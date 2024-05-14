@@ -3,6 +3,7 @@ package org.example.securityproject.service;
 import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.RegistrationStatus;
+import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
@@ -243,6 +244,14 @@ public class UserService {
         userRepository.save(user);
 
         return "User successfully updated.";
+    }
+
+    public List<User> getAllEmployees() {
+        return userRepository.findByRoleAndRegistrationStatus(UserRole.EMPLOYEE, RegistrationStatus.ACCEPTED);
+    }
+
+    public List<User> getAllClients() {
+        return userRepository.findByRoleAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku

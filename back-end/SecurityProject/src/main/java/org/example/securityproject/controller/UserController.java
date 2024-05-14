@@ -90,4 +90,30 @@ public class UserController {
         response.setResponseMessage(userService.updateUserData(adminDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/getAllEmployees")
+    public ResponseEntity<List<UserDto>> getAllEmployees() {
+        try {
+            List<UserDto> userDtos = userService.getAllEmployees()
+                    .stream()
+                    .map(user -> new UserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getAllClients")
+    public ResponseEntity<List<UserDto>> getAllClients() {
+        try {
+            List<UserDto> userDtos = userService.getAllClients()
+                    .stream()
+                    .map(user -> new UserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
