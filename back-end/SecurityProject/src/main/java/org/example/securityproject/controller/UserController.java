@@ -2,6 +2,7 @@ package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
+import org.example.securityproject.dto.PasswordDataDto;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
 import org.example.securityproject.dto.ResponseDto;
 import org.example.securityproject.dto.UserDto;
@@ -70,5 +71,19 @@ public class UserController {
     @GetMapping("/confirm-account")
     public String confirm(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
         return userService.confirmToken(token);
+    }
+
+    //OVO CEMO IZMENITI KADA BUDEMO IMALI JWT
+    @GetMapping("/getUserData")
+    public ResponseEntity<UserDto> getUserData() {
+        UserDto userDto = new UserDto(userService.getUserData());
+        return ResponseEntity.ok(userDto);
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

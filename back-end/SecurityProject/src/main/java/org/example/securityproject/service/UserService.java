@@ -1,7 +1,9 @@
 package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
+import org.example.securityproject.dto.PasswordDataDto;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.dto.ResponseDto;
 import org.example.securityproject.dto.UserDto;
 import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.model.ConfirmationToken;
@@ -154,6 +156,45 @@ public class UserService {
     private Date calculateExpiryDate(Date createdDate, int duration) {
         long expiryTimeMillis = createdDate.getTime() + (duration * 60 * 1000);
         return new Date(expiryTimeMillis);
+    }
+
+    public User getUserData() {
+        return userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+    }
+
+    public String updateUserPassword(PasswordDataDto passwordData) {
+        if (!checkOldPassword(passwordData.getOldPassword())) {
+            return "You have not entered a good current password.";
+        }
+        if (!passwordData.getNewPassword().equals(passwordData.getConfirmedNewPassword())) {
+            return "The new password and confirm password do not match.";
+        }
+        if (!validatePassword(passwordData.getNewPassword())) {
+            return "The password does not meet the requirements.";
+        }
+
+        //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
+        //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
+        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+
+        String salt = BCrypt.gensalt();
+        String hashedNewPassword = passwordEncoder.encode(passwordData.getNewPassword() + salt);
+
+        user.setPassword(hashedNewPassword);
+        user.setSalt(salt);
+
+        userRepository.save(user);
+
+        return "Password successfully changed.";
+    }
+
+    private boolean checkOldPassword(String oldPassword) {
+        //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
+        //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
+        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        String salt = user.getSalt();
+        String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
+        return passwordEncoder.matches(hashedOldPassword, user.getPassword());
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
