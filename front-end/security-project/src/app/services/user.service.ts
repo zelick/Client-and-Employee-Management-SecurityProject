@@ -5,6 +5,7 @@ import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
+import { AdRequest } from '../model/adRequest.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,9 @@ export class UserService {
   updateClient(user: User): Observable<any> {
     return this.http.put<any>(this.apiUrl + 'users/updateClient', user, { responseType: 'text' as 'json' });
   }
-  
+
+  createAdRequest(adRequest: AdRequest): Observable<string> {
+    return this.http.post<string>(this.apiUrl + 'ad-requests', adRequest, { responseType: 'text' as 'json' });
+}
 
 }

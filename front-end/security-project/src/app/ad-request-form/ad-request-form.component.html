@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>Create ad request</h1>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="polje1" id="email" name="email" [(ngModel)]="adRequest.email" required>
+      </div>
+      <div class="grupa2">
+        <label for="deadline">Deadline:</label>
+        <input type="date" class="polje2" id="deadline" name="deadline" [(ngModel)]="adRequest.deadline" required>
+      </div>
+      <div class="grupa3">
+        <label for="activeFrom">Active from:</label>
+        <input type="date" class="polje3" id="activeFrom" name="activeFrom" [(ngModel)]="adRequest.activeFrom" required>
+      </div>
+      <div class="grupa4">
+        <label for="activeTo">Active to:</label>
+        <input type="date" class="polje4" id="activeTo" name="activeTo" [(ngModel)]="adRequest.activeTo" required>
+      </div>
+      <div class="grupa5">
+        <label for="description">Description:</label>
+        <textarea class="polje5" id="description" name="description" [(ngModel)]="adRequest.description" required></textarea>
+      </div>
+      <button type="submit" class="dugme">Submit</button>
+    </form>
+  </div>
+  

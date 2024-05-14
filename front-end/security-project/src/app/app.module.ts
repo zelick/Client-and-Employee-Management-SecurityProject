@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { EditClientProfileComponent } from './edit-client-profile/edit-client-profile.component';
+import { AdRequestFormComponent } from './ad-request-form/ad-request-form.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { EditClientProfileComponent } from './edit-client-profile/edit-client-pr
     RegistrationComponent,
     RegistrationRequestsComponent,
     ClientProfileComponent,
-    EditClientProfileComponent
+    EditClientProfileComponent,
+    AdRequestFormComponent
   ],
   imports: [
     BrowserModule,

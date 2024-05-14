@@ -41,45 +41,33 @@ body {
 
 .polje1
 {
-    margin-left: 71px;
+    margin-left: 49px;
     width: 170px;
 }
 
 .polje2
 {
-    margin-left: 51px;
+    margin-left: 29px;
     width: 170px;
 }
 
 .polje3
 {
-    margin-left: 72px;
+    margin-left: 10px;
     width: 170px;
 }
 
 .polje4
 {
-    margin-left: 54px;
+    margin-left: 27px;
     width: 170px;
 }
 
 .polje5
 {
-    margin-left: 77px;
-    width: 170px;
-    height: 15px;
-}
-
-.polje6
-{
-    margin-left: 54px;
-    width: 170px;
-}
-
-.polje7
-{
     margin-left: 10px;
     width: 170px;
+    height: 15px;
 }
 
 .grupa2
@@ -98,16 +86,6 @@ body {
 }
 
 .grupa5
-{
-    margin-top: 10px;
-}
-
-.grupa6
-{
-    margin-top: 10px;
-}
-
-.grupa7
 {
     margin-top: 10px;
 }

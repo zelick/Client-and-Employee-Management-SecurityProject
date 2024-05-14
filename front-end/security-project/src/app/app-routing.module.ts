@@ -5,13 +5,15 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { EditClientProfileComponent } from './edit-client-profile/edit-client-profile.component';
+import { AdRequestFormComponent } from './ad-request-form/ad-request-form.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent}, 
   {path:'registrationRequests', component: RegistrationRequestsComponent}, 
   { path: 'login', component: PasswordlessLoginComponent },
   { path: 'client-profile', component: ClientProfileComponent},
-  { path: 'edit-client-profile/:email', component: EditClientProfileComponent }
+  { path: 'edit-client-profile/:email', component: EditClientProfileComponent },
+  { path: 'ad-request-form', component: AdRequestFormComponent}
 ];
 
 @NgModule({
