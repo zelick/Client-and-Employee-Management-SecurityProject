@@ -75,7 +75,6 @@ export class AdministratorProfileComponent implements OnInit {
     this.showPasswordForm = !this.showPasswordForm;
   }
 
-  // Funkcija za promenu lozinke
   changePassword() {
     if (this.passwordForm.valid) {
       const passwordData = this.passwordForm.value;

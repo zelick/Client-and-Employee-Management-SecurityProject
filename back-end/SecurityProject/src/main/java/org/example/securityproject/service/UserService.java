@@ -18,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -76,13 +78,41 @@ public class UserService {
         user.setRequestProcessingDate(null);
 
         String salt = BCrypt.gensalt();
-        String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
+        //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
+
+        String hashedPassword = "";
+        try {
+            hashedPassword = hashPassword(userDto.getPassword(), salt);
+            user.setPassword(hashedPassword);
+            user.setSalt(salt);
+        } catch (NoSuchAlgorithmException e) {
+            // Handle exception
+        }
 
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
         userRepository.save(user);
         return "You have successfully registered.";
+    }
+
+    private String hashPassword(String password, String salt) throws NoSuchAlgorithmException {
+        String input = password + salt;
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encodedhash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+        return bytesToHex(encodedhash);
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
     private boolean validatePassword(String password) {
@@ -162,11 +192,11 @@ public class UserService {
         return userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
     }
 
-    public String updateUserPassword(PasswordDataDto passwordData) {
+    public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
         if (!checkOldPassword(passwordData.getOldPassword())) {
             return "You have not entered a good current password.";
         }
-        if (!passwordData.getNewPassword().equals(passwordData.getConfirmedNewPassword())) {
+        if (!passwordData.getNewPassword().equals(passwordData.getConfirmPassword())) {
             return "The new password and confirm password do not match.";
         }
         if (!validatePassword(passwordData.getNewPassword())) {
@@ -178,23 +208,27 @@ public class UserService {
         User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
 
         String salt = BCrypt.gensalt();
-        String hashedNewPassword = passwordEncoder.encode(passwordData.getNewPassword() + salt);
-
-        user.setPassword(hashedNewPassword);
-        user.setSalt(salt);
+        String hashedPassword = "";
+        try {
+            hashedPassword = hashPassword(passwordData.getNewPassword(), salt);
+            user.setPassword(hashedPassword);
+            user.setSalt(salt);
+        } catch (NoSuchAlgorithmException e) {
+        }
 
         userRepository.save(user);
 
         return "Password successfully changed.";
     }
 
-    private boolean checkOldPassword(String oldPassword) {
+    private boolean checkOldPassword(String oldPassword) throws NoSuchAlgorithmException {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
         User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
         String salt = user.getSalt();
-        String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
-        return passwordEncoder.matches(hashedOldPassword, user.getPassword());
+        String hashedOldPassword = hashPassword(oldPassword, salt);
+        //String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
+        return hashedOldPassword.equals(user.getPassword());
     }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku

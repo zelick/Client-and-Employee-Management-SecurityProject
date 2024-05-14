@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PutMapping("/updatePassword")
-    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) {
+    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -3,7 +3,7 @@ package org.example.securityproject.dto;
 public class PasswordDataDto {
     private String oldPassword;
     private String newPassword;
-    private String confirmedNewPassword;
+    private String confirmPassword;
 
     public PasswordDataDto() {
     }
@@ -24,11 +24,11 @@ public class PasswordDataDto {
         this.newPassword = newPassword;
     }
 
-    public String getConfirmedNewPassword() {
-        return confirmedNewPassword;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setConfirmedNewPassword(String confirmedNewPassword) {
-        this.confirmedNewPassword = confirmedNewPassword;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
