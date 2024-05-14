@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'administratorProfile', component: AdministratorProfileComponent}, 
   {path:'allEmployees', component: AllEmployeesComponent}, 
   {path:'allClients', component: AllClientsComponent}, 
-  {path:'login', component: LoginComponent}, 
+  {path:'', component: LoginComponent}, 
 ];
 
 @NgModule({

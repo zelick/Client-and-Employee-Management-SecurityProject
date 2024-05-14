@@ -11,6 +11,7 @@ import { AdministratorProfileComponent } from './administrator/administrator-pro
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
 import { AllClientsComponent } from './administrator/all-clients/allClients.component';
 import { LoginComponent } from './login/login.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LoginComponent } from './login/login.component';
     AdministratorProfileComponent,
     AllEmployeesComponent,
     AllClientsComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
