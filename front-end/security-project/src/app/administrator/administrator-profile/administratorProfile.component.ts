@@ -14,6 +14,7 @@ export class AdministratorProfileComponent implements OnInit {
   passwordForm: FormGroup = new FormGroup({});
   showPasswordForm: boolean = false;
   message: string | undefined;
+  passwordMessage: string | undefined;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -36,6 +37,9 @@ export class AdministratorProfileComponent implements OnInit {
         newPassword: ['', Validators.required],
         confirmPassword: ['', Validators.required]
     });
+
+    this.passwordMessage = "";
+    this.message = "";
 
     this.getUserData();
   }
@@ -67,6 +71,7 @@ export class AdministratorProfileComponent implements OnInit {
       const updatedData = this.administratorForm.value;
       this.userService.updateUserData(updatedData).subscribe(
         (response: ResponseMessage) => {
+          this.message = response.responseMessage;
           console.log('Administrator data updated successfully:', response);
           this.getUserData();
         },
@@ -86,7 +91,7 @@ export class AdministratorProfileComponent implements OnInit {
       const passwordData = this.passwordForm.value;
       this.userService.changePassword(passwordData).subscribe(
         (response: ResponseMessage) => {
-          this.message = response.responseMessage;
+          this.passwordMessage = response.responseMessage;
           console.log('Password changed successfully:', response);
         },
         error => {

@@ -35,8 +35,10 @@
     <br>
   </form>
 
+  <div *ngIf="message">{{ message }}</div>
+
   <div>
-    <button (click)="togglePasswordForm()" class="change-password-button">I want to change my password</button>
+    <button (click)="togglePasswordForm()" class="change-password-button">Change password</button>
   </div>
 
 <div *ngIf="showPasswordForm">
@@ -57,6 +59,6 @@
             <button type="submit">Change Password</button>
         </div>
     </form>
-    <div *ngIf="message">{{ message }}</div>
+    <div *ngIf="passwordMessage">{{ passwordMessage }}</div>
 </div>
   

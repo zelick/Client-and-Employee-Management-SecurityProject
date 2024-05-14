@@ -6,6 +6,7 @@ import { ServicesPackage } from '../model/servicesPackage.model';
 import { UserService } from '../services/user.service';
 import { RegistrationStatus } from '../model/registrationStatus.model';
 import { ResponseMessage } from '../model/responseMessage.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -25,6 +26,7 @@ export class RegistrationComponent {
 
   passwordInvalid: boolean = false;
   registrationMessage: string = '';
+  passwordMismatch: boolean = false;
 
   userData = {
     email: '',
@@ -43,16 +45,35 @@ export class RegistrationComponent {
 
   confirmPassword: string = '';
 
-  get passwordMismatch() {
-    return this.userData.password !== this.confirmPassword;
-  }
+  onSubmit(registrationForm: NgForm): void {
+    if (!registrationForm.valid) {
+      return;
+    }
 
-  onSubmit() {
+    if (this.userData.password !== this.confirmPassword) {
+      this.passwordMismatch = true;
+      return;
+    }
+
     if (!this.validatePassword(this.userData.password)) {
       this.passwordInvalid = true;
       return;
     }
 
+    if (!this.isValidEmail(this.userData.email)) {
+      this.registrationMessage = 'Invalid email format.';
+      return;
+    }
+
+    this.registerUser();
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  private registerUser(): void {
     this.userService.registerUser(this.userData).subscribe(
       (response: ResponseMessage) => {
         console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
@@ -61,7 +82,6 @@ export class RegistrationComponent {
       },
       (error) => {
         console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);
-        //this.registrationMessage = error.text;
         this.clearFields();
       }
     );

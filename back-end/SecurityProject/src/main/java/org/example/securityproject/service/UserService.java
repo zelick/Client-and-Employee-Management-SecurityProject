@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -58,6 +60,14 @@ public class UserService {
         User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
         if (existingUser != null) {
            return "A user with this email is already registered.";
+        }
+
+        if (!isValidEmail(userDto.getEmail())) {
+            return "Invalid email format.";
+        }
+
+        if (!areAllFieldsFilled(userDto)) {
+            return "All fields are required.";
         }
 
         User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
@@ -109,6 +119,35 @@ public class UserService {
 
         userRepository.save(user);
         return "You have successfully registered.";
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private boolean areAllFieldsFilled(UserDto userDto) {
+        return userDto.getEmail() != null && !userDto.getEmail().isEmpty() &&
+                userDto.getAddress() != null && !userDto.getAddress().isEmpty() &&
+                userDto.getCity() != null && !userDto.getCity().isEmpty() &&
+                userDto.getCountry() != null && !userDto.getCountry().isEmpty() &&
+                userDto.getName() != null && !userDto.getName().isEmpty() &&
+                userDto.getSurname() != null && !userDto.getSurname().isEmpty() &&
+                userDto.getPhoneNumber() != null && !userDto.getPhoneNumber().isEmpty() &&
+                userDto.getClientType() != null &&
+                userDto.getRole() != null &&
+                userDto.getServicesPackage() != null;
+    }
+
+    private boolean areAllFieldsFilledAdmin(EditAdminDto adminData) {
+        return adminData.getAddress() != null && !adminData.getAddress().isEmpty() &&
+                adminData.getCity() != null && !adminData.getCity().isEmpty() &&
+                adminData.getCountry() != null && !adminData.getCountry().isEmpty() &&
+                adminData.getName() != null && !adminData.getName().isEmpty() &&
+                adminData.getSurname() != null && !adminData.getSurname().isEmpty() &&
+                adminData.getPhoneNumber() != null && !adminData.getPhoneNumber().isEmpty();
     }
 
     private String hashPassword(String password, String salt) throws NoSuchAlgorithmException {
@@ -254,6 +293,10 @@ public class UserService {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
         User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+
+        if (!areAllFieldsFilledAdmin(adminData)) {
+            return "All fields are required.";
+        }
 
         user.setName(adminData.getName());
         user.setSurname(adminData.getSurname());
