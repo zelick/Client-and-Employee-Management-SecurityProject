@@ -14,6 +14,7 @@ import { AdRequestFormComponent } from './ad-request-form/ad-request-form.compon
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
 import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.component';
+import { AdFormComponent } from './ad-form/ad-form.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.compon
     AdRequestFormComponent,
     EmployeeProfileComponent,
     EditEmployeeProfileComponent,
-    AllAdRequestsComponent
+    AllAdRequestsComponent,
+    AdFormComponent
   ],
   imports: [
     BrowserModule,

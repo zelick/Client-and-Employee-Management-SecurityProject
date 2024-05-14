@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { AdRequest } from '../model/adRequest.model';
+import { Ad } from '../model/ad.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,14 @@ export class UserService {
 
   getAllAdRequests(): Observable<AdRequest[]> {
     return this.http.get<AdRequest[]>(this.apiUrl + 'ad-requests');
+  }
+
+  createAd(ad: Ad): Observable<string> {
+    return this.http.post<string>(this.apiUrl + 'ads', ad, { responseType: 'text' as 'json' });
+  }
+
+  getAdRequestById(id: number): Observable<AdRequest> {
+    return this.http.get<AdRequest>(`${this.apiUrl}ad-requests/${id}`);
   }
 
 }

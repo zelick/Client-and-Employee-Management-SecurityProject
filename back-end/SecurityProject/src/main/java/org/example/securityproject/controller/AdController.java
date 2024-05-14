@@ -1,5 +1,6 @@
 package org.example.securityproject.controller;
 
+import org.example.securityproject.dto.AdDto;
 import org.example.securityproject.model.Ad;
 import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.service.AdRequestService;
@@ -19,7 +20,7 @@ public class AdController {
     private AdService adService;
 
     @PostMapping
-    public ResponseEntity<String> createAd(@RequestBody Ad ad) {
+    public ResponseEntity<String> createAd(@RequestBody AdDto ad) {
         adService.createAd(ad);
         return new ResponseEntity<>("Ad request created successfully", HttpStatus.OK);
     }

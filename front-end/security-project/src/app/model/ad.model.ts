@@ -2,7 +2,9 @@ import { User } from "./user.model";
 
 export interface Ad {
     id?: number,
-    user: User,
+    email: string,
+    name: string,
+    surname: string,
     activeFrom: Date,
     activeTo: Date,
     description: string,

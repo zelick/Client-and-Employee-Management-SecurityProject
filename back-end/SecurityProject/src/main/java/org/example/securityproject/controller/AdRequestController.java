@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ad-requests")
@@ -26,4 +27,12 @@ public class AdRequestController {
         List<AdRequest> adRequests = adRequestService.getAllAdRequests();
         return new ResponseEntity<>(adRequests, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AdRequest> getAdRequestById(@PathVariable Integer id) {
+        Optional<AdRequest> adRequest = adRequestService.findById(id);
+        return adRequest.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }

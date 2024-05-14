@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdRequest } from '../model/adRequest.model';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-ad-requests',
@@ -10,7 +11,7 @@ import { UserService } from '../services/user.service';
 export class AllAdRequestsComponent implements OnInit{
   allAdRequests: AdRequest[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getAllAdRequests().subscribe(
@@ -25,6 +26,6 @@ export class AllAdRequestsComponent implements OnInit{
 
   createAd(adRequest: AdRequest)
   {
-
+    this.router.navigate(['/ad-form/' + adRequest.id]);
   }
 }

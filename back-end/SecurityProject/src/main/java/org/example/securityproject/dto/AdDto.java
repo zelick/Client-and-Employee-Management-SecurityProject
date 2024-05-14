@@ -3,14 +3,18 @@ package org.example.securityproject.dto;
 import java.util.Date;
 
 public class AdDto {
-    private UserDto user;
+    private String email;
+    private String name;
+    private String surname;
     private Date activeFrom;
     private Date activeTo;
     private String description;
     private String slogan;
 
-    public AdDto(UserDto user, Date activeFrom, Date activeTo, String description, String slogan) {
-        this.user = user;
+    public AdDto(String email, String name, String surname, Date activeFrom, Date activeTo, String description, String slogan) {
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
         this.activeFrom = activeFrom;
         this.activeTo = activeTo;
         this.description = description;
@@ -21,13 +25,30 @@ public class AdDto {
 
     }
 
-    public UserDto getUser() {
-        return user;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getName() {
+        return email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return email;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
 
     public Date getActiveFrom() {
         return activeFrom;
