@@ -30,4 +30,13 @@ export class UserService {
     return this.http.put<User[]>(this.apiUrl + 'users/processRegistrationRequest', responseData);
   }
 
+  findUserByEmail(): Observable<User> {
+    return this.http.get<User>(this.apiUrl + 'users/findUserByEmail');
+  }
+  
+  updateClient(user: User): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'users/updateClient', user, { responseType: 'text' as 'json' });
+  }
+  
+
 }

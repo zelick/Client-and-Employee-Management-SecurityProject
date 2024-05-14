@@ -168,6 +168,25 @@ public class UserService {
         long expiryTimeMillis = createdDate.getTime() + (duration * 60 * 1000);
         return new Date(expiryTimeMillis);
     }
+
+    public void updateUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        if (user != null) {
+            user.setAddress(userDto.getAddress());
+            user.setCity(userDto.getCity());
+            user.setCountry(userDto.getCountry());
+            user.setName(userDto.getName());
+            user.setSurname(userDto.getSurname());
+            user.setPhoneNumber(userDto.getPhoneNumber());
+            user.setClientType(userDto.getClientType());
+            user.setRole(userDto.getRole());
+            user.setServicesPackage(userDto.getServicesPackage());
+
+            userRepository.save(user);
+        }
+    }
+
+
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
 //onda uzmem njehovu lozinku, uzmem salt koji imam u bazi spojim ih HESIRAM i poredim onda HESOVE

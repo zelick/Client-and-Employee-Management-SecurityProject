@@ -8,6 +8,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
+import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { EditClientProfileComponent } from './edit-client-profile/edit-client-profile.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { RegistrationRequestsComponent } from './registration-requests/registrat
     AppComponent,
     PasswordlessLoginComponent,
     RegistrationComponent,
-    RegistrationRequestsComponent
+    RegistrationRequestsComponent,
+    ClientProfileComponent,
+    EditClientProfileComponent
   ],
   imports: [
     BrowserModule,
