@@ -66,8 +66,9 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Kreiraj token za tog korisnika
-        User user = (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();  // OVO NE RADI
         String jwt = tokenUtils.generateToken(user.getUsername());
+        //String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
         //String jwt = tokenUtils.generateToken("kristina.zelic@gmail.com");
         int expiresIn = tokenUtils.getExpiredIn();
 
