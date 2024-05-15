@@ -3,7 +3,7 @@ package org.example.securityproject.dto;
 // DTO koji preuzima podatke iz HTML forme za registraciju
 public class UserRequest {
 
-    private Long id;
+    private int id;
 
     private String username;
 
@@ -47,11 +47,11 @@ public class UserRequest {
         this.lastname = lastname;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

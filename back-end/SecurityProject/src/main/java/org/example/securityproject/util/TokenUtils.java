@@ -53,6 +53,7 @@ public class TokenUtils {
      */
 
     public String generateToken(String username) {
+        //System.out.println("SECRET value: " + SECRET);
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
@@ -60,6 +61,9 @@ public class TokenUtils {
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+
+        // Dodajte System.out.println za praćenje vrednosti tajnog ključa
+
 
 
         // moguce je postavljanje proizvoljnih podataka u telo JWT tokena
@@ -216,8 +220,8 @@ public class TokenUtils {
 
         // Token je validan kada:
         return (username != null // korisnicko ime nije null
-                && username.equals(userDetails.getUsername()) // korisnicko ime iz tokena se podudara sa korisnickom imenom koje pise u bazi
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
+                && username.equals(userDetails.getUsername())); // korisnicko ime iz tokena se podudara sa korisnickom imenom koje pise u bazi
+               // && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
     }
 
     /**

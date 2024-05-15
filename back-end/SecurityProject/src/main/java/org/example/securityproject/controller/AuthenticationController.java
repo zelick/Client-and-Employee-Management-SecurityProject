@@ -90,4 +90,18 @@ public class AuthenticationController {
     }
 
 
+    //OVO JE SAMO PROBA
+    @GetMapping("/getUserByEmail/{email}")
+    public ResponseEntity<UserRequest> getUser(@PathVariable String email) {
+        User user = userService.findByUsername(email);
+        UserRequest userRequestFound = new UserRequest();
+        userRequestFound.setId(user.getId());
+        userRequestFound.setEmail(user.getEmail());
+        userRequestFound.setFirstname(user.getName());
+        userRequestFound.setLastname(user.getSurname());
+        userRequestFound.setPassword(user.getPassword());
+        return new ResponseEntity<>(userRequestFound, HttpStatus.OK);
+    }
+
+
 }
