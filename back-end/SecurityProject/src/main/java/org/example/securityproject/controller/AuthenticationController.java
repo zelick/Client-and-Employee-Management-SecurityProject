@@ -7,29 +7,23 @@ import org.example.securityproject.dto.JwtAuthenticationRequest;
 import org.example.securityproject.dto.UserRequest;
 import org.example.securityproject.dto.UserTokenState;
 import org.example.securityproject.model.User;
-import org.example.securityproject.services.UserService;
+import org.example.securityproject.service.UserService;
 import org.example.securityproject.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 //import org.springframework.web.ErrorResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.Console;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 //Kontroler zaduzen za autentifikaciju korisnika
@@ -56,39 +50,21 @@ public class AuthenticationController {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
        // System.out.println("USAOOOO" + authenticationRequest.getUsername() + " " + authenticationRequest.getPassword());
-
-
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
         // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
         // kontekst
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();  // OVO NE RADI
         String jwt = tokenUtils.generateToken(user.getUsername());
         //String jwt = tokenUtils.generateToken(authenticationRequest.getUsername());
         //String jwt = tokenUtils.generateToken("kristina.zelic@gmail.com");
         int expiresIn = tokenUtils.getExpiredIn();
-
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
-
-    // Endpoint za registraciju novog korisnika
-    @PostMapping("/signup")
-    public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
-        User existUser = this.userService.findByUsername(userRequest.getUsername());
-//        if (existUser != null) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body("Username already exists"));
-//        }
-        User user = this.userService.save(userRequest);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
 
     //OVO JE SAMO PROBA
     @GetMapping("/getUserByEmail/{email}")

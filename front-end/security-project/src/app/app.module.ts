@@ -12,10 +12,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './service/auth.service';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ApiService } from './service/api.service';
-import { UserService } from './service/user.service';
 import { ConfigService } from './service/config.service';
 
-import { HttpClientModule } from '@angular/common/http';
 import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
@@ -31,6 +29,7 @@ import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.compon
 import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
+import { UserService } from './services/user.service';
 
 
 

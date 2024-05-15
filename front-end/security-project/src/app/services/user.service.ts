@@ -53,12 +53,12 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl + 'users/getAllClients');
   }
 
-  login(email: string, password: string): Observable<LoginReponse> { 
+  tryLogin(email: string, password: string): Observable<LoginReponse> { 
     const loginData = {
       email: email,
       password: password
     };
-    return this.http.post<LoginReponse>(this.apiUrl + 'users/login', loginData);
+    return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
   findUserByEmail(): Observable<User> {
     return this.http.get<User>(this.apiUrl + 'users/findUserByEmail');

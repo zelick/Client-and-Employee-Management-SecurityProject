@@ -1,10 +1,10 @@
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
-import { UserService } from "./user.service";
 import { Router } from "@angular/router";
 import { ConfigService } from "./config.service";
 import {map} from 'rxjs/operators';
+import { UserService } from "../services/user.service";
 
 
 @Injectable()
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   logout() {
-    this.userService.currentUser = null;
+    //this.userService.currentUser = null;
     localStorage.removeItem("jwt");
     this.access_token = null;
     this.router.navigate(['/login']);

@@ -8,9 +8,13 @@ import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.UserService;
+import org.example.securityproject.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,7 +35,8 @@ public class UserController {
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
 
-    @PostMapping("/login")
+
+    @PostMapping("/tryLogin")
     public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
     }

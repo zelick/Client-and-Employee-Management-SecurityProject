@@ -28,7 +28,6 @@ import org.example.securityproject.util.TokenUtils;
 @Configuration
 // Injektovanje bean-a za bezbednost
 @EnableWebSecurity
-
 // Ukljucivanje podrske za anotacije "@Pre*" i "@Post*" koje ce aktivirati autorizacione provere za svaki pristup metodi
 @EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
@@ -132,6 +131,12 @@ public class WebSecurityConfig {
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login")
+                .antMatchers(HttpMethod.POST, "/api/users/registerUser")
+                .antMatchers(HttpMethod.GET, "/api/users/getAllRegistrationRequests")
+                .antMatchers(HttpMethod.PUT, "/api/users/processRegistrationRequest")
+                .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
+                .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
+                .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");

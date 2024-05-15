@@ -1,6 +1,6 @@
 package org.example.securityproject.dto;
 
-import jakarta.persistence.Column;
+import javax.persistence.Column;
 
 import java.util.Date;
 
