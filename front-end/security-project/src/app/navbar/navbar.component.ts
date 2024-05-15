@@ -46,4 +46,24 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/registrationRequests']);
   }
 
+  allAds() {
+    this.router.navigate(['/ads']);
+  }
+  
+  allAdRequests() {
+    this.router.navigate(['/ad-requests'])
+  }
+
+  clientAds() {
+    this.router.navigate(['/client-ads']);
+  }
+
+  clientProfile() {
+    this.router.navigate(['/client-profile']);
+  }
+
+  employeeProfile() {
+    this.router.navigate(['/employee-profile']);
+  }
+
 }
