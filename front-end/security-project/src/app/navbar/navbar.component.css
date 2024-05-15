@@ -1,0 +1,108 @@
+/* Basic button styling */
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #3498db; /* Blue color, you can change it */
+    color: #fff; /* White text color */
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Add a smooth transition on hover */
+  }
+  
+  /* Hover effect */
+  button:hover {
+    background-color: #2980b9; /* Darker blue on hover, you can change it */
+  }
+  
+  /* Dropdown container styling */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown button styling */
+  .dropbtn {
+    padding: 10px 15px;
+    background-color: #3498db; /* Blue color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 60px;
+    width: 90px;
+  }
+  
+  /* Dropdown content (hidden by default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #2c3e50; /* Darker background for the dropdown */
+    width: 160px; /* Fixed width for the dropdown content */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0; /* Align the dropdown to the right */
+    border: none;
+    border-radius: 8px;
+  }
+  
+  /* Ensure buttons in the dropdown have the same width */
+  .dropdown-content button {
+    width: 90%; /* Adjust text alignment as needed */
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Menu container styling */
+  .menu-container {
+    background-color: #2c3e50; /* Darker background for the menu container */
+    padding: 10px; /* Adjust padding as needed */
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    /*OVO SAM DODALA ZA MENI*/
+    position: fixed; /* Fiksni položaj kako bi se protezao preko celog ekrana */
+    top: 0; /* Podešavanje gornje ivice na 0 da se postavi na vrh ekrana */
+    left: 0; /* Podešavanje leve ivice na 0 da se postavi na početak ekrana */
+    z-index: 1000; /* Postavljanje visokog indeksa z-steka kako bi bio iznad drugih elemenata */
+    
+  }
+
+  body {
+    margin-top: 80px; /* Prilagodite visinu menija prema potrebi */
+  }
+  
+  /* Sorry message styling */
+  .sorry-message {
+    color: #e74c3c; /* Red color for error messages */
+    margin: 20px;
+    text-align: center;
+  }
+  button.login {
+    background-color: #2c3e50; /* Darker background for login button */
+    color: #fff; 
+    font-size: 18px; /* Increase font size for register button */
+    font-weight: 550;
+  }
+  
+  /* Add these styles for register button */
+  button.register {
+    background-color: #fff; /* White background for register button */
+    color: #2c3e50; /* Text color for register button */
+    border: 2px solid #2c3e50; 
+    font-size: 18px; /* Increase font size for register button */
+    font-weight: 550;
+    border-radius: 20px;
+    margin-right: 20px;
+     
+  }
+  /* Search container styling */
+
+  
+  

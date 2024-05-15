@@ -1,47 +1,43 @@
-.content {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    width: 50%;
-    padding: 10px;
+/* login.component.css */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
   }
-  
-  mat-card {
-    max-width: 350px;
-    text-align: center;
-    animation: fadein 1s;
-    -o-animation: fadein 1s; /* Opera */
-    -moz-animation: fadein 1s; /* Firefox */
-    -webkit-animation: fadein 1s; /* Safari and Chrome */
-  
+
+  label {
+    font-weight: bold;
   }
-  
-  mat-input-container {
-    display: block;
-  }
-  
-  mat-spinner {
-    width: 25px;
-    height: 25px;
-    margin: 20px auto 0 auto;
-  }
-  
-  button {
-    display: block;
+
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* obezbeđuje da padding ne utiče na širinu elementa */
   }
-  
-  .error {
-    color: #D50000;
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
   }
-  
-  .success {
-    color: #8BC34A;
+
+  button[type="submit"]:hover {
+    background-color: #0056b3;
   }
-  
-  a {
-    text-decoration: none;
-    cursor: auto;
-    color: #FFFFFF;
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
   }
-  

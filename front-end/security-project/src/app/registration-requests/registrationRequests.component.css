@@ -1,0 +1,62 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead th {
+    background-color: darkgrey;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #fff;
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody td {
+    padding: 10px;
+    color: #000;
+  }
+  
+  tfoot td {
+    font-weight: bold;
+  }
+  
+  /* Dodajte ovo u vaš CSS fajl */
+
+button {
+    padding: 8px 16px; /* Dodajte malo prostora oko teksta u dugmadima */
+    margin-right: 8px; /* Dodajte razmak između dugmadi */
+    cursor: pointer; /* Promenite kursor u pokazivač kada prelazite preko dugmeta */
+    border: none; /* Uklonite okvir oko dugmeta */
+    border-radius: 4px; /* Dodajte blago zaobljenje ivica */
+  }
+  
+  button:hover {
+    background-color: #f0f0f0; /* Promenite pozadinu dugmeta kada prelazite preko njega */
+  }
+  
+  .accept-button {
+    background-color: #4caf50; /* Promenite boju pozadine dugmeta "ACCEPT REQUEST" */
+    color: white; /* Promenite boju teksta na belo */
+  }
+  
+  .reject-button {
+    background-color: #f44336; /* Promenite boju pozadine dugmeta "REJECT REQUEST" */
+    color: white; /* Promenite boju teksta na belo */
+  }
+
+  button[disabled] {
+    background-color: #ccc; /* Siva boja pozadine */
+    color: #666; /* Tamnija boja teksta */
+    cursor: not-allowed; /* Kursor pokazuje da nije dozvoljeno kliknuti */
+  }
+  
+  

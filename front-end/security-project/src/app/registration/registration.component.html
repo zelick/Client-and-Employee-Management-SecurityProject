@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Registration Form</h2>
-    <form (ngSubmit)="onSubmit()" #registrationForm="ngForm">
+    <form (ngSubmit)="onSubmit(registrationForm)" #registrationForm="ngForm">
       <div class="form-group">
         <label>Email:</label>
         <input type="email" class="form-control" name="email" [(ngModel)]="userData.email" required>
@@ -9,12 +9,13 @@
       <div class="form-group">
         <label>Password:</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="userData.password" required>
-      </div>
-  
-      <div class="form-group">
+        <div *ngIf="passwordInvalid" class="text-danger">The password must contain a minimum of 12 characters, at least one lowercase letter, at least one uppercase letter, at least one number and at least one special character.</div>
+    </div>
+    <div class="form-group">
         <label>Confirm Password:</label>
         <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-      </div>
+        <div *ngIf="passwordMismatch" class="text-danger">Passwords do not match.</div>
+    </div>
   
       <div class="form-group">
         <label>Name:</label>
@@ -66,8 +67,12 @@
           <input type="radio" name="servicesPackage" [value]="package" [(ngModel)]="userData.servicesPackage"> {{ package }}
         </label><br>
       </div>
+
+      <div *ngIf="registrationForm.submitted && registrationForm.invalid" class="text-danger">All fields are required.</div>
+      <div *ngIf="registrationForm.submitted && userData.email && !isValidEmail(userData.email)" class="text-danger">Invalid email format.</div>
   
       <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid || passwordMismatch">Register</button>
     </form>
+    <div *ngIf="registrationMessage">{{ registrationMessage }}</div>
   </div>
   

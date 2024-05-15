@@ -19,6 +19,8 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -77,23 +79,38 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "requestProcessingDate", nullable = true)
+    private Date requestProcessingDate;
+
+    @Column(name = "loggedInOnce", nullable = false)
+    private boolean loggedInOnce;
+
     public User() {}
 
-    public User(Integer id, String email, String password, String salt, String name, String surname, String address, String city, String country, String phoneNumber, UserRole role, ClientType clientType, ServicesPackage servicesPackage, RegistrationStatus registrationStatus) {
+    public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, UserRole role, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email) {
         this.id = id;
-        this.email = email;
-        this.password = password;
-        this.salt = salt;
-        this.name = name;
-        this.surname = surname;
+        this.requestProcessingDate = requestProcessingDate;
+        this.loggedInOnce = loggedInOnce;
+        this.active = active;
+        this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.registrationStatus = registrationStatus;
+        this.servicesPackage = servicesPackage;
+        this.clientType = clientType;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
         this.address = address;
         this.city = city;
-        this.country = country;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-        this.clientType = clientType;
-        this.servicesPackage = servicesPackage;
-        this.registrationStatus = registrationStatus;
+        this.surname = surname;
+        this.salt = salt;
+        this.name = name;
+        this.password = password;
+        this.email = email;
     }
 
     public Integer getId() {
@@ -210,6 +227,7 @@ public class User implements UserDetails {
         this.registrationStatus = registrationStatus;
     }
 
+
     //jwt
     @JsonIgnore
     @Override
@@ -260,5 +278,29 @@ public class User implements UserDetails {
     //UserDetails trazi da se implemenitra sta je username
     public String getUsername() {
         return this.email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getRequestProcessingDate() {
+        return requestProcessingDate;
+    }
+
+    public void setRequestProcessingDate(Date requestProcessingDate) {
+        this.requestProcessingDate = requestProcessingDate;
+    }
+
+    public boolean isLoggedInOnce() {
+        return loggedInOnce;
+    }
+
+    public void setLoggedInOnce(boolean loggedInOnce) {
+        this.loggedInOnce = loggedInOnce;
     }
 }

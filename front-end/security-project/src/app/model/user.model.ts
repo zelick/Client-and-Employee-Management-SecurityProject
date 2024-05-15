@@ -16,5 +16,5 @@ export interface User{
     role: UserRole, 
     clientType: ClientType, 
     servicesPackage: ServicesPackage,
-    registrationStatus : RegistrationStatus
+    registrationStatus: RegistrationStatus
 }

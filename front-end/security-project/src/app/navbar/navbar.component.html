@@ -1,0 +1,16 @@
+<body>
+    <div  class="menu-container">
+      <div class="dropdown">
+        <button (click)="redirectToLogin()" class="button login">Login</button>
+        <button  (click)="logout()">Logout</button>
+        <button  (click)="registration()">Registration</button>
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+         <button  (click)="administratorProfile()">Administrator profile</button> 
+         <button  (click)="allClients()">All clients</button> 
+         <button  (click)="allEmployees()">All employees</button> 
+         <button  (click)="registrationRequests()">Registration requests</button> 
+        </div>
+      </div>
+    </div>
+</body>

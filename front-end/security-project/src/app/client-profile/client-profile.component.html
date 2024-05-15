@@ -1,0 +1,15 @@
+<div>
+    <div class="container">
+<h1>My profile</h1>
+<div>
+    <p><strong>Email:</strong>{{ user.email }}</p>
+    <p><strong>Name:</strong>{{ user.name }} </p>
+    <p><strong>Surname:</strong>{{ user.surname }} </p>
+    <p><strong>Address:</strong>{{ user.address}} </p>
+    <p><strong>City:</strong>{{ user.city }}</p>
+    <p><strong>Country:</strong>{{ user.country }} </p>
+    <p><strong>Phone number:</strong>{{ user.phoneNumber}} </p>
+    <button class="dugme" (click)="editProfile(user.email)">Edit</button>
+</div>
+</div>
+</div>

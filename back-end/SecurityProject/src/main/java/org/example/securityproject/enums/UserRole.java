@@ -2,7 +2,6 @@ package org.example.securityproject.enums;
 
 public enum UserRole {
     CLIENT,
-    STAFF,
+    EMPLOYEE,
     ADMINISTRATOR,
-    UNAUTHENTICATED_USER
 }
