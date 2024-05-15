@@ -1,16 +1,32 @@
 package org.example.securityproject.model;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.enums.ClientType;
 import org.example.securityproject.enums.UserRole;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
+
 
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -57,6 +73,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RegistrationStatus registrationStatus;
 
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Column(name = "active", nullable = false)
     private boolean active;
 
@@ -69,24 +91,26 @@ public class User {
 
     public User() {}
 
-    public User(Integer id, String email, String password, String salt, String name, String surname, String address, String city, String country, String phoneNumber, UserRole role, ClientType clientType, ServicesPackage servicesPackage, RegistrationStatus registrationStatus, boolean active, Date requestProcessingDate, boolean loggedInOnce) {
+    public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, UserRole role, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email) {
         this.id = id;
-        this.email = email;
-        this.password = password;
-        this.salt = salt;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.city = city;
-        this.country = country;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
-        this.clientType = clientType;
-        this.servicesPackage = servicesPackage;
-        this.registrationStatus = registrationStatus;
-        this.active = active;
         this.requestProcessingDate = requestProcessingDate;
         this.loggedInOnce = loggedInOnce;
+        this.active = active;
+        this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.registrationStatus = registrationStatus;
+        this.servicesPackage = servicesPackage;
+        this.clientType = clientType;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.address = address;
+        this.city = city;
+        this.surname = surname;
+        this.salt = salt;
+        this.name = name;
+        this.password = password;
+        this.email = email;
     }
 
     public Integer getId() {
@@ -110,6 +134,8 @@ public class User {
     }
 
     public void setPassword(String password) {
+        Timestamp now = new Timestamp(new Date().getTime());
+        this.setLastPasswordResetDate(now);
         this.password = password;
     }
 
@@ -199,6 +225,59 @@ public class User {
 
     public void setRegistrationStatus(RegistrationStatus registrationStatus) {
         this.registrationStatus = registrationStatus;
+    }
+
+
+    //jwt
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Napravi set ovlašćenja (roles) za korisnika
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(this.role.toString()));
+
+        // Vrati ovlašćenja
+        return authorities;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    //UserDetails trazi da se implemenitra sta je username
+    public String getUsername() {
+        return this.email;
     }
 
     public boolean isActive() {

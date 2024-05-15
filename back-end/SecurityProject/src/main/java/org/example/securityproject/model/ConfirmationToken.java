@@ -1,8 +1,8 @@
 package org.example.securityproject.model;
 
-import jakarta.persistence.Table;
+import javax.persistence.Table;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
