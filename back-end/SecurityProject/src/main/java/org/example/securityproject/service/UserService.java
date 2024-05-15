@@ -9,7 +9,11 @@ import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -308,7 +312,11 @@ public class UserService {
     public String updateUserData(EditAdminDto adminData) {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = (User)auth.getPrincipal();
+        System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
+
+        User user = userRepository.findByEmail(loggedInUser.getEmail());
 
         if (!areAllFieldsFilledAdmin(adminData)) {
             return "All fields are required.";
@@ -327,6 +335,9 @@ public class UserService {
     }
 
     public List<User> getAllEmployees() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = (User)auth.getPrincipal();
+        System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
         return userRepository.findByRoleAndRegistrationStatus(UserRole.EMPLOYEE, RegistrationStatus.ACCEPTED);
     }
 
@@ -354,6 +365,16 @@ public class UserService {
         return userRepository.findByEmail(username);
     }
 
+    public User getLoggedInUser() {
+        Authentication auth = null;
+        try {
+            auth = SecurityContextHolder.getContext().getAuthentication();
+        }
+        catch (Exception e) {
+            return null;
+        }
+        return (User)auth.getPrincipal();
+    }
 
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku

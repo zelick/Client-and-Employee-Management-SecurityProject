@@ -12,6 +12,7 @@ import org.example.securityproject.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -87,6 +88,17 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
+    @GetMapping("/getLoggedInUser")
+    public ResponseEntity<UserDto> getLogegdInUser() {
+        User loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser == null) {
+            return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
+        }
+
+        UserDto userDto = new UserDto(loggedInUser);
+        return ResponseEntity.ok(userDto);
+    }
+
     @PutMapping("/updatePassword")
     public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
         ResponseDto response = new ResponseDto();
@@ -102,6 +114,7 @@ public class UserController {
     }
 
     @GetMapping("/getAllEmployees")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         try {
             List<UserDto> userDtos = userService.getAllEmployees()

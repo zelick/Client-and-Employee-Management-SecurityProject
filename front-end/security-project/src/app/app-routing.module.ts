@@ -16,12 +16,13 @@ import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.compon
 import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
+import { AuthGuard } from './service/authGuard.service';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
   {path:'registrationRequests', component: RegistrationRequestsComponent},
   {path:'administratorProfile', component: AdministratorProfileComponent},
-  {path:'allEmployees', component: AllEmployeesComponent},
+  { path: 'allEmployees', component: AllEmployeesComponent, canActivate: [AuthGuard] },
   {path:'allClients', component: AllClientsComponent},
   {path:'', component: LoginComponent},
   { path: 'login', component: PasswordlessLoginComponent },
