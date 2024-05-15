@@ -18,12 +18,12 @@ import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 
 const routes: Routes = [
-  {path:'registration', component: RegistrationComponent}, 
-  {path:'registrationRequests', component: RegistrationRequestsComponent}, 
-  {path:'administratorProfile', component: AdministratorProfileComponent}, 
-  {path:'allEmployees', component: AllEmployeesComponent}, 
-  {path:'allClients', component: AllClientsComponent}, 
-  {path:'', component: LoginComponent}, 
+  {path:'registration', component: RegistrationComponent},
+  {path:'registrationRequests', component: RegistrationRequestsComponent},
+  {path:'administratorProfile', component: AdministratorProfileComponent},
+  {path:'allEmployees', component: AllEmployeesComponent},
+  {path:'allClients', component: AllClientsComponent},
+  {path:'', component: LoginComponent},
   { path: 'login', component: PasswordlessLoginComponent },
   { path: 'client-profile', component: ClientProfileComponent},
   { path: 'edit-client-profile/:email', component: EditClientProfileComponent },

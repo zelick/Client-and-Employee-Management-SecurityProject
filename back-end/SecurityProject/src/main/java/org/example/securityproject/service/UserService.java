@@ -10,6 +10,7 @@ import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -102,6 +103,7 @@ public class UserService {
         user.setServicesPackage(userDto.getServicesPackage());
         user.setRequestProcessingDate(null);
         user.setLoggedInOnce(false);
+        user.setEnabled(false); //proveri!
 
         String salt = BCrypt.gensalt();
         //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -228,6 +230,7 @@ public class UserService {
             else {
                 user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
                 user.setActive(true);
+                user.setEnabled(true); //proveri!!
                 userRepository.save(user);
                 confirmationTokenRepository.delete(confirmationToken);
                 htmlResponse = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Confirmation Success</title></head><body><h1>Congratulations!</h1><p>You have successfully confirmed your registration. You can now log in.</p></body></html>";
@@ -345,6 +348,10 @@ public class UserService {
 
             userRepository.save(user);
         }
+    }
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username);
     }
 
 

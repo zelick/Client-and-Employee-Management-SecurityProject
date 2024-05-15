@@ -1,6 +1,6 @@
 package org.example.securityproject.service;
 
-import jakarta.mail.internet.MimeMessage;
+//import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.example.securityproject.auth.TokenGenerator;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;

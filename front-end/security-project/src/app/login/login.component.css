@@ -1,5 +1,4 @@
 /* login.component.css */
-
 form {
     max-width: 400px;
     margin: 0 auto;
@@ -8,11 +7,11 @@ form {
     border-radius: 5px;
     background-color: #f9f9f9;
   }
-  
+
   label {
     font-weight: bold;
   }
-  
+
   input[type="email"],
   input[type="password"] {
     width: 100%;
@@ -22,7 +21,7 @@ form {
     border-radius: 5px;
     box-sizing: border-box; /* obezbeđuje da padding ne utiče na širinu elementa */
   }
-  
+
   button[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -33,13 +32,12 @@ form {
     font-size: 16px;
     cursor: pointer;
   }
-  
+
   button[type="submit"]:hover {
     background-color: #0056b3;
   }
-  
+
   .error-message {
     color: red;
     margin-top: 10px;
   }
-  
