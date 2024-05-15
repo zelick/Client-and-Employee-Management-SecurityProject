@@ -115,6 +115,8 @@ public class WebSecurityConfig {
                 // CLIENT AUTHORIZATION
                 .antMatchers("/api/ad-requests/create").hasAuthority("CLIENT")
                 .antMatchers("/api/ads/by-email").hasAuthority("CLIENT")
+                //OVDE SE DODAJE AUTHORITY
+                .antMatchers("/api/users/getAllEmployees").hasAuthority("ADMINISTRATOR")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
@@ -151,5 +153,4 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }
-
 }

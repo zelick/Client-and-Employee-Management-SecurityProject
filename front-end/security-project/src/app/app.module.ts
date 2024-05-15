@@ -63,12 +63,12 @@ import { UserService } from './services/user.service';
     ReactiveFormsModule
   ],
   providers: [
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
     },
-    AuthService,
     ApiService,
     UserService,
     ConfigService,

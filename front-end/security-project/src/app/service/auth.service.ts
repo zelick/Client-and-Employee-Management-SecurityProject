@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 import { ConfigService } from "./config.service";
 import {map} from 'rxjs/operators';
 import { UserService } from "../services/user.service";
+import { ResponseMessage } from "../model/responseMessage.model";
+import { User } from "../model/user.model";
 
 
 @Injectable()
@@ -15,8 +17,10 @@ export class AuthService {
     private userService: UserService,
     private config: ConfigService,
     private router: Router
-  ) {
+  ){
   }
+
+  user: User | undefined;
 
   private access_token = null;
 
@@ -35,12 +39,38 @@ export class AuthService {
     console.log("putanja:",this.config.login_url );
 
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
-      .pipe(map((res) => {
-        console.log('Login success');
+    .pipe(map((res) => {
+      console.log('Login success');
+      if (res.body && res.body.accessToken) {
         this.access_token = res.body.accessToken;
-        localStorage.setItem("jwt", res.body.accessToken)
-        console.log(this.access_token)
-      }));
+        localStorage.setItem("jwt", res.body.accessToken);
+        console.log(this.access_token);
+        this.getLoggedInUser();
+      } else {
+        console.error('Invalid response or missing access token:', res);
+      }
+    }));
+  }
+
+  getLoggedInUser() {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.user = user;
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.role);
+        localStorage.setItem('loggedUserRole', this.user.role);
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
+  }
+
+  getLoggedInUserRole() {
+    if (localStorage.getItem('loggedUserRole') == null) {
+      return "UNAUTHORIZE";
+    }
+    return localStorage.getItem('loggedUserRole');
   }
 
   signup(user:any) { //NE TREBA OVO 
@@ -58,7 +88,7 @@ export class AuthService {
     //this.userService.currentUser = null;
     localStorage.removeItem("jwt");
     this.access_token = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   tokenIsPresent() {
@@ -67,6 +97,11 @@ export class AuthService {
 
   getToken() {
     return this.access_token;
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('jwt');
+    return !!token; 
   }
 
 }
