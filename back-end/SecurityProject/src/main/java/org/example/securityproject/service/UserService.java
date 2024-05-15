@@ -275,7 +275,7 @@ public class UserService {
 
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        User user = userRepository.findByEmail("pmilica990@gmail.com");
 
         String salt = BCrypt.gensalt();
         String hashedPassword = "";
@@ -298,7 +298,7 @@ public class UserService {
     private boolean checkOldPassword(String oldPassword) throws NoSuchAlgorithmException {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        User user = userRepository.findByEmail("pmilica990@gmail.com");
         String salt = user.getSalt();
         String hashedOldPassword = hashPassword(oldPassword, salt);
         //String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
@@ -308,7 +308,7 @@ public class UserService {
     public String updateUserData(EditAdminDto adminData) {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        User user = userRepository.findByEmail("pmilica990@gmail.com");
 
         if (!areAllFieldsFilledAdmin(adminData)) {
             return "All fields are required.";

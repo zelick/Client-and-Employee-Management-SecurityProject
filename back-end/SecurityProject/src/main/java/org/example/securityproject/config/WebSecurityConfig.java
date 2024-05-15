@@ -106,6 +106,16 @@ public class WebSecurityConfig {
                 // samo korisnik koji ima rolu 'ADMIN', navodimo na sledeci nacin:
                 // .antMatchers("/admin").hasRole("ADMIN") ili .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
 
+                // EMPLOYEE AUTHORIZATION
+                .antMatchers("/api/ads/all").hasAuthority("EMPLOYEE")
+                .antMatchers("/api/ads/create").hasAuthority("EMPLOYEE")
+                .antMatchers("/api/ad-requests/all").hasAuthority("EMPLOYEE")
+                .antMatchers("/api/ad-requests/id").hasAuthority("EMPLOYEE")
+
+                // CLIENT AUTHORIZATION
+                .antMatchers("/api/ad-requests/create").hasAuthority("CLIENT")
+                .antMatchers("/api/ads/by-email").hasAuthority("CLIENT")
+
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
