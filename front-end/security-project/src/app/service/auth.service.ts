@@ -86,8 +86,10 @@ export class AuthService {
 
   logout() {
     //this.userService.currentUser = null;
+    localStorage.removeItem("loggedUserRole")
     localStorage.removeItem("jwt");
     this.access_token = null;
+    console.log("KAD SE ODJAVI: " + localStorage.getItem("loggedUserRole"));
     this.router.navigate(['/']);
   }
 

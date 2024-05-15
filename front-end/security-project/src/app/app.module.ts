@@ -31,8 +31,6 @@ import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 import { UserService } from './services/user.service';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
