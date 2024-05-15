@@ -69,15 +69,15 @@ export class UserService {
   }
 
   createAdRequest(adRequest: AdRequest): Observable<string> {
-    return this.http.post<string>(this.apiUrl + 'ad-requests', adRequest, { responseType: 'text' as 'json' });
+    return this.http.post<string>(this.apiUrl + 'ad-requests/create', adRequest, { responseType: 'text' as 'json' });
   }
 
   getAllAdRequests(): Observable<AdRequest[]> {
-    return this.http.get<AdRequest[]>(this.apiUrl + 'ad-requests');
+    return this.http.get<AdRequest[]>(this.apiUrl + 'ad-requests/all');
   }
 
   createAd(ad: Ad): Observable<string> {
-    return this.http.post<string>(this.apiUrl + 'ads', ad, { responseType: 'text' as 'json' });
+    return this.http.post<string>(this.apiUrl + 'ads/create', ad, { responseType: 'text' as 'json' });
   }
 
   getAdRequestById(id: number): Observable<AdRequest> {
@@ -85,7 +85,7 @@ export class UserService {
   }
 
   getAllAds(): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl + 'ads');
+    return this.http.get<Ad[]>(this.apiUrl + 'ads/all');
   }
 
   getAllAdsByEmail(email: string): Observable<Ad[]> {

@@ -68,4 +68,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/employee-profile']);
   }
 
+  createAdRequest() {
+    this.router.navigate(['/ad-request-form']);
+  }
 }
