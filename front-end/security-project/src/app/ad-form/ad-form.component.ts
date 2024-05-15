@@ -45,7 +45,7 @@ export class AdFormComponent implements OnInit {
       surname: this.client.surname, 
       activeFrom: this.adRequest.activeFrom, 
       activeTo: this.adRequest.activeTo, 
-      description: this.description, 
+      description: this.adRequest.description, 
       slogan: this.slogan 
     };
     console.log(ad);
