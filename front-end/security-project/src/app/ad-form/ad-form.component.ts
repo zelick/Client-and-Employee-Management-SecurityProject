@@ -4,6 +4,8 @@ import { AdRequest } from '../model/adRequest.model';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.model';
 import { Ad } from '../model/ad.model';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ad-form',
@@ -15,24 +17,46 @@ export class AdFormComponent implements OnInit {
   client!: User;
   description: string = '';
   slogan: string = '';
+  loggedUser!: User;
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  constructor(private route: ActivatedRoute, private userService: UserService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id')); 
-      if (!isNaN(id)) {
-        this.userService.getAdRequestById(id).subscribe(adRequest => {
-          this.adRequest = adRequest;
-          console.log(adRequest);
-          this.findUser();
+    const userRole = this.auth.getLoggedInUserRole(); // Poziv metode da dobijete stvarnu vrednost uloge
+      console.log(userRole);
+      if (userRole !== "EMPLOYEE") {
+        this.router.navigate(['/']);
+      } else {
+        this.route.paramMap.subscribe(params => {
+          const id = Number(params.get('id')); 
+          if (!isNaN(id)) {
+            this.userService.getAdRequestById(id).subscribe(adRequest => {
+              this.adRequest = adRequest;
+              console.log(adRequest);
+              this.getLoggedInUser();
+            });
+          }
         });
       }
-    });
+  }
+
+  getLoggedInUser() {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.role);
+        localStorage.setItem('loggedUserRole', this.loggedUser.role);
+        this.findUser();
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
   }
 
   findUser(): void{
-    this.userService.findUserByEmail().subscribe(user => {
+    this.userService.findUserByEmail(this.loggedUser.email).subscribe(user => {
       this.client = user;
       console.log(user);
     });
@@ -53,6 +77,7 @@ export class AdFormComponent implements OnInit {
     this.userService.createAd(ad).subscribe(response => {
       console.log(ad);
       console.log(response);
+      this.router.navigate(['/ads']);
     });
   }
 

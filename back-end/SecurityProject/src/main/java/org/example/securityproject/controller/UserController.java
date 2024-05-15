@@ -139,9 +139,9 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/findUserByEmail")
-    public ResponseEntity<UserDto> findUserByEmail() {
-        User user = userRepository.findByEmail("pmilica990@gmail.com");
+    @GetMapping("/findUserByEmail/{email}")
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             UserDto userDto = new UserDto(user);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -149,6 +149,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PutMapping("/updateClient")
     public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) {

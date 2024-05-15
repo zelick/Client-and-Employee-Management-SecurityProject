@@ -60,8 +60,8 @@ export class UserService {
     };
     return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
-  findUserByEmail(): Observable<User> {
-    return this.http.get<User>(this.apiUrl + 'users/findUserByEmail');
+  findUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(this.apiUrl + 'users/findUserByEmail/' + email);
   }
   
   updateClient(user: User): Observable<any> {

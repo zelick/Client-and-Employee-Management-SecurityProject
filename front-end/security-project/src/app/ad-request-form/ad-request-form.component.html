@@ -1,10 +1,6 @@
 <div class="container">
     <h1>Create ad request</h1>
     <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="polje1" id="email" name="email" [(ngModel)]="adRequest.email" required>
-      </div>
       <div class="grupa2">
         <label for="deadline">Deadline:</label>
         <input type="date" class="polje2" id="deadline" name="deadline" [(ngModel)]="adRequest.deadline" required>
