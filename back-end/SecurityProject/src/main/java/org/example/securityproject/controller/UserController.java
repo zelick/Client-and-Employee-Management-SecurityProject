@@ -44,9 +44,7 @@ public class UserController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
-        ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.registerUser(userDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
     @GetMapping("/getAllRegistrationRequests")

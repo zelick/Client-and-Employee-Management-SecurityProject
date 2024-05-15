@@ -46,6 +46,7 @@ export class AuthService {
         localStorage.setItem("jwt", res.body.accessToken);
         console.log(this.access_token);
         this.getLoggedInUser();
+        this.router.navigate(['/homepage']);
       } else {
         console.error('Invalid response or missing access token:', res);
       }

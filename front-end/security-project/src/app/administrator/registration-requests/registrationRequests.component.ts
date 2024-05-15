@@ -26,9 +26,13 @@ export class RegistrationRequestsComponent {
     ngOnInit(): void {
         const userRole = this.auth.getLoggedInUserRole(); 
         console.log(userRole);
-        if (userRole !== "ADMINISTRATOR") {
-          this.router.navigate(['/']);
-        } else {
+        if (userRole === "UNAUTHORIZE") {
+            this.router.navigate(['/']);
+        }
+        else if (userRole !== "ADMINISTRATOR") {
+            this.router.navigate(['/homepage']); 
+        } 
+        else {
             this.loadUsersRequests();        
         }      
     }

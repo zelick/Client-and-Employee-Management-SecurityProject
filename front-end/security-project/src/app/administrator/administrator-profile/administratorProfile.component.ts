@@ -26,8 +26,11 @@ export class AdministratorProfileComponent implements OnInit {
 
     const userRole = this.auth.getLoggedInUserRole(); 
     console.log(userRole);
-    if (userRole !== "ADMINISTRATOR") {
+    if (userRole === "UNAUTHORIZE") {
       this.router.navigate(['/']);
+    }
+    else if (userRole !== "ADMINISTRATOR") {
+      this.router.navigate(['/homepage']);
     } else {
       this.administratorForm = this.fb.group({
         email: [{value: '', disabled: true}],

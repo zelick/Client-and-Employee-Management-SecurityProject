@@ -24,9 +24,18 @@ export class RegistrationComponent implements OnInit{
   ngOnInit(): void {
     const userRole = this.auth.getLoggedInUserRole(); 
     console.log(userRole);
-    if (userRole === "ADMINISTRATOR") {
-      this.isAdmin = true;
-    } 
+
+    if (userRole === "CLIENT" || userRole === "EMPLOYEE") {
+      this.router.navigate(['/homepage']);
+    }
+    else {
+      if (userRole === "ADMINISTRATOR") {
+        this.isAdmin = true;
+      }
+      else {
+        this.isUnAuthorize = true;
+      }
+    }
   }
   
   userRoles = Object.values(UserRole);
@@ -38,6 +47,7 @@ export class RegistrationComponent implements OnInit{
   passwordMismatch: boolean = false;
 
   isAdmin: boolean = false;
+  isUnAuthorize: boolean = false;
 
   userData = {
     email: '',
@@ -48,9 +58,9 @@ export class RegistrationComponent implements OnInit{
     city: '',
     country: '',
     phoneNumber: '',
-    role: UserRole.CLIENT,
-    clientType: ClientType.INDIVIDUAL,
-    servicesPackage: ServicesPackage.BASIC,
+    role: UserRole.ADMINISTRATOR,
+    clientType: ClientType.NONE,
+    servicesPackage: ServicesPackage.NONE,
     registrationStatus: RegistrationStatus.PENDING
   };
 
@@ -87,9 +97,18 @@ export class RegistrationComponent implements OnInit{
   private registerUser(): void {
     this.userService.registerUser(this.userData).subscribe(
       (response: ResponseMessage) => {
-        console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+        //console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
         this.registrationMessage = response.responseMessage;
-        this.clearFields();
+        console.log("ADMIN JE ULOGOVAN: " + this.isAdmin);
+        console.log("RESPONSE FLAG: " + response.flag)
+        if (response.flag === true && this.isAdmin === true) {
+          console.log("USAAO GDE TREBA samo nece u homepage ");
+          this.router.navigate(['/homepage']);
+        }
+        else if (response.flag === true && this.isAdmin === false) {
+          this.router.navigate(['/']);
+        }
+        //this.clearFields();
       },
       (error) => {
         console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);

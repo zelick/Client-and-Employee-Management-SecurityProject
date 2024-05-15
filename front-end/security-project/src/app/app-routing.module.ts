@@ -17,6 +17,7 @@ import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 import { AuthGuard } from './service/authGuard.service';
+import { HomePageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: 'ad-requests', component: AllAdRequestsComponent},
   { path: 'ad-form/:id', component: AdFormComponent},
   { path: 'ads', component: AllAdsComponent},
-  { path: 'client-ads', component: AllClientAdsComponent}
+  { path: 'client-ads', component: AllClientAdsComponent},
+  { path: 'homepage', component: HomePageComponent}
 ];
 
 @NgModule({

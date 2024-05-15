@@ -30,6 +30,7 @@ import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 import { UserService } from './services/user.service';
+import { HomePageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { UserService } from './services/user.service';
     AllAdRequestsComponent,
     AdFormComponent,
     AllAdsComponent,
-    AllClientAdsComponent
+    AllClientAdsComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
