@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { LoginReponse } from '../model/loginResponse.model';
+import { AdRequest } from '../model/adRequest.model';
+import { Ad } from '../model/ad.model';
 
 @Injectable({
   providedIn: 'root',
@@ -58,4 +60,36 @@ export class UserService {
     };
     return this.http.post<LoginReponse>(this.apiUrl + 'users/login', loginData);
   }
+  findUserByEmail(): Observable<User> {
+    return this.http.get<User>(this.apiUrl + 'users/findUserByEmail');
+  }
+  
+  updateClient(user: User): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'users/updateClient', user, { responseType: 'text' as 'json' });
+  }
+
+  createAdRequest(adRequest: AdRequest): Observable<string> {
+    return this.http.post<string>(this.apiUrl + 'ad-requests', adRequest, { responseType: 'text' as 'json' });
+  }
+
+  getAllAdRequests(): Observable<AdRequest[]> {
+    return this.http.get<AdRequest[]>(this.apiUrl + 'ad-requests');
+  }
+
+  createAd(ad: Ad): Observable<string> {
+    return this.http.post<string>(this.apiUrl + 'ads', ad, { responseType: 'text' as 'json' });
+  }
+
+  getAdRequestById(id: number): Observable<AdRequest> {
+    return this.http.get<AdRequest>(`${this.apiUrl}ad-requests/${id}`);
+  }
+
+  getAllAds(): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl + 'ads');
+  }
+
+  getAllAdsByEmail(email: string): Observable<Ad[]> {
+    return this.http.get<Ad[]>(this.apiUrl + 'ads/by-email', { params: { email } });
+  }
+
 }

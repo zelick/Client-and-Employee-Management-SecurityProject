@@ -1,0 +1,12 @@
+<div *ngFor="let ad of allAds">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Ad for: {{ ad.name }}  {{ ad.surname }} </h5>
+        <p class="card-text">Active from: {{ ad.activeFrom | date }}</p>
+        <p class="card-text">Active to: {{ ad.activeTo | date }}</p>
+        <p class="card-text">Description: {{ ad.description }}</p>
+        <p class="card-text">Slogan: {{ ad.slogan }}</p>
+      </div>
+    </div>
+  </div>
+  

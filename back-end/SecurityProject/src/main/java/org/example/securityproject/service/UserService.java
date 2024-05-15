@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.enums.UserRole;
+import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
@@ -191,6 +192,18 @@ public class UserService {
         emailService.sendRegistrationEmail(responseData);
     }
 
+    public boolean checkIfExists(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return user != null;
+    }
+
+    public boolean checkServicePackage(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return user.getServicesPackage() == ServicesPackage.STANDARD || user.getServicesPackage() == ServicesPackage.GOLDEN;
+    }
+    
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
         ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token);
         String htmlResponse = "";
@@ -317,6 +330,24 @@ public class UserService {
     public List<User> getAllClients() {
         return userRepository.findByRoleAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
+    public void updateUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        if (user != null) {
+            user.setAddress(userDto.getAddress());
+            user.setCity(userDto.getCity());
+            user.setCountry(userDto.getCountry());
+            user.setName(userDto.getName());
+            user.setSurname(userDto.getSurname());
+            user.setPhoneNumber(userDto.getPhoneNumber());
+            user.setClientType(userDto.getClientType());
+            user.setRole(userDto.getRole());
+            user.setServicesPackage(userDto.getServicesPackage());
+
+            userRepository.save(user);
+        }
+    }
+
+
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
 //onda uzmem njehovu lozinku, uzmem salt koji imam u bazi spojim ih HESIRAM i poredim onda HESOVE

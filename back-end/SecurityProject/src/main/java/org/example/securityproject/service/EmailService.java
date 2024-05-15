@@ -2,7 +2,10 @@ package org.example.securityproject.service;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.example.securityproject.auth.TokenGenerator;
 import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.model.LoginToken;
+import org.example.securityproject.repository.LoginTokenRepository;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
@@ -24,10 +27,10 @@ import java.util.Base64;
 public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
+    private LoginTokenRepository loginTokenRepository;
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
-    private static final String HMAC_ALGORITHM = "HmacSHA256";
-    private static final String SECRET_KEY = "secretKey";
+
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
         String subject = "";
@@ -54,6 +57,21 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
+    public void sendPasswordlessMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        LoginToken objectToken = TokenGenerator.generateToken();
+        loginTokenRepository.save(objectToken);
+        String userEmail = email;
+        String subject = "Passwordless login";
+        String text = "Click on the following link to login: http://localhost:8080/api/login?token=" + objectToken.getToken();
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("aplikacijemobilnea0gmail.com");
+        message.setTo(userEmail);
+        message.setSubject(subject);
+        message.setText(text);
+
+        javaMailSender.send(message);
+    }
     /*
     private String generateToken(String userEmail) {
         User user = userRepository.findByEmail(userEmail);
