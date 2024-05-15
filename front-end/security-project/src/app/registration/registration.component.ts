@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserRole } from '../model/userRole.model';
 import { ClientType } from '../model/clientType.model';
@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { RegistrationStatus } from '../model/registrationStatus.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,10 +15,18 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./registration.component.css']
 })
 
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit{
 
   constructor(private router: Router, 
-    private userService: UserService) {
+    private userService: UserService,
+    private auth: AuthService) {
+  }
+  ngOnInit(): void {
+    const userRole = this.auth.getLoggedInUserRole(); 
+    console.log(userRole);
+    if (userRole === "ADMINISTRATOR") {
+      this.isAdmin = true;
+    } 
   }
   
   userRoles = Object.values(UserRole);
@@ -27,6 +36,8 @@ export class RegistrationComponent {
   passwordInvalid: boolean = false;
   registrationMessage: string = '';
   passwordMismatch: boolean = false;
+
+  isAdmin: boolean = false;
 
   userData = {
     email: '',

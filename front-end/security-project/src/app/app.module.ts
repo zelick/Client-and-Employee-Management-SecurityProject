@@ -14,7 +14,7 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ApiService } from './service/api.service';
 import { ConfigService } from './service/config.service';
 
-import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
+import { RegistrationRequestsComponent } from './administrator/registration-requests/registrationRequests.component';
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
 import { AllClientsComponent } from './administrator/all-clients/allClients.component';

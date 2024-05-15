@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { User } from '../model/user.model';
-import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
+import { UserService } from '../../services/user.service';
+import { User } from '../../model/user.model';
+import { RegistrationRequestResponse } from '../../model/registrationRequestResponse.model';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-registrationRequests',
@@ -17,10 +18,19 @@ export class RegistrationRequestsComponent {
     rejectionReason: string = "";
     responseData: RegistrationRequestResponse | undefined;
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService,
+                private auth: AuthService, 
+                private router: Router
+    ) { }
   
     ngOnInit(): void {
-      this.loadUsersRequests();
+        const userRole = this.auth.getLoggedInUserRole(); 
+        console.log(userRole);
+        if (userRole !== "ADMINISTRATOR") {
+          this.router.navigate(['/']);
+        } else {
+            this.loadUsersRequests();        
+        }      
     }
   
     loadUsersRequests(): void {

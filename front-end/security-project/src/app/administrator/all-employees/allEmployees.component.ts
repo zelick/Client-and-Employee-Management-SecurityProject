@@ -15,16 +15,15 @@ export class AllEmployeesComponent implements OnInit {
     private auth: AuthService, 
     private router: Router) { }
 
-    ngOnInit(): void {
-      const userRole = this.auth.getLoggedInUserRole(); // Poziv metode da dobijete stvarnu vrednost uloge
-      console.log(userRole);
-      if (userRole !== "ADMINISTRATOR") {
-        this.router.navigate(['/']);
-      } else {
-        this.loadEmployees();
-      }
+  ngOnInit(): void {
+    const userRole = this.auth.getLoggedInUserRole(); 
+    console.log(userRole);
+    if (userRole !== "ADMINISTRATOR") {
+      this.router.navigate(['/']);
+    } else {
+      this.loadEmployees();
     }
-    
+  }
 
   loadEmployees() {
     this.userService.getAllEmployees().subscribe(

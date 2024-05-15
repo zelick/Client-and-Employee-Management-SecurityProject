@@ -45,6 +45,10 @@ export class UserService {
     return this.http.put<ResponseMessage>(this.apiUrl + 'users/updatePassword', passwordData);
   }
 
+  changeAdminPassword(passwordData: any): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(this.apiUrl + 'users/updateAdminPassword', passwordData);
+  }
+
   getAllEmployees(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl + 'users/getAllEmployees');
   }

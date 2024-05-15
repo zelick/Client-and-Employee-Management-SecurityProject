@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,10 +11,19 @@ import { UserService } from 'src/app/services/user.service';
 export class AllClientsComponent implements OnInit {
   clients: any[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private auth: AuthService,
+              private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.loadClients();
+    const userRole = this.auth.getLoggedInUserRole(); 
+    console.log(userRole);
+    if (userRole !== "ADMINISTRATOR") {
+      this.router.navigate(['/']);
+    } else {
+      this.loadClients();
+    }
   }
 
   loadClients() {

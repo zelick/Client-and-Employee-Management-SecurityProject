@@ -263,7 +263,7 @@ public class UserService {
     }
 
     public User getUserData() {
-        return userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        return getLoggedInUser();
     }
 
     public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
