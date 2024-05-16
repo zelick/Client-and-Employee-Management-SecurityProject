@@ -128,7 +128,7 @@ public class WebSecurityConfig {
 
                 //OVAKO OD SAD::::
                 .antMatchers("/api/admins/**").hasRole("ADMINISTRATOR")
-                .antMatchers(HttpMethod.GET, "/api/admins/getAllEmployees").hasAnyAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.GET, "/api/admins/getAllEmployees").hasAuthority("ADMIN_READ")
 
                 .antMatchers("/api/users/getAllClients").hasAuthority("ADMINISTRATOR")
                 .antMatchers("/api/users/updateUserData").hasAuthority("ADMINISTRATOR")
