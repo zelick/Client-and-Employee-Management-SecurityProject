@@ -3,6 +3,7 @@ package org.example.securityproject.config;
 import org.example.securityproject.auth.CustomAuthenticationProvider;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,6 +32,9 @@ import org.example.securityproject.util.TokenUtils;
 // Ukljucivanje podrske za anotacije "@Pre*" i "@Post*" koje ce aktivirati autorizacione provere za svaki pristup metodi
 @EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
+
+    @Value("${security.project.secret}")
+    private String SECRET_KEY;
 
     @Autowired
     private UserRepository userRepository; // mora da bi uzeo salt iz usera

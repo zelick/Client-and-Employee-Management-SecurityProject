@@ -92,7 +92,7 @@ export class AuthService {
       }));
   }
 
-  private refreshCheckInterval: any; //Promenljiva za interval 
+  private refreshCheckInterval: any; //Promenljiva za interval   
   logout() {
     //this.userService.currentUser = null;
     localStorage.removeItem("loggedUserRole")
