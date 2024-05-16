@@ -58,7 +58,7 @@ public class EmailService {
     }
 
     public void sendPasswordlessMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
-        LoginToken objectToken = TokenGenerator.generateToken();
+        LoginToken objectToken = TokenGenerator.generateToken(email);
         loginTokenRepository.save(objectToken);
         String userEmail = email;
         String subject = "Passwordless login";

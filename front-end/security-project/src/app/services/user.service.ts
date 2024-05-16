@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/env/environment';
 import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
@@ -98,6 +98,14 @@ export class UserService {
 
   getLoggedInUser(): Observable<User> {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser");
+  }
+
+
+  getLoggedInUserHomepage(accessToken : string): Observable<User> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${accessToken}`
+    });
+    return this.http.get<User>(this.apiUrl + "users/getLoggedInUser", { headers});
   }
 
 }

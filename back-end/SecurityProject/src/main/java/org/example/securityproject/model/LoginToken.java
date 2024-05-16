@@ -22,15 +22,19 @@ public class LoginToken {
     @Column(name = "hmac", nullable = false)
     private String hmac;
 
+    @Column(name= "username", nullable = false)
+    private String username;
+
 
     public LoginToken() {}
 
-    public LoginToken(Integer id, String token, LocalDateTime expirationTime, boolean visited, String hmac) {
+    public LoginToken(Integer id, String token, LocalDateTime expirationTime, boolean visited, String hmac, String username) {
         this.id = id;
         this.token = token;
         this.expirationTime = expirationTime;
         this.visited = visited;
         this.hmac = hmac;
+        this.username = username;
     }
 
     public Integer getId() {
@@ -72,4 +76,8 @@ public class LoginToken {
     public void setHmac(String hmac) {
         this.hmac = hmac;
     }
+
+    public String getUsername(){return  username;}
+
+    public void setUsername(String username) { this.username = username; }
 }

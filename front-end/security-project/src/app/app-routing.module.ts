@@ -18,6 +18,7 @@ import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 import { AuthGuard } from './service/authGuard.service';
 import { HomePageComponent } from './homepage/homepage.component';
+import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'ad-form/:id', component: AdFormComponent},
   { path: 'ads', component: AllAdsComponent},
   { path: 'client-ads', component: AllClientAdsComponent},
-  { path: 'homepage', component: HomePageComponent}
+  { path: 'homepage', component: HomePageComponent},
+  { path: 'client-homepage/:email', component: ClientHomepageComponent}
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@ package org.example.securityproject.auth;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.naming.factory.SendMailFactory;
 import org.example.securityproject.model.LoginToken;
 import org.example.securityproject.repository.LoginTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,12 @@ import java.util.Date;
 import java.util.UUID;
 
 public class TokenGenerator {
-    public static LoginToken generateToken() throws NoSuchAlgorithmException, InvalidKeyException {
+    public static LoginToken generateToken(String email) throws NoSuchAlgorithmException, InvalidKeyException {
         UUID uuid = UUID.randomUUID();
         String token = uuid.toString();
         LocalDateTime expirationTime = LocalDateTime.now().plus(10, ChronoUnit.MINUTES);
         String hmac = generateHmac(token, "milica123");
-        LoginToken loginToken = new LoginToken(null, token, expirationTime, false, hmac);
+        LoginToken loginToken = new LoginToken(null, token, expirationTime, false, hmac, email);
         saveTokenToDatabase(token, expirationTime);
         return loginToken;
     }
@@ -34,8 +35,8 @@ public class TokenGenerator {
     }
 
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
-        LoginToken token = generateToken();
-        System.out.println("Generated token: " + token);
+        //LoginToken token = generateToken(email);
+        //System.out.println("Generated token: " + token);
     }
 
     public static String generateHmac(String data, String key) throws NoSuchAlgorithmException, InvalidKeyException {

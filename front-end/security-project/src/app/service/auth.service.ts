@@ -110,11 +110,11 @@ export class AuthService {
   }
 
   tokenIsPresent() {
-    return this.access_token != undefined && this.access_token != null;
+    return localStorage.getItem('jwt') !== null;
   }
-
+  
   getToken() {
-    return this.access_token;
+    return localStorage.getItem('jwt');
   }
 
   isAuthenticated(): boolean {

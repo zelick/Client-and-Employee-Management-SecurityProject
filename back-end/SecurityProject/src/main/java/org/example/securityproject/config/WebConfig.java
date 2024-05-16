@@ -22,7 +22,11 @@ public class WebConfig {
                                 HttpMethod.PATCH.name(),
                                 HttpMethod.PUT.name())
                         .allowedHeaders(HttpHeaders.CONTENT_TYPE,
-                                HttpHeaders.AUTHORIZATION);
+                                HttpHeaders.AUTHORIZATION,
+                                "Authorization", "Refresh-Token",
+                                HttpHeaders.SET_COOKIE)
+                        .exposedHeaders("Authorization", "Refresh-Token") // Ovo omogućava pristup ovim zaglavljima iz klijentske aplikacije
+                        .allowCredentials(true);;
             }
         };
     }
