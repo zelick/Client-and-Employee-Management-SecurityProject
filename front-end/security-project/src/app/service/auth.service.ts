@@ -126,17 +126,19 @@ export class AuthService {
   private readonly checkTokenEndpoint = '/check-token';
 
   startTokenRefreshCheck(): void {
-    interval(5000) // Every 5 seconds
+    this.refreshCheckInterval = interval(5000) // Every 5 seconds
       .pipe(
         switchMap(() => this.checkTokenValidity()),
-        catchError(() => {
-          // If checkTokenValidity() returns an error, call refreshToken()
-          return this.refreshToken();
-        })
+        catchError(() => this.refreshToken())
       )
       .subscribe(
         () => console.log('Token is valid.'),
-        () => console.log('Token is not valid. Refresh token is being triggered.')
+        () => console.log('Token is not valid. Refresh token is being triggered.'),
+        () => {
+          console.log('Token refresh completed. Resuming token validity check.');
+          // After token refresh, resume token validity check
+          this.startTokenRefreshCheck();
+        }
       );
   }
 
@@ -153,7 +155,7 @@ export class AuthService {
       'Authorization': `Bearer ${accessToken}`
     });
   
-    return this.http.get<void>(this._api_url + this.checkTokenEndpoint, { headers: headers });
+    return this.http.get<void>(`${this._api_url}/check-token`, { headers });
   }
   
   refreshToken(): Observable<any> {
@@ -164,25 +166,26 @@ export class AuthService {
       return EMPTY;  // Return an empty Observable if refreshToken is not present
     }
   
-    return this.http.get<any>(this._api_url + this.refreshTokenEndpoint, { headers: { 'Authorization': `Bearer ${refreshToken}` } })
+    return this.http.get<any>(`${this._api_url}/refresh-token`, { headers: { 'Authorization': `Bearer ${refreshToken}` } })
       .pipe(
-        tap(
-          (res) => {
-            if (res && res.accessToken) {
-              localStorage.setItem('jwt', res.accessToken); // Update the new access token in local storage
-            }
-          },
-          (error) => {
-            // Check if the error is 401 (Unauthorized), which means the refreshToken has expired
-            if (error.status === 401) {
-              console.error('Refresh token has expired.');
-              // Log out the user and redirect to the home page
-              this.logout();
-              this.router.navigate(['/']); 
-            }
+        tap((res) => {
+          if (res && res.accessToken) {
+            console.log("---NOVI ACCESS TOKEN---", res.accessToken )
+            localStorage.setItem('jwt', res.accessToken); // Update the new access token in local storage
           }
-        )
+        }),
+        catchError((error) => {
+          // Check if the error is 401 (Unauthorized), which means the refreshToken has expired
+          if (error.status === 401) {
+            console.error('Refresh token has expired.');
+            // Log out the user and redirect to the home page
+            this.logout();
+            this.router.navigate(['/']); 
+          }
+          return EMPTY; // Return an empty Observable if refreshToken fails
+        })
       );
   }
+
 
 }
