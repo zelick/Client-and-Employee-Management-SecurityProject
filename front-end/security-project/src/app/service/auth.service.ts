@@ -1,12 +1,12 @@
-import { HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
 import { Router } from "@angular/router";
 import { ConfigService } from "./config.service";
-import {map} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import { UserService } from "../services/user.service";
-import { ResponseMessage } from "../model/responseMessage.model";
 import { User } from "../model/user.model";
+import { EMPTY, Observable, interval } from 'rxjs';
 
 
 @Injectable()
@@ -16,12 +16,14 @@ export class AuthService {
     private apiService: ApiService,
     private userService: UserService,
     private config: ConfigService,
-    private router: Router
+    private router: Router, 
+    private http: HttpClient
   ){
   }
 
   user: User | undefined;
 
+  private _api_url = 'http://localhost:8080/api/auth';
   private access_token = null;
 
   login(user:any) {
@@ -44,8 +46,14 @@ export class AuthService {
       if (res.body && res.body.accessToken) {
         this.access_token = res.body.accessToken;
         localStorage.setItem("jwt", res.body.accessToken);
-        console.log(this.access_token);
+        localStorage.setItem("refreshToken", res.body.refreshToken);
+        console.log("Acces token:", this.access_token);
+        console.log("Refresh token:", this.refreshToken);
         this.getLoggedInUser();
+        
+        this.startTokenRefreshCheck(); //poziv za refresh token
+
+        this.router.navigate(['/homepage']);
       } else {
         console.error('Invalid response or missing access token:', res);
       }
@@ -84,10 +92,20 @@ export class AuthService {
       }));
   }
 
+  private refreshCheckInterval: any; //Promenljiva za interval 
   logout() {
     //this.userService.currentUser = null;
+    localStorage.removeItem("loggedUserRole")
+    localStorage.removeItem("refreshToken") //dodala
     localStorage.removeItem("jwt");
     this.access_token = null;
+    console.log("KAD SE ODJAVI: " + localStorage.getItem("loggedUserRole"));
+
+    // Zaustavi interval provere tokena
+    if (this.refreshCheckInterval) {
+      console.log("USAO unsubscribe")
+      this.refreshCheckInterval.unsubscribe(); //ovo NE RADI, nez sto?
+    }
     this.router.navigate(['/']);
   }
 
@@ -103,5 +121,71 @@ export class AuthService {
     const token = localStorage.getItem('jwt');
     return !!token; 
   }
+
+  private readonly refreshTokenEndpoint = '/refresh-token';
+  private readonly checkTokenEndpoint = '/check-token';
+
+  startTokenRefreshCheck(): void {
+    this.refreshCheckInterval = interval(5000) // Every 5 seconds
+      .pipe(
+        switchMap(() => this.checkTokenValidity()),
+        catchError(() => this.refreshToken())
+      )
+      .subscribe(
+        () => console.log('Token is valid.'),
+        () => console.log('Token is not valid. Refresh token is being triggered.'),
+        () => {
+          console.log('Token refresh completed. Resuming token validity check.');
+          // After token refresh, resume token validity check
+          this.startTokenRefreshCheck();
+        }
+      );
+  }
+
+  checkTokenValidity(): Observable<void> {
+    console.log('-----------------CHECKING TOKEN EXPIRY.-----------------');
+  
+    const accessToken = localStorage.getItem('jwt');
+    if (!accessToken) {
+      console.error('Access token not found in local storage.');
+      return EMPTY;  // Return an empty Observable if accessToken is not present
+    }
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${accessToken}`
+    });
+  
+    return this.http.get<void>(`${this._api_url}/check-token`, { headers });
+  }
+  
+  refreshToken(): Observable<any> {
+    console.log('CALLING FOR ACCESS TOKEN REFRESH!!!!!.');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      console.error('Refresh token not found in local storage.');
+      return EMPTY;  // Return an empty Observable if refreshToken is not present
+    }
+  
+    return this.http.get<any>(`${this._api_url}/refresh-token`, { headers: { 'Authorization': `Bearer ${refreshToken}` } })
+      .pipe(
+        tap((res) => {
+          if (res && res.accessToken) {
+            console.log("---NOVI ACCESS TOKEN---", res.accessToken )
+            localStorage.setItem('jwt', res.accessToken); // Update the new access token in local storage
+          }
+        }),
+        catchError((error) => {
+          // Check if the error is 401 (Unauthorized), which means the refreshToken has expired
+          if (error.status === 401) {
+            console.error('Refresh token has expired.');
+            // Log out the user and redirect to the home page
+            this.logout();
+            this.router.navigate(['/']); 
+          }
+          return EMPTY; // Return an empty Observable if refreshToken fails
+        })
+      );
+  }
+
 
 }

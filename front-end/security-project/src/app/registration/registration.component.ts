@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserRole } from '../model/userRole.model';
 import { ClientType } from '../model/clientType.model';
@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { RegistrationStatus } from '../model/registrationStatus.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,10 +15,27 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./registration.component.css']
 })
 
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit{
 
   constructor(private router: Router, 
-    private userService: UserService) {
+    private userService: UserService,
+    private auth: AuthService) {
+  }
+  ngOnInit(): void {
+    const userRole = this.auth.getLoggedInUserRole(); 
+    console.log(userRole);
+
+    if (userRole === "CLIENT" || userRole === "EMPLOYEE") {
+      this.router.navigate(['/homepage']);
+    }
+    else {
+      if (userRole === "ADMINISTRATOR") {
+        this.isAdmin = true;
+      }
+      else {
+        this.isUnAuthorize = true;
+      }
+    }
   }
   
   userRoles = Object.values(UserRole);
@@ -28,6 +46,9 @@ export class RegistrationComponent {
   registrationMessage: string = '';
   passwordMismatch: boolean = false;
 
+  isAdmin: boolean = false;
+  isUnAuthorize: boolean = false;
+
   userData = {
     email: '',
     password: '',
@@ -37,9 +58,9 @@ export class RegistrationComponent {
     city: '',
     country: '',
     phoneNumber: '',
-    role: UserRole.CLIENT,
-    clientType: ClientType.INDIVIDUAL,
-    servicesPackage: ServicesPackage.BASIC,
+    role: UserRole.ADMINISTRATOR,
+    clientType: ClientType.NONE,
+    servicesPackage: ServicesPackage.NONE,
     registrationStatus: RegistrationStatus.PENDING
   };
 
@@ -76,9 +97,18 @@ export class RegistrationComponent {
   private registerUser(): void {
     this.userService.registerUser(this.userData).subscribe(
       (response: ResponseMessage) => {
-        console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+        //console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
         this.registrationMessage = response.responseMessage;
-        this.clearFields();
+        console.log("ADMIN JE ULOGOVAN: " + this.isAdmin);
+        console.log("RESPONSE FLAG: " + response.flag)
+        if (response.flag === true && this.isAdmin === true) {
+          console.log("USAAO GDE TREBA samo nece u homepage ");
+          this.router.navigate(['/homepage']);
+        }
+        else if (response.flag === true && this.isAdmin === false) {
+          this.router.navigate(['/']);
+        }
+        //this.clearFields();
       },
       (error) => {
         console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);

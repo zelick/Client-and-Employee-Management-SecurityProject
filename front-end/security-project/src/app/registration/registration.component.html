@@ -49,25 +49,40 @@
   
       <div class="form-group">
         <label>User Role:</label><br>
-        <label *ngFor="let role of userRoles">
-          <input type="radio" name="role" [value]="role" [(ngModel)]="userData.role"> {{ role }}
+        <label *ngIf="!isUnAuthorize">
+          <input type="radio" name="role" value="ADMINISTRATOR" [(ngModel)]="userData.role"> ADMINISTRATOR
+        </label><br>
+        <label *ngIf="!isUnAuthorize">
+          <input type="radio" name="role" value="EMPLOYEE" [(ngModel)]="userData.role"> EMPLOYEE
+        </label><br>
+        <label *ngIf="!isAdmin || isUnAuthorize">
+          <input type="radio" name="role" value="CLIENT" [(ngModel)]="userData.role"> CLIENT
         </label><br>
       </div>
-  
-      <div class="form-group">
+      
+      <div class="form-group" *ngIf="userData.role === 'CLIENT'">
         <label>Client Type:</label><br>
-        <label *ngFor="let type of clientTypes">
-          <input type="radio" name="clientType" [value]="type" [(ngModel)]="userData.clientType"> {{ type }}
+        <label>
+          <input type="radio" name="clientType" value="INDIVIDUAL" [(ngModel)]="userData.clientType"> INDIVIDUAL
+        </label><br>
+        <label>
+          <input type="radio" name="clientType" value="LEGAL_ENTITY" [(ngModel)]="userData.clientType"> LEGAL ENTITY
         </label><br>
       </div>
-  
-      <div class="form-group">
+      
+      <div class="form-group" *ngIf="userData.role === 'CLIENT'">
         <label>Services Package:</label><br>
-        <label *ngFor="let package of servicesPackages">
-          <input type="radio" name="servicesPackage" [value]="package" [(ngModel)]="userData.servicesPackage"> {{ package }}
+        <label>
+          <input type="radio" name="servicesPackage" value="BASIC" [(ngModel)]="userData.servicesPackage"> BASIC
+        </label><br>
+        <label>
+          <input type="radio" name="servicesPackage" value="STANDARD" [(ngModel)]="userData.servicesPackage"> STANDARD
+        </label><br>
+        <label>
+          <input type="radio" name="servicesPackage" value="GOLDEN" [(ngModel)]="userData.servicesPackage"> GOLDEN
         </label><br>
       </div>
-
+      
       <div *ngIf="registrationForm.submitted && registrationForm.invalid" class="text-danger">All fields are required.</div>
       <div *ngIf="registrationForm.submitted && userData.email && !isValidEmail(userData.email)" class="text-danger">Invalid email format.</div>
   

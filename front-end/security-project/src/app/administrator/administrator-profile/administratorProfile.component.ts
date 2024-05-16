@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseMessage } from 'src/app/model/responseMessage.model';
+import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,18 +19,28 @@ export class AdministratorProfileComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.administratorForm = this.fb.group({
-      email: [{value: '', disabled: true}],
-      password: [''],
-      name: [''],
-      surname: [''],
-      address: [''],
-      city: [''],
-      country: [''],
-      phoneNumber: ['']
+
+    const userRole = this.auth.getLoggedInUserRole(); 
+    console.log(userRole);
+    if (userRole === "UNAUTHORIZE") {
+      this.router.navigate(['/']);
+    }
+    else if (userRole !== "ADMINISTRATOR") {
+      this.router.navigate(['/homepage']);
+    } else {
+      this.administratorForm = this.fb.group({
+        email: [{value: '', disabled: true}],
+        password: [''],
+        name: [''],
+        surname: [''],
+        address: [''],
+        city: [''],
+        country: [''],
+        phoneNumber: ['']
     });
 
     this.passwordForm = this.fb.group({
@@ -41,7 +52,7 @@ export class AdministratorProfileComponent implements OnInit {
     this.passwordMessage = "";
     this.message = "";
 
-    this.getUserData();
+    this.getUserData();    }
   }
 
   getUserData() {
@@ -89,7 +100,7 @@ export class AdministratorProfileComponent implements OnInit {
   changePassword() {
     if (this.passwordForm.valid) {
       const passwordData = this.passwordForm.value;
-      this.userService.changePassword(passwordData).subscribe(
+      this.userService.changeAdminPassword(passwordData).subscribe(
         (response: ResponseMessage) => {
           this.passwordMessage = response.responseMessage;
           console.log('Password changed successfully:', response);
@@ -100,6 +111,4 @@ export class AdministratorProfileComponent implements OnInit {
       );
     }
   }
-
-
 }

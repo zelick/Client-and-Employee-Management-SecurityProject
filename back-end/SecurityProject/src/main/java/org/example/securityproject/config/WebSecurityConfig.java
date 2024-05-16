@@ -115,8 +115,15 @@ public class WebSecurityConfig {
                 // CLIENT AUTHORIZATION
                 .antMatchers("/api/ad-requests/create").hasAuthority("CLIENT")
                 .antMatchers("/api/ads/by-email").hasAuthority("CLIENT")
-                //OVDE SE DODAJE AUTHORITY
+
+                // ADMINISTRATOR AUTHORIZATION
                 .antMatchers("/api/users/getAllEmployees").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/getAllClients").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/updateUserData").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/getUserData").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/updateAdminPassword").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/processRegistrationRequest").hasAuthority("ADMINISTRATOR")
+                .antMatchers("/api/users/getAllRegistrationRequests").hasAuthority("ADMINISTRATOR")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
@@ -144,8 +151,6 @@ public class WebSecurityConfig {
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login")
                 .antMatchers(HttpMethod.POST, "/api/users/registerUser")
-                .antMatchers(HttpMethod.GET, "/api/users/getAllRegistrationRequests")
-                .antMatchers(HttpMethod.PUT, "/api/users/processRegistrationRequest")
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")

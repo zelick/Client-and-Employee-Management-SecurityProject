@@ -14,7 +14,7 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { ApiService } from './service/api.service';
 import { ConfigService } from './service/config.service';
 
-import { RegistrationRequestsComponent } from './registration-requests/registrationRequests.component';
+import { RegistrationRequestsComponent } from './administrator/registration-requests/registrationRequests.component';
 import { AdministratorProfileComponent } from './administrator/administrator-profile/administratorProfile.component';
 import { AllEmployeesComponent } from './administrator/all-employees/allEmployees.component';
 import { AllClientsComponent } from './administrator/all-clients/allClients.component';
@@ -30,8 +30,7 @@ import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
 import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component';
 import { UserService } from './services/user.service';
-
-
+import { HomePageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,8 @@ import { UserService } from './services/user.service';
     AllAdRequestsComponent,
     AdFormComponent,
     AllAdsComponent,
-    AllClientAdsComponent
+    AllClientAdsComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

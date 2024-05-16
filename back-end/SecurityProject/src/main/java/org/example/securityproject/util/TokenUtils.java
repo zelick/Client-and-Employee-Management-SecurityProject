@@ -43,6 +43,15 @@ public class TokenUtils {
     @Value("Authorization")
     private String AUTH_HEADER;
 
+//    // Ove vrednosti se sada izražavaju u milisekundama
+    private static final int ACCESS_TOKEN_EXPIRATION = 15 * 60 * 1000; // 15 minuta
+    private static final int REFRESH_TOKEN_EXPIRATION = 30 * 60 * 1000; // 30 minuta
+
+    //test primer
+//    private static final int ACCESS_TOKEN_EXPIRATION = 1 * 60 * 1000; // 1 minut
+//    private static final int REFRESH_TOKEN_EXPIRATION = 2 * 60 * 1000; // 4 minuta
+
+
     // ============= Funkcije za generisanje JWT tokena =============
 
     /**
@@ -52,24 +61,91 @@ public class TokenUtils {
      * @return JWT token
      */
 
-    public String generateToken(String username) {
-        //System.out.println("SECRET value: " + SECRET);
+//    public String generateToken(String username) {
+//        //System.out.println("SECRET value: " + SECRET);
+//        return Jwts.builder()
+//                .setIssuer(APP_NAME)
+//                .setSubject(username)
+//                .setAudience(AUDIENCE_WEB)
+//                .setIssuedAt(new Date())
+//                .setExpiration(generateExpirationDate())
+//                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+//
+//        // Dodajte System.out.println za praćenje vrednosti tajnog ključa
+//
+//
+//
+//        // moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+//        // pozivom funkcije .claim("key", value),
+//        // npr. .claim("role", user.getRole())
+//    }
+
+    /**
+     * Funkcija za generisanje access tokena.
+     *
+     * @param username Korisničko ime korisnika za koga se generiše token.
+     * @return Generisani access token.
+     */
+    public String generateAccessToken(String username) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .setAudience(AUDIENCE_WEB)
                 .setIssuedAt(new Date())
-                .setExpiration(generateExpirationDate())
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION))
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
-
-        // Dodajte System.out.println za praćenje vrednosti tajnog ključa
-
-
-
-        // moguce je postavljanje proizvoljnih podataka u telo JWT tokena
-        // pozivom funkcije .claim("key", value),
-        // npr. .claim("role", user.getRole())
     }
+
+    /**
+     * Funkcija za generisanje refresh tokena.
+     *
+     * @param username Korisničko ime korisnika za koga se generiše token.
+     * @return Generisani refresh token.
+     */
+    public String generateRefreshToken(String username) {
+        return Jwts.builder()
+                .setIssuer(APP_NAME)
+                .setSubject(username)
+                .setAudience(AUDIENCE_WEB)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
+                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+    }
+
+    /**
+     * Funkcija za proveru da li je refresh token istekao.
+     *
+     * @param token Refresh token koji se proverava.
+     * @return True ako je refresh token istekao, false ako nije.
+     */
+    public boolean isTokenExpired(String token) {
+        Date expiration = getExpirationDateFromToken(token);
+        Date currentDate = new Date();
+        //provera
+        System.out.println("Datum isteka: " + expiration);
+        System.out.println("Trenutni datum: " + currentDate);
+        return expiration != null && expiration.before(currentDate);
+    }
+
+    /**
+     * Funkcija za osvežavanje access tokena.
+     *
+     * @param refreshToken Refresh token koji se koristi za osvežavanje.
+     * @return Novi access token.
+     */
+    public String refreshAccessToken(String refreshToken) {
+        String username = getUsernameFromToken(refreshToken);
+        return generateAccessToken(username);
+    }
+
+    public int getAccessExpiresIn() {
+        return ACCESS_TOKEN_EXPIRATION;
+    }
+
+    public int getRefreshExpiresIn() {
+        return REFRESH_TOKEN_EXPIRATION;
+    }
+
 
     /**
      * Funkcija generiše datum do kog je JWT token validan.

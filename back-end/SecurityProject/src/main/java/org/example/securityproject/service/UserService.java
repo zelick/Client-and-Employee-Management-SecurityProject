@@ -58,22 +58,31 @@ public class UserService {
         loginReponseDto.setResponse("This user has successfully logged in.");
         return loginReponseDto;
     }
-    public String registerUser (UserDto userDto) {
+    public ResponseDto registerUser (UserDto userDto) {
+        ResponseDto response = new ResponseDto();
         if (!validatePassword(userDto.getPassword())) {
-           return "The password does not meet the requirements.";
+            response.setResponseMessage("The password does not meet the requirements.");
+            response.setFlag(false);
+            return response;
         }
 
         User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
         if (existingUser != null) {
-           return "A user with this email is already registered.";
+            response.setResponseMessage("A user with this email is already registered.");
+            response.setFlag(false);
+            return response;
         }
 
         if (!isValidEmail(userDto.getEmail())) {
-            return "Invalid email format.";
+            response.setResponseMessage("Invalid email format.");
+            response.setFlag(false);
+            return response;
         }
 
         if (!areAllFieldsFilled(userDto)) {
-            return "All fields are required.";
+            response.setResponseMessage("All fields are required.");
+            response.setFlag(false);
+            return response;
         }
 
         User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
@@ -85,7 +94,9 @@ public class UserService {
             long minutesPassed = ChronoUnit.MINUTES.between(requestProcessedTime, currentTime);
 
             if (minutesPassed < 5) {
-                return "It is not possible to register - your request was recently rejected.";
+                response.setResponseMessage("It is not possible to register - your request was recently rejected.");
+                response.setFlag(false);
+                return response;
             }
             else {
                userRepository.delete(existingRejectedUser);
@@ -125,7 +136,9 @@ public class UserService {
         user.setSalt(salt);
 
         userRepository.save(user);
-        return "You have successfully registered.";
+        response.setResponseMessage("You have successfully registered.");
+        response.setFlag(true);
+        return response;
     }
 
     private boolean isValidEmail(String email) {
@@ -269,7 +282,7 @@ public class UserService {
     }
 
     public User getUserData() {
-        return userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+        return getLoggedInUser();
     }
 
     public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {

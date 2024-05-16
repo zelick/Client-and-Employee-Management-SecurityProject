@@ -44,12 +44,11 @@ public class UserController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
-        ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.registerUser(userDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
     @GetMapping("/getAllRegistrationRequests")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<UserDto>> getAllRegistrationRequests() {
         try {
             List<UserDto> userDtos = userService.getAllRegistrationRequests()
@@ -63,6 +62,7 @@ public class UserController {
     }
 
     @PutMapping("/processRegistrationRequest")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<Map<String, String>> processRegistrationRequest(@RequestBody RegistrationRequestResponseDto responseData) {
         try {
             userService.processRegistrationRequest(responseData);
@@ -81,8 +81,8 @@ public class UserController {
         return userService.confirmToken(token);
     }
 
-    //OVO CEMO IZMENITI KADA BUDEMO IMALI JWT
     @GetMapping("/getUserData")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<UserDto> getUserData() {
         UserDto userDto = new UserDto(userService.getUserData());
         return ResponseEntity.ok(userDto);
@@ -106,7 +106,16 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PutMapping("/updateAdminPassword")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PutMapping("/updateUserData")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserData(adminDto));
@@ -128,6 +137,7 @@ public class UserController {
     }
 
     @GetMapping("/getAllClients")
+    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<UserDto>> getAllClients() {
         try {
             List<UserDto> userDtos = userService.getAllClients()
