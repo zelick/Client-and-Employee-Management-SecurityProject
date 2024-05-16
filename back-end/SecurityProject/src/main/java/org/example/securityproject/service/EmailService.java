@@ -62,7 +62,7 @@ public class EmailService {
         loginTokenRepository.save(objectToken);
         String userEmail = email;
         String subject = "Passwordless login";
-        String text = "Click on the following link to login: http://localhost:8080/api/login?token=" + objectToken.getToken();
+        String text = "Click on the following link to login: http://localhost:8080/api/login/verify?token=" + objectToken.getToken();
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("aplikacijemobilnea0gmail.com");

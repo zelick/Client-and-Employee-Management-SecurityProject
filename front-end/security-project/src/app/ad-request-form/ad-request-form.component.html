@@ -3,15 +3,15 @@
     <form (ngSubmit)="onSubmit()">
       <div class="grupa2">
         <label for="deadline">Deadline:</label>
-        <input type="date" class="polje2" id="deadline" name="deadline" [(ngModel)]="adRequest.deadline" required>
+        <input type="date" class="polje2" id="deadline" name="deadline" [(ngModel)]="adRequest.deadline" required min="{{ today | date: 'yyyy-MM-dd' }}">
       </div>
       <div class="grupa3">
         <label for="activeFrom">Active from:</label>
-        <input type="date" class="polje3" id="activeFrom" name="activeFrom" [(ngModel)]="adRequest.activeFrom" required>
+        <input type="date" class="polje3" id="activeFrom" name="activeFrom" [(ngModel)]="adRequest.activeFrom" required min="{{ today | date: 'yyyy-MM-dd' }}">
       </div>
       <div class="grupa4">
         <label for="activeTo">Active to:</label>
-        <input type="date" class="polje4" id="activeTo" name="activeTo" [(ngModel)]="adRequest.activeTo" required>
+        <input type="date" class="polje4" id="activeTo" name="activeTo" [(ngModel)]="adRequest.activeTo" required min="{{ today | date: 'yyyy-MM-dd' }}">
       </div>
       <div class="grupa5">
         <label for="description">Description:</label>
@@ -19,5 +19,6 @@
       </div>
       <button type="submit" class="dugme">Submit</button>
     </form>
+    <p>{{ message }}</p>
   </div>
   

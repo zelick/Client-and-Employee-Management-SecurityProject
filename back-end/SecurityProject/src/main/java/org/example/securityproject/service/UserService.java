@@ -209,6 +209,12 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         return user.getServicesPackage() == ServicesPackage.STANDARD || user.getServicesPackage() == ServicesPackage.GOLDEN;
     }
+
+    public boolean checkRole(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        return user.getRole() == UserRole.CLIENT;
+    }
     
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
         ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token);

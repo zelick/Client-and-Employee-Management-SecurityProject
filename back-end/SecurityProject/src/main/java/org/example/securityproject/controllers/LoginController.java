@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidKeyException;
@@ -44,6 +45,11 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have permission for passwordless login due to your service package type.");
         }
 
+        if(!userService.checkRole(email))
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have permission for paswordless login due to you role.");
+        }
+
         loginService.sendEmail(email);
         return ResponseEntity.ok().build();
     }
@@ -53,7 +59,7 @@ public class LoginController {
         return hmacToVerify.equals(generatedHmac);
     }
 
-    @GetMapping
+    @GetMapping("/verify")
     public ResponseEntity<String> handleLoginRequest(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
         LoginToken loginToken = loginTokenRepository.findByToken(token);
         if (loginToken == null) {
@@ -68,9 +74,9 @@ public class LoginController {
         }
 
         loginTokenRepository.delete(loginToken);
-        String clientAppUrl = "http://localhost:4200"; // Promeni URL prema stvarnoj putanji
+        String clientAppUrl = "http://localhost:4200";
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create(clientAppUrl));
+        headers.setLocation(URI.create(clientAppUrl));.
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 

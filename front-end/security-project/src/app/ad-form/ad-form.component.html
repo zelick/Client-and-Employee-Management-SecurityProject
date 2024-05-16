@@ -3,12 +3,12 @@
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" [(ngModel)]="description" required></textarea>
+            <input type="text" class="polje1" id="description" name="description" [(ngModel)]="description" required>
         </div>
         <div class="form-group">
             <label for="slogan">Slogan:</label>
-            <input type="text" class="form-control" id="slogan" name="slogan" [(ngModel)]="slogan" required>
+            <input type="text" class="polje2" id="slogan" name="slogan" [(ngModel)]="slogan" required>
         </div>        
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="dugme">Submit</button>
     </form>
 </div>

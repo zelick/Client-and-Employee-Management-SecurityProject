@@ -16,11 +16,7 @@ export class PasswordlessLoginComponent implements OnInit{
   constructor(private loginService: LoginService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    const userRole = this.auth.getLoggedInUserRole(); 
-    console.log(userRole);
-    if (userRole !== "CLIENT") {
-      this.router.navigate(['/']);
-    }
+    
   }
 
   onLoginClick() {

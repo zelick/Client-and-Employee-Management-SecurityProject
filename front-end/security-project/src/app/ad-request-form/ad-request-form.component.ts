@@ -12,6 +12,8 @@ import { User } from '../model/user.model';
 })
 export class AdRequestFormComponent implements OnInit{
   loggedUser!: User;
+  message: String = '';
+  today: string = new Date().toISOString().split('T')[0];
 
   adRequest: AdRequest = {
     email: '',
@@ -51,6 +53,13 @@ export class AdRequestFormComponent implements OnInit{
 
   onSubmit() {
     if (this.loggedUser) {
+      const today = new Date();
+      console.log("Today: " + today);
+      if (this.adRequest.activeFrom >= this.adRequest.activeTo) {
+        this.message = 'Active from must be before active to date.';
+        return;
+      }
+
       this.adRequest.email = this.loggedUser.email;
       this.userService.createAdRequest(this.adRequest).subscribe(
         (response) => {

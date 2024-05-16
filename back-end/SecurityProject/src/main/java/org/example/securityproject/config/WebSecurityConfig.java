@@ -149,6 +149,8 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
+                .antMatchers(HttpMethod.POST, "/api/login/send-email")
+                .antMatchers(HttpMethod.GET, "/api/login/verify")
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
