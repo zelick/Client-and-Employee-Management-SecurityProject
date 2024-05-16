@@ -13,13 +13,14 @@ import { AuthService } from '../service/auth.service';
 export class EditClientProfileComponent implements OnInit{
   user!: User;
   loggedUser!: User;
+  clientFlag: boolean = false;
 
   constructor ( private activatedRoute : ActivatedRoute, private userService : UserService, private router : Router, private auth: AuthService) {}
 
   ngOnInit(): void {
     const userRole = this.auth.getLoggedInUserRole(); 
     console.log(userRole);
-    if (userRole !== "CLIENT") {
+    if (userRole !== "CLIENT" && userRole !== "EMPLOYEE") {
       this.router.navigate(['/']);
     } else {
       this.getLoggedInUser();
@@ -31,6 +32,10 @@ export class EditClientProfileComponent implements OnInit{
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
+        if(this.loggedUser.role === "CLIENT")
+          {
+            this.clientFlag = true;
+          }
         console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.role);
         localStorage.setItem('loggedUserRole', this.loggedUser.role);
         this.findUserByEmail();

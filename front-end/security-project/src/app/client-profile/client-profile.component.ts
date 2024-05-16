@@ -18,7 +18,7 @@ export class ClientProfileComponent implements OnInit{
   ngOnInit(): void {
     const userRole = this.auth.getLoggedInUserRole(); 
       console.log(userRole);
-      if (userRole !== "CLIENT") {
+      if (userRole !== "CLIENT" && userRole !== "EMPLOYEE") {
         this.router.navigate(['/']);
       } else {
         this.getLoggedInUser();
