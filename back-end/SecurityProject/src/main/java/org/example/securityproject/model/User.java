@@ -8,10 +8,7 @@ import org.example.securityproject.enums.UserRole;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -57,9 +54,25 @@ public class User implements UserDetails {
     @Column(name = "phoneNumber", nullable = false)
     private String phoneNumber;
 
+    /*
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+     */
+
+    //tabela se zvala user_roles
+    //provera da li ovo moze da se menja iz koda
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<UserRole> roles;
+
+    /*
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRoleEntity> roles = new ArrayList<>();
+
+     */
 
     @Column(name = "clientType", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -91,7 +104,7 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, UserRole role, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email) {
+    public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, List<UserRole> roles, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email) {
         this.id = id;
         this.requestProcessingDate = requestProcessingDate;
         this.loggedInOnce = loggedInOnce;
@@ -101,7 +114,7 @@ public class User implements UserDetails {
         this.registrationStatus = registrationStatus;
         this.servicesPackage = servicesPackage;
         this.clientType = clientType;
-        this.role = role;
+        this.roles = roles;
         this.phoneNumber = phoneNumber;
         this.country = country;
         this.address = address;
@@ -195,12 +208,12 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public UserRole getRole() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
     public ClientType getClientType() {
@@ -244,10 +257,20 @@ public class User implements UserDetails {
     }
      */
 
+    /*
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
+    }
+
+     */
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        roles.forEach(role -> authorities.addAll(role.getAuthorities()));
+        return authorities;
     }
 
     public Timestamp getLastPasswordResetDate() {

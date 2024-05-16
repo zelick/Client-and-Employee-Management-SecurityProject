@@ -1,0 +1,10 @@
+<h1>User's roles</h1>
+<div class="container">
+    <div class="card" *ngFor="let role of roles">
+        <h2>{{ role }}</h2>
+        <button (click)="togglePermissionsForRole(role)">Show all permissions</button>
+        <ul *ngIf="selectedRole === role">
+            <li *ngFor="let permission of permissionsForRole">{{ permission }}</li>
+        </ul>
+    </div>
+</div>

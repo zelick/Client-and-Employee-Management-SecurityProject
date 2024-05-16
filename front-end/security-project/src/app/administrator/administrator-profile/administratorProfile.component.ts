@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseMessage } from 'src/app/model/responseMessage.model';
+import { UserRole } from 'src/app/model/userRole.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -24,12 +25,12 @@ export class AdministratorProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const userRole = this.auth.getLoggedInUserRole(); 
-    console.log(userRole);
-    if (userRole === "UNAUTHORIZE") {
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
+
+    if (userRoles?.length === 0) {
       this.router.navigate(['/']);
-    }
-    else if (userRole !== "ADMINISTRATOR") {
+    } else if (!userRoles?.includes(UserRole.ADMINISTRATOR)) {
       this.router.navigate(['/homepage']);
     } else {
       this.administratorForm = this.fb.group({
@@ -40,7 +41,7 @@ export class AdministratorProfileComponent implements OnInit {
         address: [''],
         city: [''],
         country: [''],
-        phoneNumber: ['']
+        phoneNumber: ['']    
     });
 
     this.passwordForm = this.fb.group({

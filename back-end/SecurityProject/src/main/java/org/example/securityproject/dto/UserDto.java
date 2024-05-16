@@ -6,6 +6,8 @@ import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.User;
 
+import java.util.List;
+
 public class UserDto {
     private String email;
     private String password;
@@ -15,7 +17,7 @@ public class UserDto {
     private String city;
     private String country;
     private String phoneNumber;
-    private UserRole role;
+    private List<UserRole> roles;
     private ClientType clientType;
     private ServicesPackage servicesPackage;
     private RegistrationStatus registrationStatus;
@@ -32,7 +34,7 @@ public class UserDto {
         this.phoneNumber = user.getPhoneNumber();
         this.city = user.getCity();
         this.country = user.getCountry();
-        this.role = user.getRole();
+        this.roles = user.getRoles();
         this.clientType = user.getClientType();
         this.servicesPackage = user.getServicesPackage();
     }
@@ -45,12 +47,12 @@ public class UserDto {
         this.registrationStatus = registrationStatus;
     }
 
-    public UserRole getRole() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
     public ClientType getClientType() {
@@ -132,6 +134,4 @@ public class UserDto {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-
 }

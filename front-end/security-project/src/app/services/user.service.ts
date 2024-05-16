@@ -8,6 +8,8 @@ import { ResponseMessage } from '../model/responseMessage.model';
 import { LoginReponse } from '../model/loginResponse.model';
 import { AdRequest } from '../model/adRequest.model';
 import { Ad } from '../model/ad.model';
+import { UserRole } from '../model/userRole.model';
+import { Permission } from '../model/permission.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,28 +19,46 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: User): Observable<ResponseMessage> {
-    return this.http.post<ResponseMessage>(this.apiUrl + 'users/registerUser', user);
+  //ADMIN
+
+  getUserData(): Observable<User> {
+    return this.http.get<User>(this.apiUrl + 'admins/getAdminData');
+  }
+
+  getAllEmployees(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'admins/getAllEmployees');
+  }
+
+  getAllClients(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'admins/getAllClients');
   }
 
   getAllRegistrationRequests(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + 'users/getAllRegistrationRequests');
-  }
-
-  processRegistrationRequest(responseData: RegistrationRequestResponse): Observable<User[]> {
-    console.log(responseData.email);
-    console.log(responseData.accepted);
-    console.log(responseData.reason);
-    console.log(responseData);
-    return this.http.put<User[]>(this.apiUrl + 'users/processRegistrationRequest', responseData);
-  }
-
-  getUserData(): Observable<User> {
-    return this.http.get<User>(this.apiUrl + 'users/getUserData');
+    return this.http.get<User[]>(this.apiUrl + 'admins/getAllRegistrationRequests');
   }
 
   updateUserData(userData: any): Observable<ResponseMessage> {
-    return this.http.put<ResponseMessage>(this.apiUrl + 'users/updateUserData', userData);
+    return this.http.put<ResponseMessage>(this.apiUrl + 'admins/updateAdminData', userData);
+  }
+
+  processRegistrationRequest(responseData: RegistrationRequestResponse): Observable<User[]> {
+    return this.http.put<User[]>(this.apiUrl + 'admins/processRegistrationRequest', responseData);
+  }
+
+  getAllRoles(): Observable<UserRole[]> {
+    return this.http.get<UserRole[]>(this.apiUrl + 'admins/getAllRoles');
+  }
+
+  getAllPermissionsForRole(userRole: UserRole): Observable<Permission[]> {
+    return this.http.get<Permission[]>(this.apiUrl + 'admins/getAllPermissionsForRole/' +  userRole);
+  }
+
+  //EMPLOYEE
+
+  //...
+
+  registerUser(user: User): Observable<ResponseMessage> {
+    return this.http.post<ResponseMessage>(this.apiUrl + 'users/registerUser', user);
   }
 
   changePassword(passwordData: any): Observable<ResponseMessage> {
@@ -49,14 +69,6 @@ export class UserService {
     return this.http.put<ResponseMessage>(this.apiUrl + 'users/updateAdminPassword', passwordData);
   }
 
-  getAllEmployees(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + 'admins/getAllEmployees');
-  }
-
-  getAllClients(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + 'users/getAllClients');
-  }
-
   tryLogin(email: string, password: string): Observable<LoginReponse> { 
     const loginData = {
       email: email,
@@ -64,6 +76,7 @@ export class UserService {
     };
     return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
+
   findUserByEmail(): Observable<User> {
     return this.http.get<User>(this.apiUrl + 'users/findUserByEmail');
   }

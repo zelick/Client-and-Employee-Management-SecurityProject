@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../model/user.model';
 import { RegistrationRequestResponse } from '../../model/registrationRequestResponse.model';
 import { AuthService } from 'src/app/service/auth.service';
+import { UserRole } from 'src/app/model/userRole.model';
 
 @Component({
   selector: 'app-registrationRequests',
@@ -24,17 +25,16 @@ export class RegistrationRequestsComponent {
     ) { }
   
     ngOnInit(): void {
-        const userRole = this.auth.getLoggedInUserRole(); 
-        console.log(userRole);
-        if (userRole === "UNAUTHORIZE") {
+        const userRoles = this.auth.getLoggedInUserRoles(); 
+        console.log(userRoles);
+
+        if (userRoles.length === 0) {
             this.router.navigate(['/']);
+        } else if (!userRoles?.includes(UserRole.ADMINISTRATOR)) {
+            this.router.navigate(['/homepage']);
+        } else {
+            this.loadUsersRequests();
         }
-        else if (userRole !== "ADMINISTRATOR") {
-            this.router.navigate(['/homepage']); 
-        } 
-        else {
-            this.loadUsersRequests();        
-        }      
     }
   
     loadUsersRequests(): void {

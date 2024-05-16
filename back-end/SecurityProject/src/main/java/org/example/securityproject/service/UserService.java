@@ -9,11 +9,9 @@ import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
-import org.example.securityproject.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -43,20 +41,31 @@ public class UserService {
     private ConfirmationTokenRepository confirmationTokenRepository;
 
     public LoginReponseDto loginUser(UserLoginData loginData) {
-        LoginReponseDto loginReponseDto = new LoginReponseDto();
+        LoginReponseDto loginResponseDto = new LoginReponseDto();
 
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
 
+        /*
         if (!(user.getRole().equals(UserRole.CLIENT)) && !user.isLoggedInOnce()) {
             loginReponseDto.setLoggedInOnce(false);
             loginReponseDto.setResponse("This user must change his password because this is his first login.");
             return loginReponseDto;
         }
+         */
 
-        loginReponseDto.setLoggedInOnce(true);
-        loginReponseDto.setResponse("This user has successfully logged in.");
-        return loginReponseDto;
+        boolean hasAdministratorOrEmployeeRole = user.getRoles().stream()
+                .anyMatch(role -> role.equals(UserRole.ADMINISTRATOR) || role.equals(UserRole.EMPLOYEE));
+
+        if (!hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("This user must change his password because this is his first login.");
+            return loginResponseDto;
+        }
+
+        loginResponseDto.setLoggedInOnce(true);
+        loginResponseDto.setResponse("This user has successfully logged in.");
+        return loginResponseDto;
     }
     public ResponseDto registerUser (UserDto userDto) {
         ResponseDto response = new ResponseDto();
@@ -114,7 +123,11 @@ public class UserService {
         user.setPhoneNumber(userDto.getPhoneNumber());
         user.setRegistrationStatus(RegistrationStatus.PENDING);
         user.setClientType(userDto.getClientType());
-        user.setRole(userDto.getRole());
+
+        List<UserRole> roles = new ArrayList<>(userDto.getRoles());
+        roles.add(UserRole.ADMINISTRATOR);
+        user.setRoles(roles);
+
         user.setServicesPackage(userDto.getServicesPackage());
         user.setRequestProcessingDate(null);
         user.setLoggedInOnce(false);
@@ -157,7 +170,7 @@ public class UserService {
                 userDto.getSurname() != null && !userDto.getSurname().isEmpty() &&
                 userDto.getPhoneNumber() != null && !userDto.getPhoneNumber().isEmpty() &&
                 userDto.getClientType() != null &&
-                userDto.getRole() != null &&
+                userDto.getRoles() != null &&
                 userDto.getServicesPackage() != null;
     }
 
@@ -351,11 +364,11 @@ public class UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = (User)auth.getPrincipal();
         System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
-        return userRepository.findByRoleAndRegistrationStatus(UserRole.EMPLOYEE, RegistrationStatus.ACCEPTED);
+        return userRepository.findByRolesAndRegistrationStatus(UserRole.EMPLOYEE, RegistrationStatus.ACCEPTED);
     }
 
     public List<User> getAllClients() {
-        return userRepository.findByRoleAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
+        return userRepository.findByRolesAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
     public void updateUser(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
@@ -367,7 +380,10 @@ public class UserService {
             user.setSurname(userDto.getSurname());
             user.setPhoneNumber(userDto.getPhoneNumber());
             user.setClientType(userDto.getClientType());
-            user.setRole(userDto.getRole());
+
+            //OVO VIDETI!!!
+            user.setRoles(userDto.getRoles());
+
             user.setServicesPackage(userDto.getServicesPackage());
 
             userRepository.save(user);

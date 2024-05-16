@@ -7,6 +7,7 @@ import {map} from 'rxjs/operators';
 import { UserService } from "../services/user.service";
 import { ResponseMessage } from "../model/responseMessage.model";
 import { User } from "../model/user.model";
+import { UserRole } from "../model/userRole.model";
 
 
 @Injectable()
@@ -58,8 +59,8 @@ export class AuthService {
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.user = user;
-        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.role);
-        localStorage.setItem('loggedUserRole', this.user.role);
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.roles);
+        localStorage.setItem('loggedUserRole', this.user.roles.join(','));
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);
@@ -67,12 +68,13 @@ export class AuthService {
     );
   }
 
-  getLoggedInUserRole() {
-    if (localStorage.getItem('loggedUserRole') == null) {
-      return "UNAUTHORIZE";
+  getLoggedInUserRoles(): UserRole[] {
+    const rolesString = localStorage.getItem('loggedUserRole');
+    if (!rolesString) {
+        return []; 
     }
-    return localStorage.getItem('loggedUserRole');
-  }
+    return rolesString.split(',').map(role => role.trim()) as UserRole[];
+}
 
   signup(user:any) { //NE TREBA OVO 
     const signupHeaders = new HttpHeaders({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { UserRole } from 'src/app/model/userRole.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,12 +18,12 @@ export class AllClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const userRole = this.auth.getLoggedInUserRole(); 
-    console.log(userRole);
-    if (userRole === "UNAUTHORIZE") {
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
+    if (userRoles.length === 0) {
       this.router.navigate(['/']);
     }
-    else if (userRole !== "ADMINISTRATOR") {
+    else if (!userRoles.includes(UserRole.ADMINISTRATOR)) {
       this.router.navigate(['/homepage']); 
     }
     else {

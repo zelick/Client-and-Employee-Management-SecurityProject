@@ -71,4 +71,8 @@ export class NavbarComponent implements OnInit {
   createAdRequest() {
     this.router.navigate(['/ad-request-form']);
   }
+
+  permissionsManipulation() {
+    this.router.navigate(['/permissionsManipulation']);
+  }
 }

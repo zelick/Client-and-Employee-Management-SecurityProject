@@ -111,6 +111,9 @@ public class WebSecurityConfig {
 
                 // EMPLOYEE AUTHORIZATION
                 .antMatchers("/api/ads/all").hasAuthority("EMPLOYEE")
+
+                //.antMatchers(HttpMethod.GET,"/api/ads/all").hasAuthority("ADMIN_SEEPROFILE")
+
                 .antMatchers("/api/ads/create").hasAuthority("EMPLOYEE")
                 .antMatchers("/api/ad-requests/all").hasAuthority("EMPLOYEE")
                 .antMatchers("/api/ad-requests/id").hasAuthority("EMPLOYEE")
@@ -126,16 +129,18 @@ public class WebSecurityConfig {
                 // ADMINISTRATOR AUTHORIZATION
                 //.antMatchers(HttpMethod.GET, "/api/users/getAllEmployees").hasAuthority("ADMINISTRATOR")
 
-                //OVAKO OD SAD::::
-                .antMatchers("/api/admins/**").hasRole("ADMINISTRATOR")
+                //ADMINISTRATOR
+                //.antMatchers("/api/admins/**").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.GET, "/api/admins/getAllEmployees").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.GET,"/api/admins/getAdminData").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.GET,"/api/admins/getAllClients").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.GET,"/api/admins/getAllRegistrationRequests").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.PUT,"/api/admins/processRegistrationRequest").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.PUT,"/api/admins/updateAdminData").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.GET,"/api/admins/getAllRoles").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.GET, "/api/admins/getAllPermissionsForRole/**").hasAuthority("ADMIN_READ")
 
-                .antMatchers("/api/users/getAllClients").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/users/updateUserData").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/users/getUserData").hasAuthority("ADMINISTRATOR")
                 .antMatchers("/api/users/updateAdminPassword").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/users/processRegistrationRequest").hasAuthority("ADMINISTRATOR")
-                .antMatchers("/api/users/getAllRegistrationRequests").hasAuthority("ADMINISTRATOR")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()
@@ -167,6 +172,8 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
+                .antMatchers(HttpMethod.POST, "/api/users/editUserRole") //TEST VELIKI
+                .antMatchers(HttpMethod.POST, "/api/users/editUserPermission") //TEST VELIKI
                 // Ovim smo dozvolili pristup statickim resursima aplikacije
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");

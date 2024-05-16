@@ -13,7 +13,7 @@ export interface User{
     city: string, 
     country: string, 
     phoneNumber: string,
-    role: UserRole, 
+    roles: UserRole[], 
     clientType: ClientType, 
     servicesPackage: ServicesPackage,
     registrationStatus: RegistrationStatus

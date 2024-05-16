@@ -1,18 +1,22 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.securityproject.dto.EditAdminDto;
+import org.example.securityproject.dto.RegistrationRequestResponseDto;
+import org.example.securityproject.dto.ResponseDto;
 import org.example.securityproject.dto.UserDto;
+import org.example.securityproject.enums.Permission;
+import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,7 +27,6 @@ public class AdminController {
     private UserService userService;
 
     @GetMapping("/getAllEmployees")
-    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         try {
             List<UserDto> userDtos = userService.getAllEmployees()
@@ -34,6 +37,81 @@ public class AdminController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/getAdminData")
+    public ResponseEntity<UserDto> getUserData() {
+        UserDto userDto = new UserDto(userService.getUserData());
+        return ResponseEntity.ok(userDto);
+    }
+
+    @GetMapping("/getAllClients")
+    public ResponseEntity<List<UserDto>> getAllClients() {
+        try {
+            List<UserDto> userDtos = userService.getAllClients()
+                    .stream()
+                    .map(user -> new UserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/processRegistrationRequest")
+    public ResponseEntity<Map<String, String>> processRegistrationRequest(@RequestBody RegistrationRequestResponseDto responseData) {
+        try {
+            userService.processRegistrationRequest(responseData);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Registration request successfully processed");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Failed to process registration request: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getAllRegistrationRequests")
+    public ResponseEntity<List<UserDto>> getAllRegistrationRequests() {
+        try {
+            List<UserDto> userDtos = userService.getAllRegistrationRequests()
+                    .stream()
+                    .map(user -> new UserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/updateAdminData")
+    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserData(adminDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllRoles")
+    public List<UserRole> getAllRoles() {
+       List<UserRole> roles = new ArrayList<>();
+
+       roles.add(UserRole.ADMINISTRATOR);
+       roles.add(UserRole.EMPLOYEE);
+       roles.add(UserRole.CLIENT);
+
+       return roles;
+    }
+
+    @GetMapping("/getAllPermissionsForRole/{role}")
+    public ResponseEntity<Set<Permission>> getAllPermissionsForRole(@PathVariable UserRole role) {
+        Set<Permission> permissions = role.getPermissions();
+
+        if (permissions == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(permissions);
     }
 
 }

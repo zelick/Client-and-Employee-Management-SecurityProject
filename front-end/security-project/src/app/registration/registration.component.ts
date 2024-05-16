@@ -8,6 +8,7 @@ import { RegistrationStatus } from '../model/registrationStatus.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-registration',
@@ -22,14 +23,14 @@ export class RegistrationComponent implements OnInit{
     private auth: AuthService) {
   }
   ngOnInit(): void {
-    const userRole = this.auth.getLoggedInUserRole(); 
-    console.log(userRole);
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
 
-    if (userRole === "CLIENT" || userRole === "EMPLOYEE") {
+    if (userRoles && (userRoles.includes(UserRole.CLIENT) || userRoles.includes(UserRole.EMPLOYEE))) {
       this.router.navigate(['/homepage']);
     }
     else {
-      if (userRole === "ADMINISTRATOR") {
+      if (userRoles && userRoles.includes(UserRole.ADMINISTRATOR)) {
         this.isAdmin = true;
       }
       else {
@@ -37,7 +38,9 @@ export class RegistrationComponent implements OnInit{
       }
     }
   }
-  
+
+  userRole: UserRole | undefined;
+
   userRoles = Object.values(UserRole);
   clientTypes = Object.values(ClientType);
   servicesPackages = Object.values(ServicesPackage);
@@ -48,6 +51,7 @@ export class RegistrationComponent implements OnInit{
 
   isAdmin: boolean = false;
   isUnAuthorize: boolean = false;
+  includesClient: boolean = true; //posle izmeni logiku
 
   userData = {
     email: '',
@@ -58,7 +62,7 @@ export class RegistrationComponent implements OnInit{
     city: '',
     country: '',
     phoneNumber: '',
-    role: UserRole.ADMINISTRATOR,
+    roles: [] as UserRole[],
     clientType: ClientType.NONE,
     servicesPackage: ServicesPackage.NONE,
     registrationStatus: RegistrationStatus.PENDING
@@ -86,8 +90,15 @@ export class RegistrationComponent implements OnInit{
       return;
     }
 
+    if (this.userRole) {
+      this.userData.roles.push(this.userRole);
+      console.log('USAO DA PUSGUJE ROLU: ' + this.userData.roles);
+    }
+
     this.registerUser();
   }
+
+  selectedRole: UserRole | undefined;
 
   isValidEmail(email: string): boolean {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -95,6 +106,8 @@ export class RegistrationComponent implements OnInit{
   }
 
   private registerUser(): void {
+    console.log("USER KOJI SE REGISTRUJE: ");
+    console.log(this.userData);
     this.userService.registerUser(this.userData).subscribe(
       (response: ResponseMessage) => {
         //console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
@@ -131,11 +144,27 @@ export class RegistrationComponent implements OnInit{
     this.userData.city = '';
     this.userData.country = '';
     this.userData.phoneNumber = '';
-    this.userData.role = UserRole.CLIENT;
+    this.userData.roles = [];    
     this.userData.clientType = ClientType.INDIVIDUAL;
     this.userData.servicesPackage = ServicesPackage.BASIC;
     this.userData.registrationStatus = RegistrationStatus.PENDING;
     this.confirmPassword = '';
     this.passwordInvalid = false;
+  }
+
+  onRoleChange(role: string) {
+    switch (role) {
+      case 'ADMINISTRATOR':
+        this.userRole = UserRole.ADMINISTRATOR;
+        break;
+      case 'EMPLOYEE':
+        this.userRole = UserRole.EMPLOYEE;
+        break;
+      case 'CLIENT':
+        this.userRole = UserRole.CLIENT;
+        break;
+      default:
+        break;
+    }
   }
 }

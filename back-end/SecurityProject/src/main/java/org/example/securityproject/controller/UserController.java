@@ -3,6 +3,8 @@ package org.example.securityproject.controller;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.example.securityproject.dto.*;
+import org.example.securityproject.enums.Permission;
+import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
@@ -25,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,6 +38,42 @@ public class UserController {
     private UserService userService;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
+
+    //TEST DA LI ROLE MOGU DA SE MENJAJU IZ KODA
+
+    @PostMapping("/editUserRole")
+    public String editUserRole() {
+       User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+       int userId = user.getId();
+
+       List<UserRole> roles = user.getRoles();
+
+       roles.add(UserRole.CLIENT);
+
+       user.setRoles(roles);
+
+       userRepository.save(user);
+       return "VEOMA USPESNO JEES";
+    }
+
+    @PostMapping("/editUserPermission")
+    public String addPermissionToUser() {
+        // Pronađi korisnika
+        User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+
+        List<UserRole> userRoles = user.getRoles();
+
+        UserRole userRole = UserRole.ADMINISTRATOR; // Na primer, uzimamo ADMINISTRATOR rolu
+
+        userRole.addPermission(Permission.ADMIN_READ); // Dodajemo permisiju ADMIN_READ
+
+        userRole.removePermission(Permission.ADMIN_DELETE); // Uklanjamo permisiju ADMIN_DELETE
+
+        userRepository.save(user);
+
+        return "PERMISIJA USPEŠNO DODATA KORISNIČKOJ ROLI";
+    }
+
 
 
     @PostMapping("/tryLogin")
@@ -47,45 +86,9 @@ public class UserController {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
-    @GetMapping("/getAllRegistrationRequests")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<List<UserDto>> getAllRegistrationRequests() {
-        try {
-            List<UserDto> userDtos = userService.getAllRegistrationRequests()
-                    .stream()
-                    .map(user -> new UserDto(user))
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(userDtos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/processRegistrationRequest")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<Map<String, String>> processRegistrationRequest(@RequestBody RegistrationRequestResponseDto responseData) {
-        try {
-            userService.processRegistrationRequest(responseData);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Registration request successfully processed");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Failed to process registration request: " + e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/confirm-account")
     public String confirm(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
         return userService.confirmToken(token);
-    }
-
-    @GetMapping("/getUserData")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<UserDto> getUserData() {
-        UserDto userDto = new UserDto(userService.getUserData());
-        return ResponseEntity.ok(userDto);
     }
 
     @GetMapping("/getLoggedInUser")
@@ -114,43 +117,6 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/updateUserData")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
-        ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.updateUserData(adminDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /*
-    @GetMapping("/getAllEmployees")
-    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<List<UserDto>> getAllEmployees() {
-        try {
-            List<UserDto> userDtos = userService.getAllEmployees()
-                    .stream()
-                    .map(user -> new UserDto(user))
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(userDtos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-     */
-
-    @GetMapping("/getAllClients")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<List<UserDto>> getAllClients() {
-        try {
-            List<UserDto> userDtos = userService.getAllClients()
-                    .stream()
-                    .map(user -> new UserDto(user))
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(userDtos, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
     @GetMapping("/findUserByEmail")
     public ResponseEntity<UserDto> findUserByEmail() {
         User user = userRepository.findByEmail("pmilica990@gmail.com");
@@ -167,6 +133,5 @@ public class UserController {
         userService.updateUser(userDto);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
-
 
 }
