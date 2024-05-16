@@ -50,7 +50,7 @@ export class UserService {
   }
 
   getAllEmployees(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + 'users/getAllEmployees');
+    return this.http.get<User[]>(this.apiUrl + 'admins/getAllEmployees');
   }
 
   getAllClients(): Observable<User[]> {

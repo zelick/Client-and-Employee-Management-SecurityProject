@@ -228,6 +228,9 @@ public class User implements UserDetails {
     }
 
 
+    /*
+    !!!NAPOMENA:
+    - ovo sam zakomentarisala i napravila novo za permisije, ako bude problema ispravicemo
     //jwt
     @JsonIgnore
     @Override
@@ -238,6 +241,13 @@ public class User implements UserDetails {
 
         // Vrati ovlašćenja
         return authorities;
+    }
+     */
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
     }
 
     public Timestamp getLastPasswordResetDate() {

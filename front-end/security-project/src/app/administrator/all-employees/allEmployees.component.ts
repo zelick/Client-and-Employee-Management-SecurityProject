@@ -16,7 +16,7 @@ export class AllEmployeesComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    const userRole = this.auth.getLoggedInUserRole(); 
+    /*const userRole = this.auth.getLoggedInUserRole(); 
     console.log(userRole);
     if (userRole === "UNAUTHORIZE") {
       this.router.navigate(['/']);
@@ -27,6 +27,8 @@ export class AllEmployeesComponent implements OnInit {
     else {
       this.loadEmployees();
     }
+    */
+    this.loadEmployees();
   }
 
   loadEmployees() {

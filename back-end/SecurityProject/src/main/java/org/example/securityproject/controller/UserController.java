@@ -122,8 +122,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /*
     @GetMapping("/getAllEmployees")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
+    //@PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         try {
             List<UserDto> userDtos = userService.getAllEmployees()
@@ -135,6 +136,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+     */
 
     @GetMapping("/getAllClients")
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")

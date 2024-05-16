@@ -25,6 +25,9 @@ import org.example.securityproject.auth.TokenAuthenticationFilter;
 import org.example.securityproject.services.CustomUserDetailsService;
 import org.example.securityproject.util.TokenUtils;
 
+import static org.example.securityproject.enums.Permission.ADMIN_READ;
+import static org.example.securityproject.enums.UserRole.*;
+
 @Configuration
 // Injektovanje bean-a za bezbednost
 @EnableWebSecurity
@@ -116,8 +119,17 @@ public class WebSecurityConfig {
                 .antMatchers("/api/ad-requests/create").hasAuthority("CLIENT")
                 .antMatchers("/api/ads/by-email").hasAuthority("CLIENT")
 
+                //PO ROLI ZA PUTANJU USERS:
+
+                //.antMatchers("/api/users/**").hasAnyRole(CLIENT.name(), EMPLOYEE.name(), ADMINISTRATOR.name())
+
                 // ADMINISTRATOR AUTHORIZATION
-                .antMatchers("/api/users/getAllEmployees").hasAuthority("ADMINISTRATOR")
+                //.antMatchers(HttpMethod.GET, "/api/users/getAllEmployees").hasAuthority("ADMINISTRATOR")
+
+                //OVAKO OD SAD::::
+                .antMatchers("/api/admins/**").hasRole("ADMINISTRATOR")
+                .antMatchers(HttpMethod.GET, "/api/admins/getAllEmployees").hasAnyAuthority("ADMIN_READ")
+
                 .antMatchers("/api/users/getAllClients").hasAuthority("ADMINISTRATOR")
                 .antMatchers("/api/users/updateUserData").hasAuthority("ADMINISTRATOR")
                 .antMatchers("/api/users/getUserData").hasAuthority("ADMINISTRATOR")
@@ -149,7 +161,8 @@ public class WebSecurityConfig {
         // Autentifikacija ce biti ignorisana ispod navedenih putanja (kako bismo ubrzali pristup resursima)
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
-        return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login")
+        return (web) -> web.ignoring()
+                .antMatchers(HttpMethod.POST, "/api/auth/login")
                 .antMatchers(HttpMethod.POST, "/api/users/registerUser")
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
