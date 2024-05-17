@@ -16,7 +16,6 @@ import static org.example.securityproject.enums.Permission.*;
 
 @RequiredArgsConstructor
 public enum UserRole {
-    CLIENT(new HashSet<>()),
     EMPLOYEE(new HashSet<>(Set.of(
             EMPLOYEE_READ,
             EMPLOYEE_CREATE,
@@ -32,7 +31,17 @@ public enum UserRole {
             EMPLOYEE_CREATE,
             EMPLOYEE_UPDATE,
             EMPLOYEE_DELETE,
-            ADMIN_SEEPROFILE
+            ADMIN_SEEPROFILE,
+            CLIENT_READ,
+            CLIENT_CREATE,
+            CLIENT_UPDATE,
+            CLIENT_DELETE
+    ))),
+    CLIENT(new HashSet<>(Set.of(
+            CLIENT_READ,
+            CLIENT_CREATE,
+            CLIENT_UPDATE,
+            CLIENT_DELETE
     )));
 
     UserRole(Set<Permission> permissions) {

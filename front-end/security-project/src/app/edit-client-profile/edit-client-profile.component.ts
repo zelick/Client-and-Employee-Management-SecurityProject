@@ -3,6 +3,8 @@ import { User } from '../model/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { UserRole } from '../model/userRole.model';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-edit-client-profile',
@@ -12,9 +14,24 @@ import { Router } from '@angular/router';
 export class EditClientProfileComponent implements OnInit{
   user!: User;
 
-  constructor ( private activatedRoute : ActivatedRoute, private userService : UserService, private router : Router) {}
+  constructor ( private activatedRoute : ActivatedRoute, private userService : UserService, private router : Router, private auth: AuthService) {}
 
   ngOnInit(): void {
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
+    if (userRoles.length === 0) {
+      this.router.navigate(['/']);
+    }
+    else if (!userRoles.includes(UserRole.CLIENT) && !userRoles.includes(UserRole.EMPLOYEE)) {
+      this.router.navigate(['/homepage']); 
+    }
+    else {
+      this.findUserByEmail();
+    }
+    
+  }
+
+  findUserByEmail(): void{
     this.activatedRoute.paramMap.subscribe(params => {
       const email = params.get('email');
       console.log("Email:" + email);
@@ -22,7 +39,7 @@ export class EditClientProfileComponent implements OnInit{
         this.userService.findUserByEmail().subscribe(
           (user: User) => {
             console.log(user);
-            this.user = user; // Postavljanje vrednosti korisnika za uređivanje
+            this.user = user;
           },
           (error) => {
             console.error('Error fetching user:', error);
@@ -36,12 +53,10 @@ export class EditClientProfileComponent implements OnInit{
     this.userService.updateClient(this.user).subscribe(
       (response: any) => {
         console.log('User updated successfully:', response);
-        // Možete dodati poruku ili preusmeriti korisnika na drugu stranicu
         this.router.navigate(['/client-profile']);
       },
       (error) => {
         console.error('Error updating user:', error);
-        // Možete prikazati odgovarajuću poruku o grešci
       }
     );
   }

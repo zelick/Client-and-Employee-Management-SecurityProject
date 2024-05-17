@@ -18,21 +18,18 @@ public class AdRequestController {
     private AdRequestService adRequestService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('CLIENT')")
     public ResponseEntity<String> createAdRequest(@RequestBody AdRequest adRequest) {
         adRequestService.createAdRequest(adRequest);
         return new ResponseEntity<>("Ad request created successfully", HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('EMPLOYEE')")
     public ResponseEntity<List<AdRequest>> getAllAdRequests() {
         List<AdRequest> adRequests = adRequestService.getAllAdRequests();
         return new ResponseEntity<>(adRequests, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('EMPLOYEE')")
     public ResponseEntity<AdRequest> getAdRequestById(@PathVariable Integer id) {
         Optional<AdRequest> adRequest = adRequestService.findById(id);
         return adRequest.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
