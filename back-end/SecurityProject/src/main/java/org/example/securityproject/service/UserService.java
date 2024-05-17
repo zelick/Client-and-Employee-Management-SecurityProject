@@ -238,8 +238,7 @@ public class UserService {
 
     public boolean checkRole(String email)
     {
-        User user = userRepository.findByEmail(email);
-        return user.getRole() == UserRole.CLIENT;
+        return userRepository.findByEmail(email).getRoles().contains(UserRole.CLIENT);
     }
     
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
