@@ -125,7 +125,7 @@ public class UserService {
         user.setClientType(userDto.getClientType());
 
         List<UserRole> roles = new ArrayList<>(userDto.getRoles());
-        roles.add(UserRole.ADMINISTRATOR);
+        //roles.add(UserRole.ADMINISTRATOR);
         user.setRoles(roles);
 
         user.setServicesPackage(userDto.getServicesPackage());

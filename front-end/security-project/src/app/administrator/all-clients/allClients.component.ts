@@ -20,7 +20,7 @@ export class AllClientsComponent implements OnInit {
   ngOnInit(): void {
     const userRoles = this.auth.getLoggedInUserRoles(); 
     console.log(userRoles);
-    if (userRoles.length === 0) {
+   if (userRoles.length === 0) {
       this.router.navigate(['/']);
     }
     else if (!userRoles.includes(UserRole.ADMINISTRATOR)) {
@@ -29,6 +29,7 @@ export class AllClientsComponent implements OnInit {
     else {
       this.loadClients();
     }
+    //this.loadClients();
   }
 
   loadClients() {
