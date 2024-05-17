@@ -3,6 +3,7 @@ package org.example.securityproject.config;
 import org.example.securityproject.auth.CustomAuthenticationProvider;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,6 +35,9 @@ import static org.example.securityproject.enums.UserRole.*;
 // Ukljucivanje podrske za anotacije "@Pre*" i "@Post*" koje ce aktivirati autorizacione provere za svaki pristup metodi
 @EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
+
+    @Value("${security.project.secret}")
+    private String SECRET_KEY;
 
     @Autowired
     private UserRepository userRepository; // mora da bi uzeo salt iz usera
@@ -186,7 +190,9 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
                 .antMatchers(HttpMethod.POST, "/api/users/editUserRole") //TEST VELIKI
                 .antMatchers(HttpMethod.POST, "/api/users/editUserPermission") //TEST VELIKI
-                // Ovim smo dozvolili pristup statickim resursima aplikacije
+                .antMatchers(HttpMethod.POST, "/api/login/send-email")
+                .antMatchers(HttpMethod.GET, "/api/login/verify")
+                .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }

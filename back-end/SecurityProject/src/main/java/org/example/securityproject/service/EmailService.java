@@ -11,6 +11,7 @@ import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -25,11 +26,16 @@ import java.util.Base64;
 @Service
 @AllArgsConstructor
 public class EmailService {
+
+//    @Value("${security.project.secret}")
+//    private String SECRET_KEY;
     @Autowired
     private JavaMailSender javaMailSender;
     private LoginTokenRepository loginTokenRepository;
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
+
+
 
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
@@ -58,11 +64,11 @@ public class EmailService {
     }
 
     public void sendPasswordlessMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
-        LoginToken objectToken = TokenGenerator.generateToken();
+        LoginToken objectToken = TokenGenerator.generateToken(email);
         loginTokenRepository.save(objectToken);
         String userEmail = email;
         String subject = "Passwordless login";
-        String text = "Click on the following link to login: http://localhost:8080/api/login?token=" + objectToken.getToken();
+        String text = "Click on the following link to login: http://localhost:8080/api/login/verify?token=" + objectToken.getToken();
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("aplikacijemobilnea0gmail.com");
@@ -91,7 +97,8 @@ public class EmailService {
 
         String token = confirmationToken.getToken();
 
-        String hmac = generateHmac(token, "ana123");
+        String hmac = generateHmac(token, "ana123"); //izmena
+        //String hmac = generateHmac(token, SECRET_KEY);
         confirmationToken.setHmac(hmac);
         confirmationTokenRepository.save(confirmationToken);
 

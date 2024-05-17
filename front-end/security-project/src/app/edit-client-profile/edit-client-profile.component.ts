@@ -13,6 +13,8 @@ import { AuthService } from '../service/auth.service';
 })
 export class EditClientProfileComponent implements OnInit{
   user!: User;
+  loggedUser!: User;
+  clientFlag: boolean = false;
 
   constructor ( private activatedRoute : ActivatedRoute, private userService : UserService, private router : Router, private auth: AuthService) {}
 
@@ -28,7 +30,25 @@ export class EditClientProfileComponent implements OnInit{
     else {
       this.findUserByEmail();
     }
-    
+  }
+
+  getLoggedInUser() {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+
+        if(this.loggedUser.roles.includes(UserRole.CLIENT))
+          {
+            this.clientFlag = true;
+          }
+
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.roles);
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
   }
 
   findUserByEmail(): void{
@@ -36,7 +56,7 @@ export class EditClientProfileComponent implements OnInit{
       const email = params.get('email');
       console.log("Email:" + email);
       if (email) {
-        this.userService.findUserByEmail().subscribe(
+        this.userService.findUserByEmail(this.loggedUser.email).subscribe(
           (user: User) => {
             console.log(user);
             this.user = user;
@@ -59,7 +79,5 @@ export class EditClientProfileComponent implements OnInit{
         console.error('Error updating user:', error);
       }
     );
-  }
-  
-  
+  } 
 }

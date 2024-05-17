@@ -14,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public auth: AuthService) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.auth.tokenIsPresent()) {
+    if (this.auth.tokenIsPresent() && !this.isIgnoredEndpoint(request)) {
       const token = this.auth.getToken();
       console.log('PROVERA TOKENA:', token);  
       request = request.clone({
@@ -24,5 +24,11 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(request);
+  }
+
+  private isIgnoredEndpoint(request: HttpRequest<any>): boolean {
+    // Add logic to determine if the request should be ignored
+    const ignoredEndpoints = ['/refresh-token', '/check-token'];
+    return ignoredEndpoints.some(endpoint => request.url.includes(endpoint));
   }
 }

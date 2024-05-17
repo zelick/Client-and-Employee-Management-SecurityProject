@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Update your profile</h1>
     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
-      <div class="grupa1">
+      <div class="grupa1" *ngIf="clientFlag">
         <label for="email">Email:</label>
         <input type="email" class="polje1" id="email" name="email" [(ngModel)]="user.email" required>
       </div>

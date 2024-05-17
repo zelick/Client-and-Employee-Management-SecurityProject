@@ -16,13 +16,12 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200")
-                        .allowedMethods(HttpMethod.GET.name(),
-                                HttpMethod.POST.name(),
-                                HttpMethod.DELETE.name(),
-                                HttpMethod.PATCH.name(),
-                                HttpMethod.PUT.name())
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders(HttpHeaders.CONTENT_TYPE,
-                                HttpHeaders.AUTHORIZATION);
+                                HttpHeaders.AUTHORIZATION,
+                                "Authorization", "Refresh-Token")
+                       .exposedHeaders("Authorization", "Refresh-Token") // Ovo omogućava pristup ovim zaglavljima iz klijentske aplikacije
+                       .allowCredentials(true);;
             }
         };
     }

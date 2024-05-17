@@ -12,6 +12,7 @@ import { AuthService } from '../service/auth.service';
 })
 export class ClientProfileComponent implements OnInit{
   user!: User;
+  loggedUser!: User;
 
   constructor(private userService: UserService, private router: Router, private auth: AuthService) { }
 
@@ -29,8 +30,21 @@ export class ClientProfileComponent implements OnInit{
     }
   }
 
+  getLoggedInUser() {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+        this.findUserByEmail();
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
+  }
+
   findUserByEmail(): void{
-    this.userService.findUserByEmail().subscribe(
+    this.userService.findUserByEmail(this.loggedUser.email).subscribe(
       (user: User) => {
         this.user = user;
       },

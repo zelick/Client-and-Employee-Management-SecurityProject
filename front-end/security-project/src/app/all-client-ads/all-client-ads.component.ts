@@ -11,7 +11,7 @@ import { User } from '../model/user.model';
   templateUrl: './all-client-ads.component.html',
   styleUrls: ['./all-client-ads.component.css']
 })
-export class AllClientAdsComponent {
+export class AllClientAdsComponent implements OnInit{
   allAds: Ad[] = [];
   loggedUser!: User;
 
@@ -27,19 +27,18 @@ export class AllClientAdsComponent {
       this.router.navigate(['/homepage']); 
     }
     else {
-      this.getLoggedUser();
+      this.getLoggedInUser();
     }
   }
 
-  getLoggedUser(): void
-  {
+  getLoggedInUser() {
     this.userService.getLoggedInUser().subscribe(
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
         console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
         localStorage.setItem('loggedUserRole', this.loggedUser.roles.join(','));
-        this.getAllClientAds();
+        this.getAllAdsByEmail();
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);
@@ -47,7 +46,7 @@ export class AllClientAdsComponent {
     );
   }
 
-  getAllClientAds(): void{
+  getAllAdsByEmail(): void{
     this.userService.getAllAdsByEmail(this.loggedUser.email).subscribe(
       (data: Ad[]) => {
         this.allAds = data;
@@ -57,5 +56,4 @@ export class AllClientAdsComponent {
       }
     );
   }
-
 }

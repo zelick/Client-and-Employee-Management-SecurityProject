@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { UserRole } from '../model/userRole.model';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-ad-request-form',
@@ -11,6 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./ad-request-form.component.css']
 })
 export class AdRequestFormComponent implements OnInit{
+  loggedUser!: User;
+  message: String = '';
+  today: string = new Date().toISOString().split('T')[0];
+
   adRequest: AdRequest = {
     email: '',
     deadline: new Date(),
@@ -31,17 +36,42 @@ export class AdRequestFormComponent implements OnInit{
       this.router.navigate(['/homepage']); 
     }
   }
-
-  onSubmit() {
-    this.userService.createAdRequest(this.adRequest).subscribe(
-      (response) => {
-        console.log('Ad request created successfully');
-        // Dodajte ovde logiku za obradu uspešnog odgovora ako je potrebno
+ 
+  getLoggedInUser() {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
+        localStorage.setItem('loggedUserRole', this.loggedUser.roles.join(','));
       },
       (error) => {
-        console.error('Error creating ad request:', error);
-        // Dodajte ovde logiku za obradu greške ako je potrebno
+        console.error('Error dobavljanja ulogovanog usera:', error);
       }
     );
+  }
+
+  onSubmit() {
+    if (this.loggedUser) {
+      const today = new Date();
+      console.log("Today: " + today);
+      if (this.adRequest.activeFrom >= this.adRequest.activeTo) {
+        this.message = 'Active from must be before active to date.';
+        return;
+      }
+
+      this.adRequest.email = this.loggedUser.email;
+      this.userService.createAdRequest(this.adRequest).subscribe(
+        (response) => {
+          console.log('Ad request created successfully');
+          this.router.navigate(['/client-ads']);
+        },
+        (error) => {
+          console.error('Error creating ad request:', error);
+        }
+      );
+    } else {
+      console.error('Logged user is not defined');
+    }
   }
 }

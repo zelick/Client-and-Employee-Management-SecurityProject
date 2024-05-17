@@ -15,7 +15,7 @@ body {
     border-style: solid;
     width: 300px;
     margin-left: 550px;
-    margin-top: 150px;
+    margin-top: 50px;
     padding: 20px;
   }
   .dugme {
@@ -30,6 +30,8 @@ body {
     border: 2px solid #3D9AF8;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
+    margin-left: 650px;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 

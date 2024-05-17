@@ -1,4 +1,6 @@
-<div *ngFor="let ad of allAds">
+<div>
+  <p class="naslov">My ads</p>
+  <div *ngFor="let ad of allAds">
     <div class="card">
       <div class="card-body">
         <p class="card-text">Active from: {{ ad.activeFrom | date }}</p>
@@ -8,4 +10,4 @@
       </div>
     </div>
   </div>
-  
+</div>

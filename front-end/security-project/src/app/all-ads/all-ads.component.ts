@@ -40,4 +40,8 @@ export class AllAdsComponent implements OnInit{
     );
   }
 
+  createMore(): void{
+    this.router.navigate(['/ad-requests']);
+  }
+
 }

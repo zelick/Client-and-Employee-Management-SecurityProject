@@ -19,12 +19,13 @@ import { AllClientAdsComponent } from './all-client-ads/all-client-ads.component
 import { AuthGuard } from './service/authGuard.service';
 import { HomePageComponent } from './homepage/homepage.component';
 import { PermissionsManipulationComponent } from './administrator/permissions-manipulation/permissionsManipulation.component';
+import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
   {path:'registrationRequests', component: RegistrationRequestsComponent},
   {path:'administratorProfile', component: AdministratorProfileComponent},
-  { path: 'allEmployees', component: AllEmployeesComponent, canActivate: [AuthGuard] },
+  {path: 'allEmployees', component: AllEmployeesComponent, canActivate: [AuthGuard] },
   {path:'allClients', component: AllClientsComponent},
   {path:'', component: LoginComponent},
   { path: 'login', component: PasswordlessLoginComponent },
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'ads', component: AllAdsComponent},
   { path: 'client-ads', component: AllClientAdsComponent},
   { path: 'homepage', component: HomePageComponent},
-  { path: 'permissionsManipulation', component: PermissionsManipulationComponent}
+  { path: 'permissionsManipulation', component: PermissionsManipulationComponent},
+  { path: 'client-homepage/:email', component: ClientHomepageComponent}
 ];
 
 @NgModule({

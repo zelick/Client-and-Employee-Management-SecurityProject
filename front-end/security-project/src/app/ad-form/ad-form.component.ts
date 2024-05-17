@@ -4,9 +4,9 @@ import { AdRequest } from '../model/adRequest.model';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.model';
 import { Ad } from '../model/ad.model';
-import { Router } from '@angular/router';
 import { UserRole } from '../model/userRole.model';
 import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ad-form',
@@ -18,6 +18,7 @@ export class AdFormComponent implements OnInit {
   client!: User;
   description: string = '';
   slogan: string = '';
+  loggedUser!: User;
 
   constructor(private route: ActivatedRoute, private userService: UserService, private auth: AuthService, private router: Router) {}
 
@@ -44,8 +45,23 @@ export class AdFormComponent implements OnInit {
     }
   }
 
+  getLoggedInUser() {
+
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
+        localStorage.setItem('loggedUserRole', this.loggedUser.roles.join(','));
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
+  }
+
   findUser(): void{
-    this.userService.findUserByEmail().subscribe(user => {
+    this.userService.findUserByEmail(this.loggedUser.email).subscribe(user => {
       this.client = user;
       console.log(user);
     });
@@ -66,6 +82,7 @@ export class AdFormComponent implements OnInit {
     this.userService.createAd(ad).subscribe(response => {
       console.log(ad);
       console.log(response);
+      this.router.navigate(['/ads']);
     });
   }
 

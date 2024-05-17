@@ -74,8 +74,6 @@ public class UserController {
         return "PERMISIJA USPEŠNO DODATA KORISNIČKOJ ROLI";
     }
 
-
-
     @PostMapping("/tryLogin")
     public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
@@ -117,9 +115,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/findUserByEmail")
-    public ResponseEntity<UserDto> findUserByEmail() {
-        User user = userRepository.findByEmail("pmilica990@gmail.com");
+    @GetMapping("/findUserByEmail/{email}")
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             UserDto userDto = new UserDto(user);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
