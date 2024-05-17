@@ -139,6 +139,9 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.PUT,"/api/admins/updateAdminData").hasAuthority("ADMIN_UPDATE")
                 .antMatchers(HttpMethod.GET,"/api/admins/getAllRoles").hasAuthority("ADMIN_READ")
                 .antMatchers(HttpMethod.GET, "/api/admins/getAllPermissionsForRole/**").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.PUT,"/api/admins/removePermission").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.GET, "/api/admins/getAllCanBeAddedPermissions/**").hasAuthority("ADMIN_READ")
+                .antMatchers(HttpMethod.PUT,"/api/admins/addPermission").hasAuthority("ADMIN_UPDATE")
 
                 .antMatchers("/api/users/updateAdminPassword").hasAuthority("ADMINISTRATOR")
 

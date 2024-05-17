@@ -1,14 +1,12 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.securityproject.dto.EditAdminDto;
-import org.example.securityproject.dto.RegistrationRequestResponseDto;
-import org.example.securityproject.dto.ResponseDto;
-import org.example.securityproject.dto.UserDto;
+import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.service.PermissionService;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,7 @@ import java.util.stream.Collectors;
 public class AdminController {
     @Autowired
     private UserService userService;
+    private PermissionService permissionService;
 
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
@@ -112,6 +111,31 @@ public class AdminController {
         }
 
         return ResponseEntity.ok(permissions);
+    }
+
+    @PutMapping("/removePermission")
+    public ResponseEntity<ResponseDto> removePermission(@RequestBody PermissionRoleDto data) {
+        Permission permission = data.getPermission();
+        UserRole role = data.getRole();
+
+        ResponseDto response = permissionService.removePermissionFromRole(permission, role);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getAllCanBeAddedPermissions/{role}")
+    public ResponseEntity<Set<Permission>> getAllCanBeAddedPermissions(@PathVariable UserRole role) {
+        return ResponseEntity.ok(permissionService.findMissingPermissions(role));
+    }
+
+    @PutMapping("/addPermission")
+    public ResponseEntity<ResponseDto> addPermission(@RequestBody PermissionRoleDto data) {
+        Permission permission = data.getPermission();
+        UserRole role = data.getRole();
+
+        ResponseDto response = permissionService.addPermissionToRole(permission, role);
+
+        return ResponseEntity.ok(response);
     }
 
 }

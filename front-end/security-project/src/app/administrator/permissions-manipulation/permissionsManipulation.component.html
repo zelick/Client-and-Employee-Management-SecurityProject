@@ -4,7 +4,17 @@
         <h2>{{ role }}</h2>
         <button (click)="togglePermissionsForRole(role)">Show all permissions</button>
         <ul *ngIf="selectedRole === role">
-            <li *ngFor="let permission of permissionsForRole">{{ permission }}</li>
+            <li *ngFor="let permission of permissionsForRole">
+                <div>{{ permission }}</div>
+                <button (click)="removePermission(permission, role)">-</button>
+            </li>
+        </ul>
+        <button (click)="getAllCanBeAddedPermissions(role)">Add more permissions</button>
+        <ul *ngIf="selectedRole === role">
+            <li *ngFor="let permission of canBeAddedPermissions">
+                <div>{{ permission }}</div>
+                <button (click)="addPermission(permission, role)">+</button>
+            </li>
         </ul>
     </div>
 </div>

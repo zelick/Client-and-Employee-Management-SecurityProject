@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Permission } from 'src/app/model/permission.model';
+import { User } from 'src/app/model/user.model';
 import { UserRole } from 'src/app/model/userRole.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -19,6 +20,7 @@ export class PermissionsManipulationComponent implements OnInit {
   roles: UserRole[] | undefined;
   permissionsForRole: Permission[] | undefined;
   selectedRole: UserRole | null = null;
+  canBeAddedPermissions: Permission[] | undefined;
 
   ngOnInit(): void {
     const userRoles = this.auth.getLoggedInUserRoles(); 
@@ -66,4 +68,41 @@ export class PermissionsManipulationComponent implements OnInit {
     );
   }
 
+  removePermission(permission: Permission, role: UserRole) {
+    this.userService.removePermission(permission, role).subscribe(
+        (data: any) => {
+          this.permissionsForRole = data;
+          console.log(this.permissionsForRole);
+          this.getAllPermissionsForRole(role);
+        },
+        error => {
+          console.error('Error fetching permissions:', error);
+        }
+    );
+  }
+
+  getAllCanBeAddedPermissions(role: UserRole) {
+    this.userService.getAllCanBeAddedPermissions(role).subscribe(
+        (data: any) => {
+          this.canBeAddedPermissions = data;
+        },
+        error => {
+          console.error('Error fetching permissions:', error);
+        }
+    );
+  }
+
+  addPermission(permission: Permission, role: UserRole) {
+    this.userService.addPermission(permission, role).subscribe(
+        (data: any) => {
+          this.permissionsForRole = data;
+          console.log(this.permissionsForRole);
+          this.getAllPermissionsForRole(role);
+        },
+        error => {
+          console.error('Error fetching permissions:', error);
+        }
+    );
+
+  }
 }

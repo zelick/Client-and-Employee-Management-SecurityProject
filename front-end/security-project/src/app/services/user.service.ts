@@ -53,6 +53,26 @@ export class UserService {
     return this.http.get<Permission[]>(this.apiUrl + 'admins/getAllPermissionsForRole/' +  userRole);
   }
 
+  removePermission(permission: Permission, role: UserRole): Observable<ResponseMessage> {
+    const data = {
+      permission: permission,
+      role: role
+    };
+    return this.http.put<ResponseMessage>(this.apiUrl + 'admins/removePermission', data);
+  }
+
+  getAllCanBeAddedPermissions(userRole: UserRole): Observable<Permission[]> {
+    return this.http.get<Permission[]>(this.apiUrl + 'admins/getAllCanBeAddedPermissions/' +  userRole);
+  }
+
+  addPermission(permission: Permission, role: UserRole): Observable<ResponseMessage> {
+    const data = {
+      permission: permission,
+      role: role
+    };
+    return this.http.put<ResponseMessage>(this.apiUrl + 'admins/addPermission', data);
+  }
+
   //EMPLOYEE
 
   //...
