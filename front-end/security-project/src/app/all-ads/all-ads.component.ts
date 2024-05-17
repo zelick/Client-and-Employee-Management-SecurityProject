@@ -31,8 +31,9 @@ export class AllAdsComponent implements OnInit{
 
   getAllAds(): void{
     this.userService.getAllAds().subscribe(
-      (data: Ad[]) => {
+      (data: any) => {
         this.allAds = data;
+        console.log(this.allAds);
       },
       (error) => {
         console.error('Error fetching ad requests: ', error);

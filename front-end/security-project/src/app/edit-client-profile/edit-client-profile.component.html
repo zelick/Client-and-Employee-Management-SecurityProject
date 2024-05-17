@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Update your profile</h1>
-    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm" *ngIf="loggedUser">
       <div class="grupa1" *ngIf="clientFlag">
         <label for="email">Email:</label>
         <input type="email" class="polje1" id="email" name="email" [(ngModel)]="loggedUser.email" required>

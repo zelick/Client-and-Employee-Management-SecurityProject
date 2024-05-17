@@ -12,7 +12,7 @@ import { AuthService } from '../service/auth.service';
 })
 export class ClientProfileComponent implements OnInit{
   user!: User;
-  loggedUser!: User;
+  loggedUser?: User;
 
   constructor(private userService: UserService, private router: Router, private auth: AuthService) { }
 
@@ -26,7 +26,8 @@ export class ClientProfileComponent implements OnInit{
       this.router.navigate(['/homepage']); 
     }
     else {
-      this.findUserByEmail();
+      //this.findUserByEmail();
+      this.getLoggedInUser();
     }
   }
 
@@ -35,7 +36,7 @@ export class ClientProfileComponent implements OnInit{
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
-        this.findUserByEmail();
+        //this.findUserByEmail();
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);
@@ -44,6 +45,7 @@ export class ClientProfileComponent implements OnInit{
   }
 
   findUserByEmail(): void{
+    if (this.loggedUser)
     this.userService.findUserByEmail(this.loggedUser.email).subscribe(
       (user: User) => {
         this.user = user;

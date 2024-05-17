@@ -99,4 +99,21 @@ public class UserController {
         UserDto userDto = new UserDto(loggedInUser);
         return ResponseEntity.ok(userDto);
     }
+
+    @PutMapping("/updateClient")
+    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) {
+        userService.updateUser(userDto);
+        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/findUserByEmail/{email}")
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            UserDto userDto = new UserDto(user);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -12,8 +12,8 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./edit-client-profile.component.css']
 })
 export class EditClientProfileComponent implements OnInit{
-  user!: User;
-  loggedUser!: User;
+  user?: User;
+  loggedUser?: User;
   clientFlag: boolean = false;
 
   constructor ( private activatedRoute : ActivatedRoute, private userService : UserService, private router : Router, private auth: AuthService) {}
@@ -28,7 +28,8 @@ export class EditClientProfileComponent implements OnInit{
       this.router.navigate(['/homepage']); 
     }
     else {
-      this.findUserByEmail();
+      //this.findUserByEmail();
+      this.getLoggedInUser();
     }
   }
 
@@ -56,6 +57,7 @@ export class EditClientProfileComponent implements OnInit{
       const email = params.get('email');
       console.log("Email:" + email);
       if (email) {
+        if (this.loggedUser)
         this.userService.findUserByEmail(this.loggedUser.email).subscribe(
           (user: User) => {
             console.log(user);
@@ -70,6 +72,7 @@ export class EditClientProfileComponent implements OnInit{
   }
 
   onSubmit(): void {
+    if (this.loggedUser)
     this.userService.updateClient(this.loggedUser).subscribe(
       (response: any) => {
         console.log('User updated successfully:', response);

@@ -35,6 +35,9 @@ export class AdRequestFormComponent implements OnInit{
     else if (!userRoles.includes(UserRole.CLIENT)) {
       this.router.navigate(['/homepage']); 
     }
+    else {
+      this.getLoggedInUser();
+    }
   }
  
   getLoggedInUser() {

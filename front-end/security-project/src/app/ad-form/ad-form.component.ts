@@ -38,7 +38,7 @@ export class AdFormComponent implements OnInit {
           this.userService.getAdRequestById(id).subscribe(adRequest => {
             this.adRequest = adRequest;
             console.log(adRequest);
-            this.findUser();
+            this.getLoggedInUser();
           });
         }
       });
@@ -51,6 +51,8 @@ export class AdFormComponent implements OnInit {
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
+        this.findUser();
+        //this.client = user;
         console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
         localStorage.setItem('loggedUserRole', this.loggedUser.roles.join(','));
       },
@@ -61,7 +63,7 @@ export class AdFormComponent implements OnInit {
   }
 
   findUser(): void{
-    this.userService.findUserByEmail(this.loggedUser.email).subscribe(user => {
+    this.userService.findUserByEmail(this.adRequest.email).subscribe(user => {
       this.client = user;
       console.log(user);
     });

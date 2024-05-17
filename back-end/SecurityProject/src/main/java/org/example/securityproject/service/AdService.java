@@ -9,6 +9,7 @@ import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,9 +33,21 @@ public class AdService {
 
     public List<AdDto> getAllAds() {
         List<Ad> ads = adRepository.findAll();
-        return ads.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        List<AdDto> adsDtos = new ArrayList<>();
+
+        for (Ad ad: ads) {
+            AdDto adDto = new AdDto();
+            adDto.setActiveFrom(ad.getActiveFrom());
+            adDto.setName(ad.getUser().getName());
+            adDto.setDescription(ad.getDescription());
+            adDto.setSlogan(ad.getSlogan());
+            adDto.setSurname(ad.getUser().getSurname());
+            adDto.setActiveTo(ad.getActiveTo());
+            adDto.setEmail(ad.getUser().getEmail());
+            adsDtos.add(adDto);
+        }
+
+        return adsDtos;
     }
 
     public List<AdDto> getAllAdsByEmail(String email) {

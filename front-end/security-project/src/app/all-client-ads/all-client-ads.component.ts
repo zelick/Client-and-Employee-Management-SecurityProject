@@ -50,6 +50,7 @@ export class AllClientAdsComponent implements OnInit{
     this.userService.getAllAdsByEmail(this.loggedUser.email).subscribe(
       (data: Ad[]) => {
         this.allAds = data;
+        console.log("ALL ADS: " + this.allAds);
       },
       (error) => {
         console.error('Error fetching ad requests: ', error);
