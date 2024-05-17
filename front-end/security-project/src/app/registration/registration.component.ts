@@ -26,12 +26,12 @@ export class RegistrationComponent implements OnInit{
     const userRoles = this.auth.getLoggedInUserRoles(); 
     console.log(userRoles);
 
-    if (userRoles && (userRoles.includes(UserRole.CLIENT) || userRoles.includes(UserRole.EMPLOYEE))) {
-      this.router.navigate(['/homepage']);
+    if (userRoles && userRoles.includes(UserRole.ADMINISTRATOR)) {
+      this.isAdmin = true;
     }
     else {
-      if (userRoles && userRoles.includes(UserRole.ADMINISTRATOR)) {
-        this.isAdmin = true;
+      if (userRoles && userRoles.includes(UserRole.CLIENT) || userRoles.includes(UserRole.EMPLOYEE)) {
+        this.router.navigate(['/homepage']);
       }
       else {
         this.isUnAuthorize = true;

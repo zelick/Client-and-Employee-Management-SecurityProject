@@ -60,7 +60,7 @@
         </label><br>
     </div>
       
-      <div class="form-group" *ngIf="includesClient">
+      <div class="form-group" *ngIf="includesClient && !isAdmin">
         <label>Client Type:</label><br>
         <label>
           <input type="radio" name="clientType" value="INDIVIDUAL" [(ngModel)]="userData.clientType"> INDIVIDUAL
@@ -70,7 +70,7 @@
         </label><br>
       </div>
       
-      <div class="form-group" *ngIf="includesClient">
+      <div class="form-group" *ngIf="includesClient && !isAdmin">
         <label>Services Package:</label><br>
         <label>
           <input type="radio" name="servicesPackage" value="BASIC" [(ngModel)]="userData.servicesPackage"> BASIC
