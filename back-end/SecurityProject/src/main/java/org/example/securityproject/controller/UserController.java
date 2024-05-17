@@ -1,34 +1,22 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
-import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.UserService;
-import org.example.securityproject.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -89,47 +77,8 @@ public class UserController {
         return userService.confirmToken(token);
     }
 
-    @GetMapping("/getLoggedInUser")
-    public ResponseEntity<UserDto> getLogegdInUser() {
-        User loggedInUser = userService.getLoggedInUser();
-        if (loggedInUser == null) {
-            return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
-        }
-
-        UserDto userDto = new UserDto(loggedInUser);
-        return ResponseEntity.ok(userDto);
+    @GetMapping("/httpsMessage")
+    public String httpMessage() {
+        return "USPESNO!";
     }
-
-    @PutMapping("/updatePassword")
-    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
-        ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PutMapping("/updateAdminPassword")
-    @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
-        ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/findUserByEmail/{email}")
-    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            UserDto userDto = new UserDto(user);
-            return new ResponseEntity<>(userDto, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PutMapping("/updateClient")
-    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) {
-        userService.updateUser(userDto);
-        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
-    }
-
 }
