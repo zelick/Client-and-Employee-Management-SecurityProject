@@ -14,7 +14,11 @@ public enum Permission {
     EMPLOYEE_UPDATE("employee:update"),
     EMPLOYEE_CREATE("employee:create"),
     EMPLOYEE_DELETE("employee:delete"),
-    ADMIN_SEEPROFILE("admin:seeprofile")
+    ADMIN_SEEPROFILE("admin:seeprofile"),
+    CLIENT_READ("client:read"),
+    CLIENT_CREATE("client:create"),
+    CLIENT_UPDATE("client:update"),
+    CLIENT_DELETE("client:delete")
     ;
 
     @Getter

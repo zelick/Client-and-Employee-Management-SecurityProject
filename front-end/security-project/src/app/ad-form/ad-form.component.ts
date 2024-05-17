@@ -4,6 +4,9 @@ import { AdRequest } from '../model/adRequest.model';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.model';
 import { Ad } from '../model/ad.model';
+import { Router } from '@angular/router';
+import { UserRole } from '../model/userRole.model';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-ad-form',
@@ -16,19 +19,29 @@ export class AdFormComponent implements OnInit {
   description: string = '';
   slogan: string = '';
 
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  constructor(private route: ActivatedRoute, private userService: UserService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id')); 
-      if (!isNaN(id)) {
-        this.userService.getAdRequestById(id).subscribe(adRequest => {
-          this.adRequest = adRequest;
-          console.log(adRequest);
-          this.findUser();
-        });
-      }
-    });
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
+    if (userRoles.length === 0) {
+      this.router.navigate(['/']);
+    }
+    else if (!userRoles.includes(UserRole.EMPLOYEE)) {
+      this.router.navigate(['/homepage']); 
+    }
+    else {
+      this.route.paramMap.subscribe(params => {
+        const id = Number(params.get('id')); 
+        if (!isNaN(id)) {
+          this.userService.getAdRequestById(id).subscribe(adRequest => {
+            this.adRequest = adRequest;
+            console.log(adRequest);
+            this.findUser();
+          });
+        }
+      });
+    }
   }
 
   findUser(): void{

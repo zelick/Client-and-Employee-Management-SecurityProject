@@ -28,14 +28,12 @@ public class AdController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('EMPLOYEE')")
     public ResponseEntity<List<AdDto>> getAllAds() {
         List<AdDto> ads = adService.getAllAds();
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 
     @GetMapping("/by-email")
-    @PreAuthorize("hasAuthority('CLIENT')")
     public ResponseEntity<List<AdDto>> getAllAdsByEmail(@RequestParam String email) {
         List<AdDto> ads = adService.getAllAdsByEmail(email);
         return new ResponseEntity<>(ads, HttpStatus.OK);

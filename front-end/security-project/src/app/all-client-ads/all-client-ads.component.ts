@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ad } from '../model/ad.model';
 import { UserService } from '../services/user.service';
+import { UserRole } from '../model/userRole.model';
+import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-all-client-ads',
@@ -9,11 +13,42 @@ import { UserService } from '../services/user.service';
 })
 export class AllClientAdsComponent {
   allAds: Ad[] = [];
+  loggedUser!: User;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.userService.getAllAdsByEmail('pmilica990@gmail.com').subscribe(
+    const userRoles = this.auth.getLoggedInUserRoles(); 
+    console.log(userRoles);
+    if (userRoles.length === 0) {
+      this.router.navigate(['/']);
+    }
+    else if (!userRoles.includes(UserRole.CLIENT)) {
+      this.router.navigate(['/homepage']); 
+    }
+    else {
+      this.getLoggedUser();
+    }
+  }
+
+  getLoggedUser(): void
+  {
+    this.userService.getLoggedInUser().subscribe(
+      (user: User) => {
+        console.log("Uspesno dobavio ulogovanog usera: ", user);
+        this.loggedUser = user;
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
+        localStorage.setItem('loggedUserRole', this.loggedUser.roles.join(','));
+        this.getAllClientAds();
+      },
+      (error) => {
+        console.error('Error dobavljanja ulogovanog usera:', error);
+      }
+    );
+  }
+
+  getAllClientAds(): void{
+    this.userService.getAllAdsByEmail(this.loggedUser.email).subscribe(
       (data: Ad[]) => {
         this.allAds = data;
       },
