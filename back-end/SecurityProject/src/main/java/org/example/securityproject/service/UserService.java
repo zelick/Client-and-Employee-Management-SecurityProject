@@ -46,6 +46,12 @@ public class UserService {
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
 
+        if (!(user.isActive() && user.isEnabled())) {
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
+            return loginResponseDto;
+        }
+
         /*
         if (!(user.getRole().equals(UserRole.CLIENT)) && !user.isLoggedInOnce()) {
             loginReponseDto.setLoggedInOnce(false);
@@ -57,7 +63,7 @@ public class UserService {
         boolean hasAdministratorOrEmployeeRole = user.getRoles().stream()
                 .anyMatch(role -> role.equals(UserRole.ADMINISTRATOR) || role.equals(UserRole.EMPLOYEE));
 
-        if (!hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
+        if (hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This user must change his password because this is his first login.");
             return loginResponseDto;
@@ -124,9 +130,10 @@ public class UserService {
         user.setRegistrationStatus(RegistrationStatus.PENDING);
         user.setClientType(userDto.getClientType());
 
-        List<UserRole> roles = new ArrayList<>(userDto.getRoles());
         //roles.add(UserRole.ADMINISTRATOR);
-        user.setRoles(roles);
+        //List<UserRole> rolesAdmin = new ArrayList();
+        //rolesAdmin.add(UserRole.ADMINISTRATOR);
+        user.setRoles(userDto.getRoles());
 
         user.setServicesPackage(userDto.getServicesPackage());
         user.setRequestProcessingDate(null);
@@ -298,7 +305,12 @@ public class UserService {
     }
 
     public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
-        if (!checkOldPassword(passwordData.getOldPassword())) {
+        if (passwordData.getEmail().isEmpty()) {
+                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                User user = (User)auth.getPrincipal();
+                passwordData.setEmail(user.getEmail());
+        }
+        if (!checkOldPassword(passwordData)) {
             return "You have not entered a good current password.";
         }
         if (!passwordData.getNewPassword().equals(passwordData.getConfirmPassword())) {
@@ -308,9 +320,7 @@ public class UserService {
             return "The password does not meet the requirements.";
         }
 
-        //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
-        //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("pmilica990@gmail.com");
+        User user = userRepository.findByEmail(passwordData.getEmail());
 
         String salt = BCrypt.gensalt();
         String hashedPassword = "";
@@ -330,13 +340,10 @@ public class UserService {
         return "Password successfully changed.";
     }
 
-    private boolean checkOldPassword(String oldPassword) throws NoSuchAlgorithmException {
-        //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
-        //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
-        User user = userRepository.findByEmail("pmilica990@gmail.com");
+    private boolean checkOldPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
+        User user = userRepository.findByEmail(passwordData.getEmail());
         String salt = user.getSalt();
-        String hashedOldPassword = hashPassword(oldPassword, salt);
-        //String hashedOldPassword = passwordEncoder.encode(oldPassword + salt);
+        String hashedOldPassword = hashPassword(passwordData.getOldPassword(), salt);
         return hashedOldPassword.equals(user.getPassword());
     }
 

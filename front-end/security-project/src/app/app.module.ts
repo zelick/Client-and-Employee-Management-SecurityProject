@@ -23,8 +23,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
 import { EditClientProfileComponent } from './edit-client-profile/edit-client-profile.component';
 import { AdRequestFormComponent } from './ad-request-form/ad-request-form.component';
-import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
-import { EditEmployeeProfileComponent } from './edit-employee-profile/edit-employee-profile.component';
 import { AllAdRequestsComponent } from './all-ad-requests/all-ad-requests.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
 import { AllAdsComponent } from './all-ads/all-ads.component';
@@ -49,8 +47,6 @@ import { ClientHomepageComponent } from './client-homepage/client-homepage.compo
     ClientProfileComponent,
     EditClientProfileComponent,
     AdRequestFormComponent,
-    EmployeeProfileComponent,
-    EditEmployeeProfileComponent,
     AllAdRequestsComponent,
     AdFormComponent,
     AllAdsComponent,

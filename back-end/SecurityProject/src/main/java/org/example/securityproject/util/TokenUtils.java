@@ -48,8 +48,8 @@ public class TokenUtils {
     private static final int REFRESH_TOKEN_EXPIRATION = 30 * 60 * 1000; // 30 minuta
 
     //test primer
-//    private static final int ACCESS_TOKEN_EXPIRATION = 1 * 60 * 1000; // 1 minut
-//    private static final int REFRESH_TOKEN_EXPIRATION = 2 * 60 * 1000; // 4 minuta, 2 min
+    //private static final int ACCESS_TOKEN_EXPIRATION = 1 * 60 * 1000; // 1 minut
+    //private static final int REFRESH_TOKEN_EXPIRATION = 2 * 60 * 1000; // 4 minuta, 2 min
 
 
     // ============= Funkcije za generisanje JWT tokena =============

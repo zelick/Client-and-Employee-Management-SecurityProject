@@ -35,8 +35,6 @@ public class EmailService {
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
 
-
-
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
         String subject = "";
@@ -46,7 +44,7 @@ public class EmailService {
             subject = "Confirmation of Registration";
             text = "Your registration request has been accepted." +
                     "To confirm your account, please click here: " +
-                    "http://localhost:8080/api/users/confirm-account?token=" + generateToken(userEmail);
+                    "https://localhost:443/api/users/confirm-account?token=" + generateToken(userEmail);
         } else {
             subject = "Refusal of registration";
             text = "Your registration request has been rejected.\n" +
@@ -68,7 +66,7 @@ public class EmailService {
         loginTokenRepository.save(objectToken);
         String userEmail = email;
         String subject = "Passwordless login";
-        String text = "Click on the following link to login: http://localhost:8080/api/login/verify?token=" + objectToken.getToken();
+        String text = "Click on the following link to login: https://localhost:443/api/login/verify?token=" + objectToken.getToken();
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("aplikacijemobilnea0gmail.com");

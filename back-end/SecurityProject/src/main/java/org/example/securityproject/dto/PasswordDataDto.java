@@ -4,6 +4,7 @@ public class PasswordDataDto {
     private String oldPassword;
     private String newPassword;
     private String confirmPassword;
+    private String email;
 
     public PasswordDataDto() {
     }
@@ -30,5 +31,13 @@ public class PasswordDataDto {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

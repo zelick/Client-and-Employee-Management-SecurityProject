@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -136,6 +137,13 @@ public class AdminController {
         ResponseDto response = permissionService.addPermissionToRole(permission, role);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/updateAdminPassword")
+    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

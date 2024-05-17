@@ -20,6 +20,10 @@ export class NavbarComponent implements OnInit {
   }
     
   redirectToLogin() {
+    this.router.navigate(['/']);
+  }
+
+  redirectToPasswordlessLogin() {
     this.router.navigate(['/login']);
   }
 
@@ -62,10 +66,6 @@ export class NavbarComponent implements OnInit {
 
   clientProfile() {
     this.router.navigate(['/client-profile']);
-  }
-
-  employeeProfile() {
-    this.router.navigate(['/employee-profile']);
   }
 
   createAdRequest() {

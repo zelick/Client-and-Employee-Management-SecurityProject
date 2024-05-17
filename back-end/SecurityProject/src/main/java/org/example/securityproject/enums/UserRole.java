@@ -20,7 +20,8 @@ public enum UserRole {
             EMPLOYEE_READ,
             EMPLOYEE_CREATE,
             EMPLOYEE_UPDATE,
-            EMPLOYEE_DELETE
+            EMPLOYEE_DELETE,
+            CHANGE_PASSWORD
     ))),
     ADMINISTRATOR(new HashSet<>(Set.of(
             ADMIN_READ,
@@ -35,7 +36,8 @@ public enum UserRole {
             CLIENT_READ,
             CLIENT_CREATE,
             CLIENT_UPDATE,
-            CLIENT_DELETE
+            CLIENT_DELETE,
+            CHANGE_PASSWORD
     ))),
     CLIENT(new HashSet<>(Set.of(
             CLIENT_READ,

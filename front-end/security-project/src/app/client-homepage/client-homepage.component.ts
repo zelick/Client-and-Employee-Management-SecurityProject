@@ -26,7 +26,7 @@ export class ClientHomepageComponent implements OnInit{
   }
 
   sendRequest() {
-    this.http.get<any>('http://localhost:8080/api/login/tokens/' + this.email, { observe: 'response' }).subscribe(
+    this.http.get<any>('https://localhost:443/api/login/tokens/' + this.email, { observe: 'response' }).subscribe(
         response => this.processResponse(response),
         error => console.error(error)
     );
@@ -55,8 +55,7 @@ export class ClientHomepageComponent implements OnInit{
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.user = user;
-        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.role);
-        localStorage.setItem('loggedUserRole', this.user.role);
+        localStorage.setItem('loggedUserRole', this.user.roles.join(','));
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);

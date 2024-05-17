@@ -23,7 +23,7 @@ export class AuthService {
 
   user: User | undefined;
 
-  private _api_url = 'http://localhost:8080/api/auth';
+  private _api_url = 'https://localhost:443/api/auth';
   private access_token = null;
 
   login(user:any) {

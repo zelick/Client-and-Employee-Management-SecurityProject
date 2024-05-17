@@ -155,8 +155,9 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.PUT,"/api/admins/removePermission").hasAuthority("ADMIN_UPDATE")
                 .antMatchers(HttpMethod.GET, "/api/admins/getAllCanBeAddedPermissions/**").hasAuthority("ADMIN_READ")
                 .antMatchers(HttpMethod.PUT,"/api/admins/addPermission").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.PUT,"/api/admins/updateAdminPassword").hasAuthority("ADMIN_UPDATE")
 
-                .antMatchers("/api/users/updateAdminPassword").hasAuthority("ADMINISTRATOR")
+                //.antMatchers(HttpMethod.PUT,"/api/users/updatePassword").hasAnyAuthority("ADMIN_UPDATE", "EMPLOYEE_UPDATE")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()

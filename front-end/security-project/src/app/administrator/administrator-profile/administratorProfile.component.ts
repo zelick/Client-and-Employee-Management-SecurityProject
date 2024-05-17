@@ -100,7 +100,12 @@ export class AdministratorProfileComponent implements OnInit {
 
   changePassword() {
     if (this.passwordForm.valid) {
-      const passwordData = this.passwordForm.value;
+      const passwordData = {
+        oldPassword: this.passwordForm.value.oldPassword,
+        newPassword: this.passwordForm.value.newPassword,
+        confirmPassword: this.passwordForm.value.confirmPassword,
+        email: "", 
+      };      
       this.userService.changeAdminPassword(passwordData).subscribe(
         (response: ResponseMessage) => {
           this.passwordMessage = response.responseMessage;

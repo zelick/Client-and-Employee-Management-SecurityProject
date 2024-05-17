@@ -83,7 +83,7 @@ public class LoginController {
         }
 
         loginTokenRepository.delete(loginToken);
-        String clientAppUrl = "http://localhost:4200/client-homepage/" + email;
+        String clientAppUrl = "https://localhost:4200/client-homepage/" + email;
 
         URI redirectUri = UriComponentsBuilder.fromUriString(clientAppUrl).build().toUri();
         return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();

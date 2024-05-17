@@ -40,6 +40,9 @@ export class LoginComponent implements OnInit {
         console.log('Login successful:', response);
         this.messageLogin = response.response;
         this.changePasswordFlag = !response.loggedInOnce;
+        if (response.response === "This account is not active, please wait for admin to activate your account.") {
+          this.changePasswordFlag = false;
+        }
         if(response.loggedInOnce){
           this.loginUser();
         }
@@ -65,7 +68,12 @@ export class LoginComponent implements OnInit {
 
   changePassword(): void {
     if (this.passwordForm.valid) {
-      const passwordData = this.passwordForm.value;
+      const passwordData = {
+        oldPassword: this.passwordForm.value.oldPassword,
+        newPassword: this.passwordForm.value.newPassword,
+        confirmPassword: this.passwordForm.value.confirmPassword,
+        email: this.email, 
+      };
       this.userService.changePassword(passwordData).subscribe(
         (response: ResponseMessage) => {
             this.messagePassword = response.responseMessage;

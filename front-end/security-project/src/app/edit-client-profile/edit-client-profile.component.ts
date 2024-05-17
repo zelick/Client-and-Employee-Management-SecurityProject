@@ -43,7 +43,7 @@ export class EditClientProfileComponent implements OnInit{
             this.clientFlag = true;
           }
 
-        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.user.roles);
+        console.log('ROLA ULOGOVANOG KORISNIKA: ' + this.loggedUser.roles);
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);
@@ -59,7 +59,7 @@ export class EditClientProfileComponent implements OnInit{
         this.userService.findUserByEmail(this.loggedUser.email).subscribe(
           (user: User) => {
             console.log(user);
-            this.user = user;
+            this.loggedUser = user;
           },
           (error) => {
             console.error('Error fetching user:', error);
@@ -70,7 +70,7 @@ export class EditClientProfileComponent implements OnInit{
   }
 
   onSubmit(): void {
-    this.userService.updateClient(this.user).subscribe(
+    this.userService.updateClient(this.loggedUser).subscribe(
       (response: any) => {
         console.log('User updated successfully:', response);
         this.router.navigate(['/client-profile']);

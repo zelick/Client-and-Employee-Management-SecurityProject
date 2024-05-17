@@ -73,6 +73,10 @@ export class UserService {
     return this.http.put<ResponseMessage>(this.apiUrl + 'admins/addPermission', data);
   }
 
+  changeAdminPassword(passwordData: any): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(this.apiUrl + 'admins/updateAdminPassword', passwordData);
+  }
+
   //EMPLOYEE
 
   //...
@@ -83,10 +87,6 @@ export class UserService {
 
   changePassword(passwordData: any): Observable<ResponseMessage> {
     return this.http.put<ResponseMessage>(this.apiUrl + 'users/updatePassword', passwordData);
-  }
-
-  changeAdminPassword(passwordData: any): Observable<ResponseMessage> {
-    return this.http.put<ResponseMessage>(this.apiUrl + 'users/updateAdminPassword', passwordData);
   }
 
   tryLogin(email: string, password: string): Observable<LoginReponse> { 
@@ -132,7 +132,6 @@ export class UserService {
   getLoggedInUser(): Observable<User> {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser");
   }
-
 
   getLoggedInUserHomepage(accessToken : string): Observable<User> {
     const headers = new HttpHeaders({

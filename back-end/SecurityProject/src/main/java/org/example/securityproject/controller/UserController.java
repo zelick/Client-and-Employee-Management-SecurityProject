@@ -36,7 +36,7 @@ public class UserController {
 
        List<UserRole> roles = user.getRoles();
 
-       roles.add(UserRole.CLIENT);
+       roles.remove(UserRole.CLIENT);
 
        user.setRoles(roles);
 
@@ -80,5 +80,23 @@ public class UserController {
     @GetMapping("/httpsMessage")
     public String httpMessage() {
         return "USPESNO!";
+    }
+
+    @PutMapping("/updatePassword")
+    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+        ResponseDto response = new ResponseDto();
+        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/getLoggedInUser")
+    public ResponseEntity<UserDto> getLogegdInUser() {
+        User loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser == null) {
+            return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
+        }
+
+        UserDto userDto = new UserDto(loggedInUser);
+        return ResponseEntity.ok(userDto);
     }
 }
