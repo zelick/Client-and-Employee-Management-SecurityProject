@@ -18,6 +18,7 @@ export class RegistrationRequestsComponent {
     showRejectForm: boolean = false;
     rejectionReason: string = "";
     responseData: RegistrationRequestResponse | undefined;
+    rejectingUser: User | null = null;
 
     constructor(private userService: UserService,
                 private auth: AuthService, 
@@ -65,6 +66,7 @@ export class RegistrationRequestsComponent {
     rejectRequest(user: User): void {
         this.showRejectForm = true;
         this.responseData = { email: user.email, accepted: false, reason: '' };
+        this.rejectingUser = user;
     }
 
     submitRejection(): void {
@@ -78,6 +80,7 @@ export class RegistrationRequestsComponent {
                     this.loadUsersRequests();
                     this.showRejectForm = false; 
                     console.log(response);
+                    this.rejectingUser = null;
                 },
                 (error) => {
                     console.error('Failed to reject user:', error);
@@ -94,6 +97,7 @@ export class RegistrationRequestsComponent {
                     this.loadUsersRequests();
                     this.showRejectForm = false; 
                     console.log(response);
+                    this.rejectingUser = null;
                 },
                 (error) => {
                     console.error('Failed to process user registration request:', error);
