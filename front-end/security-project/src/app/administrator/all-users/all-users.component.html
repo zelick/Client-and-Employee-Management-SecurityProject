@@ -1,0 +1,19 @@
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Surname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.email }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.surname }}</td>
+      <button (click)="blockUser(user.email)">Block</button>
+    </tr>
+  </tbody>
+</table>

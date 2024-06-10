@@ -18,6 +18,7 @@ import { AuthGuard } from './service/authGuard.service';
 import { HomePageComponent } from './homepage/homepage.component';
 import { PermissionsManipulationComponent } from './administrator/permissions-manipulation/permissionsManipulation.component';
 import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
+import { AllUsersComponent } from './administrator/all-users/all-users.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
   { path: 'client-ads', component: AllClientAdsComponent},
   { path: 'homepage', component: HomePageComponent},
   { path: 'permissionsManipulation', component: PermissionsManipulationComponent},
-  { path: 'client-homepage/:email', component: ClientHomepageComponent}
+  { path: 'client-homepage/:email', component: ClientHomepageComponent},
+  { path: 'allUsers', component: AllUsersComponent}
 ];
 
 @NgModule({

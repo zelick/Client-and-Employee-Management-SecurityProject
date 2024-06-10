@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   messageLogin: string | undefined;
   messagePassword: string | undefined;
   passwordForm: FormGroup = new FormGroup({});
+  resetPasswordFlag: boolean = false;
 
   constructor(private userService: UserService, private fb: FormBuilder, private authService: AuthService) { }
 
@@ -34,18 +35,34 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  resetPassword(): void {
+    
+  }
+
   tryLogin(): void {
     this.userService.tryLogin(this.email, this.password).subscribe(
       (response: LoginReponse) => {
-        console.log('Login successful:', response);
+        console.log('Login response:', response);
         this.messageLogin = response.response;
         this.changePasswordFlag = !response.loggedInOnce;
         if (response.response === "This account is not active, please wait for admin to activate your account.") {
           this.changePasswordFlag = false;
+          return;
         }
-        if(response.loggedInOnce){
-          this.loginUser();
+        if (response.response === "Your account has been blocked by administrator.") {
+          this.changePasswordFlag = false;
+          return;
         }
+        if (response.response === "Wrong password. Try again or click ‘Forgot password’ to reset it.") {
+          this.resetPasswordFlag = true;
+          return; 
+        }
+        if (response.loggedInOnce)
+          {
+            this.loginUser();
+          }
+        
+        
       },
       (error) => {
         console.error('Login failed:', error);

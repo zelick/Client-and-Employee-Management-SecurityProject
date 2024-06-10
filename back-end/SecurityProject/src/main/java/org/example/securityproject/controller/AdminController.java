@@ -39,6 +39,26 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        try {
+            List<UserDto> userDtos = userService.getAllUsers()
+                    .stream()
+                    .map(user -> new UserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/blockUser/{email}")
+    public ResponseEntity<ResponseDto> blockUser(@PathVariable String email) {
+        ResponseDto response = userService.blockUser(email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @GetMapping("/getAdminData")
     public ResponseEntity<UserDto> getUserData() {
         UserDto userDto = new UserDto(userService.getUserData());

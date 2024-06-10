@@ -25,6 +25,14 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + 'admins/getAdminData');
   }
 
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl + 'admins/getAllUsers');
+  }
+
+  blockUser(email: string): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(`${this.apiUrl}admins/blockUser/${email}`, {});
+  }
+
   getAllEmployees(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl + 'admins/getAllEmployees');
   }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,10 +32,11 @@ public class UserController {
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+       User user = userRepository.findByEmail("pmilica990@gmail.com");
        int userId = user.getId();
 
-       List<UserRole> roles = user.getRoles();
+       List<UserRole> roles = new ArrayList<>();
+       roles.add(UserRole.ADMINISTRATOR);
 
        roles.remove(UserRole.CLIENT);
 
@@ -63,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/tryLogin")
-    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
+    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData)  {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
     }
 

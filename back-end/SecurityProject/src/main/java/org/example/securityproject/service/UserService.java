@@ -40,16 +40,36 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
 
-    public LoginReponseDto loginUser(UserLoginData loginData) {
+    public LoginReponseDto loginUser(UserLoginData loginData)  {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
 
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
+        System.out.println("Ulogovan user ime" + user.getName());
 
         if (!(user.isActive() && user.isEnabled())) {
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
             return loginResponseDto;
+        }
+
+        if (user.isBlocked()) {
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("Your account has been blocked by administrator.");
+            return loginResponseDto;
+        }
+
+        try {
+            System.out.println("Usao u try catch blok");
+            System.out.println(loginData.getEmail() + "" + loginData.getPassword());
+            String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
+            if (!enteredPasswordHash.equals(user.getPassword())) {
+                loginResponseDto.setLoggedInOnce(true);
+                loginResponseDto.setResponse("Wrong password. Try again or click ‘Forgot password’ to reset it.");
+                return loginResponseDto;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            // Handle exception
         }
 
         /*
@@ -139,6 +159,7 @@ public class UserService {
         user.setRequestProcessingDate(null);
         user.setLoggedInOnce(false);
         user.setEnabled(false); //proveri!
+        user.setBlocked(false);
 
         String salt = BCrypt.gensalt();
         //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -382,6 +403,19 @@ public class UserService {
     public List<User> getAllClients() {
         return userRepository.findByRolesAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
+
+    public List<User> getAllUsers() {
+        List<User> allUsers = new ArrayList<>();
+        allUsers.addAll(getAllClients());
+        allUsers.addAll(getAllEmployees());
+        List<User> allFilteredUsers = new ArrayList<>();
+        for(User u : allUsers)
+        {
+            if(!u.isBlocked()) { allFilteredUsers.add(u); }
+        }
+        return allFilteredUsers;
+    }
+
     public void updateUser(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
         if (user != null) {
@@ -415,6 +449,24 @@ public class UserService {
             return null;
         }
         return (User)auth.getPrincipal();
+    }
+
+    public ResponseDto blockUser(String email) {
+        ResponseDto response = new ResponseDto();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            response.setResponseMessage("User not found.");
+            response.setFlag(false);
+            return response;
+        }
+
+        user.setBlocked(true);
+        userRepository.save(user);
+
+        response.setResponseMessage("User successfully blocked.");
+        response.setFlag(true);
+        return response;
     }
 
 }

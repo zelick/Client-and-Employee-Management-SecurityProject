@@ -76,6 +76,20 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
+    public void sendResetPasswordMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        String userEmail = email;
+        String subject = "Reset your password";
+        String text = "Click on the following link to reset your password: https://localhost:443/api/login/verify?token=";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("aplikacijemobilnea0gmail.com");
+        message.setTo(userEmail);
+        message.setSubject(subject);
+        message.setText(text);
+
+        javaMailSender.send(message);
+    }
     /*
     private String generateToken(String userEmail) {
         User user = userRepository.findByEmail(userEmail);

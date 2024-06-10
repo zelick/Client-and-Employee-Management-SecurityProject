@@ -40,6 +40,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/administratorProfile']);
   }
 
+  allUsers() {
+    this.router.navigate(['/allUsers']);
+  }
+
   allClients() {
     this.router.navigate(['/allClients']);
   }
