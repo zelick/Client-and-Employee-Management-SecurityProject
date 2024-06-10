@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @PostMapping("/registerUser")
-    public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<RegistrationResponseDto> registerUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
@@ -115,5 +115,11 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<ResponseDto> verifyCode(@RequestBody VerificationRequestDto verificationRequest)
+    {
+        return new ResponseEntity<>(userService.verifyCode(verificationRequest), HttpStatus.OK);
     }
 }

@@ -1,4 +1,5 @@
-export interface LoginReponse{
+export interface LoginResponse{
     response: string, 
-    loggedInOnce: boolean
+    loggedInOnce: boolean,
+    mfaEnabled: boolean
 }

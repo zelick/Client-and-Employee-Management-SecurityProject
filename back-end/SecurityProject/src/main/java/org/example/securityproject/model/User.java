@@ -102,6 +102,14 @@ public class User implements UserDetails {
     @Column(name = "loggedInOnce", nullable = false)
     private boolean loggedInOnce;
 
+    @Column(name="mfaEnabled", nullable = false)
+    private boolean mfaEnabled;
+    @Column(name = "secret", nullable = true)
+    private String secret;
+
+    @Column(name="verifiedMfaCode", nullable = false)
+    private boolean verifiedMfaCode;
+
     public User() {}
 
     public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, List<UserRole> roles, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email) {
@@ -335,5 +343,29 @@ public class User implements UserDetails {
 
     public void setLoggedInOnce(boolean loggedInOnce) {
         this.loggedInOnce = loggedInOnce;
+    }
+
+    public boolean isMfaEnabled() {
+        return mfaEnabled;
+    }
+
+    public void setMfaEnabled(boolean mfaEnabled) {
+        this.mfaEnabled = mfaEnabled;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public boolean isVerifiedMfaCode() {
+        return verifiedMfaCode;
+    }
+
+    public void setVerifiedMfaCode(boolean verifiedMfaCode) {
+        this.verifiedMfaCode = verifiedMfaCode;
     }
 }

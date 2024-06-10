@@ -11,7 +11,20 @@
   <button type="submit">Login</button>
 </form>
 
-<div *ngIf="messageLogin">{{ messageLogin }}</div>
+<div *ngIf="showVerificationCode">{{ "Enter the 6-digit authentication code." }}</div>
+
+<div *ngIf="showVerificationCode">
+  <form (ngSubmit)="verifyCode()">
+    <div>
+      <label for="verificationCode">Verification Code:</label>
+      <input type="text" id="verificationCode" name="verificationCode" [(ngModel)]="verificationCode" required>
+    </div>
+    <button type="submit">Verify</button>
+  </form>
+  <div *ngIf="messageVerification">{{ messageVerification }}</div>
+</div>
+
+<div *ngIf="messageLogin" && !messageVerification>{{ messageLogin }}</div>
 
 <div *ngIf="changePasswordFlag">
   <h2>Change Password</h2>

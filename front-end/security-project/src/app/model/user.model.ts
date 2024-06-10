@@ -16,5 +16,6 @@ export interface User{
     roles: UserRole[], 
     clientType: ClientType, 
     servicesPackage: ServicesPackage,
-    registrationStatus: RegistrationStatus
+    registrationStatus: RegistrationStatus,
+    mfaEnabled: boolean;
 }

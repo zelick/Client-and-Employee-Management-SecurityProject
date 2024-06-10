@@ -10,6 +10,7 @@ import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +40,7 @@ public class UserService {
     private EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
+    private final TwoFactorAuthenticationService tfaService;
 
     public LoginReponseDto loginUser(UserLoginData loginData) {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
@@ -47,6 +49,7 @@ public class UserService {
         User user = userRepository.findByEmail(loginData.getEmail());
 
         if (!(user.isActive() && user.isEnabled())) {
+            loginResponseDto.setMfaEnabled(false);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
             return loginResponseDto;
@@ -64,20 +67,38 @@ public class UserService {
                 .anyMatch(role -> role.equals(UserRole.ADMINISTRATOR) || role.equals(UserRole.EMPLOYEE));
 
         if (hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
+            loginResponseDto.setMfaEnabled(false);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This user must change his password because this is his first login.");
             return loginResponseDto;
         }
 
+        if (user.isMfaEnabled() && !user.isVerifiedMfaCode()) {
+            loginResponseDto.setMfaEnabled(false);
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("The user did not enter the two-factor authentication code correctly, and his account is not active.");
+            return loginResponseDto;
+        }
+
+        if (user.isMfaEnabled() && user.isVerifiedMfaCode()) {
+            loginResponseDto.setMfaEnabled(true);
+            //loginonce -- tek ako potvrdi pravilno 2fa
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("Enter the 6-digit authentication code.");
+            return loginResponseDto;
+        }
+
+        loginResponseDto.setMfaEnabled(false);
         loginResponseDto.setLoggedInOnce(true);
         loginResponseDto.setResponse("This user has successfully logged in.");
         return loginResponseDto;
     }
-    public ResponseDto registerUser (UserDto userDto) {
-        ResponseDto response = new ResponseDto();
+    public RegistrationResponseDto registerUser (UserDto userDto) {
+        RegistrationResponseDto response = new RegistrationResponseDto();
         if (!validatePassword(userDto.getPassword())) {
             response.setResponseMessage("The password does not meet the requirements.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
@@ -85,18 +106,21 @@ public class UserService {
         if (existingUser != null) {
             response.setResponseMessage("A user with this email is already registered.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
         if (!isValidEmail(userDto.getEmail())) {
             response.setResponseMessage("Invalid email format.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
         if (!areAllFieldsFilled(userDto)) {
             response.setResponseMessage("All fields are required.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
@@ -111,6 +135,7 @@ public class UserService {
             if (minutesPassed < 5) {
                 response.setResponseMessage("It is not possible to register - your request was recently rejected.");
                 response.setFlag(false);
+                response.setSecretImageUri("");
                 return response;
             }
             else {
@@ -152,12 +177,23 @@ public class UserService {
             // Handle exception
         }
 
+        //DODATO ZA 2FA
+        user.setMfaEnabled(userDto.isMfaEnabled());
+
+        if (userDto.isMfaEnabled()) {
+            user.setSecret(tfaService.generateNewSecret());
+        }
+
+        user.setVerifiedMfaCode(false);
+        //
+
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
         userRepository.save(user);
         response.setResponseMessage("You have successfully registered.");
         response.setFlag(true);
+        response.setSecretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()));
         return response;
     }
 
@@ -417,6 +453,23 @@ public class UserService {
         return (User)auth.getPrincipal();
     }
 
+    public ResponseDto verifyCode(VerificationRequestDto verificationRequestDto) {
+        ResponseDto responseDto = new ResponseDto();
+        User user = userRepository.findByEmail(verificationRequestDto.getEmail());
+        if (tfaService.isOtpNotValid(user.getSecret(), verificationRequestDto.getCode())) {
+
+            //throw new BadCredentialsException("Code is not correct");
+            responseDto.setFlag(false);
+            responseDto.setResponseMessage("Code is not correct");
+            return responseDto;
+        }
+        responseDto.setFlag(true);
+        responseDto.setResponseMessage("Code is correct.");
+
+        user.setVerifiedMfaCode(true);
+        userRepository.save(user);
+        return responseDto;
+    }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
 //onda uzmem njehovu lozinku, uzmem salt koji imam u bazi spojim ih HESIRAM i poredim onda HESOVE

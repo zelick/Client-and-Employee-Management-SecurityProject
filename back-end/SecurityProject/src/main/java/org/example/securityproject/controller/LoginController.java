@@ -1,4 +1,4 @@
-package org.example.securityproject.controllers;
+package org.example.securityproject.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
