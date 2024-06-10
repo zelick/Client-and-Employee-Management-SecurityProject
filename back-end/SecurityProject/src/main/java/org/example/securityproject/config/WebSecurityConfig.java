@@ -188,10 +188,12 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/users/registerUser")
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
+                .antMatchers(HttpMethod.POST, "/api/users/resetPassword")
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
                 .antMatchers(HttpMethod.POST, "/api/users/editUserRole") //TEST VELIKI
                 .antMatchers(HttpMethod.POST, "/api/users/editUserPermission") //TEST VELIKI
                 .antMatchers(HttpMethod.POST, "/api/login/send-email")
+                .antMatchers(HttpMethod.POST, "/api/login/reset-password")
                 .antMatchers(HttpMethod.GET, "/api/login/verify")
                 .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",

@@ -69,6 +69,11 @@ public class UserController {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
     }
 
+    @PostMapping("/resetPassword")
+    public ResponseEntity<LoginReponseDto> resetPassword(@RequestBody UserLoginData loginData)  {
+        return new ResponseEntity<>(userService.resetPassword(loginData), HttpStatus.OK);
+    }
+
     @PostMapping("/registerUser")
     public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);

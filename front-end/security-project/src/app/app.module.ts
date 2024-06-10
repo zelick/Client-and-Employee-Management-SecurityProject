@@ -32,6 +32,7 @@ import { HomePageComponent } from './homepage/homepage.component';
 import { PermissionsManipulationComponent } from './administrator/permissions-manipulation/permissionsManipulation.component';
 import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
 import { AllUsersComponent } from './administrator/all-users/all-users.component';
+import { ResetPasswordComponent } from './administrator/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AllUsersComponent } from './administrator/all-users/all-users.component
     HomePageComponent,
     PermissionsManipulationComponent,
     ClientHomepageComponent,
-    AllUsersComponent
+    AllUsersComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

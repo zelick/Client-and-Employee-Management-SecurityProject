@@ -104,6 +104,14 @@ export class UserService {
     };
     return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
+
+  resetPassword(email: string, password: string): Observable<LoginReponse> { 
+    const loginData = {
+      email: email,
+      password: password
+    };
+    return this.http.post<LoginReponse>(this.apiUrl + 'users/resetPassword', loginData);
+  }
   
   findUserByEmail(email: string): Observable<User> {
     return this.http.get<User>(this.apiUrl + 'users/findUserByEmail/' + email);

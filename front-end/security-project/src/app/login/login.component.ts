@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LoginReponse } from '../model/loginResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { UserService } from '../services/user.service';
+import { LoginService } from '../services/login.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   passwordForm: FormGroup = new FormGroup({});
   resetPasswordFlag: boolean = false;
 
-  constructor(private userService: UserService, private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private userService: UserService, private fb: FormBuilder, private authService: AuthService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -36,7 +37,14 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword(): void {
-    
+    this.loginService.resetPassword(this.email).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   tryLogin(): void {

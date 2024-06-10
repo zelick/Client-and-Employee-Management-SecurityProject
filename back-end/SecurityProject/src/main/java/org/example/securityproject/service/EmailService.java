@@ -80,7 +80,7 @@ public class EmailService {
     public void sendResetPasswordMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = email;
         String subject = "Reset your password";
-        String text = "Click on the following link to reset your password: https://localhost:443/api/login/verify?token=";
+        String text = "Click on the following link to reset your password: https://localhost:4200/resetPassword/" + email;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("aplikacijemobilnea0gmail.com");

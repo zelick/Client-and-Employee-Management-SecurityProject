@@ -19,6 +19,7 @@ import { HomePageComponent } from './homepage/homepage.component';
 import { PermissionsManipulationComponent } from './administrator/permissions-manipulation/permissionsManipulation.component';
 import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
 import { AllUsersComponent } from './administrator/all-users/all-users.component';
+import { ResetPasswordComponent } from './administrator/reset-password/reset-password.component';
 
 const routes: Routes = [
   {path:'registration', component: RegistrationComponent},
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'homepage', component: HomePageComponent},
   { path: 'permissionsManipulation', component: PermissionsManipulationComponent},
   { path: 'client-homepage/:email', component: ClientHomepageComponent},
-  { path: 'allUsers', component: AllUsersComponent}
+  { path: 'allUsers', component: AllUsersComponent},
+  { path: 'resetPassword/:email', component: ResetPasswordComponent}
 ];
 
 @NgModule({

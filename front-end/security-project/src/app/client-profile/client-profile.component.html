@@ -10,6 +10,27 @@
     <p><strong>Country:</strong>{{ loggedUser.country }} </p>
     <p><strong>Phone number:</strong>{{ loggedUser.phoneNumber}} </p>
     <button class="dugme" (click)="editProfile(loggedUser.email)">Edit</button>
+    <button class="dugme" (click)="changePasswordToggle()">Change password</button>
 </div>
+<div *ngIf="changePasswordFlag">
+    <h2>Change password</h2>
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+      <div>
+        <label for="oldPassword">Old password:</label>
+        <input type="password" id="oldPassword" formControlName="oldPassword">
+      </div>
+      <div>
+        <label for="newPassword">New password:</label>
+        <input type="password" id="newPassword" formControlName="newPassword">
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm new password:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword">
+      </div>
+      <button type="submit">Change password</button>
+    </form>
+  </div>
+  
+  <div *ngIf="messagePassword">{{ messagePassword }}</div>
 </div>
 </div>

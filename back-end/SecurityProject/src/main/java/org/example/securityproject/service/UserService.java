@@ -40,6 +40,31 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
 
+    public LoginReponseDto resetPassword(UserLoginData loginData){
+        LoginReponseDto loginResponseDto = new LoginReponseDto();
+
+        if(!validatePassword(loginData.getPassword())){
+            loginResponseDto.setLoggedInOnce(true);
+            loginResponseDto.setResponse("Password do not meet the requirements.");
+            return loginResponseDto;
+        }
+
+        //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
+        User user = userRepository.findByEmail(loginData.getEmail());
+        try{
+            String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
+            user.setPassword(enteredPasswordHash);
+            userRepository.save(user);
+            loginResponseDto.setLoggedInOnce(true);
+            loginResponseDto.setResponse("You have successfully reset your password.");
+        }catch (NoSuchAlgorithmException e) {
+            // Handle exception
+        }
+        loginResponseDto.setLoggedInOnce(true);
+        loginResponseDto.setResponse("Reset password failed.");
+        return loginResponseDto;
+    }
+
     public LoginReponseDto loginUser(UserLoginData loginData)  {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
 
