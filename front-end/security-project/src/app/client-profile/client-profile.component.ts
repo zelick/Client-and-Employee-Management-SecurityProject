@@ -75,6 +75,7 @@ export class ClientProfileComponent implements OnInit{
       (user: User) => {
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
+        this.email = this.loggedUser.email;
         //this.findUserByEmail();
       },
       (error) => {
