@@ -1,0 +1,1144 @@
+2024-06-11 18:43:10,958 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 18:43:10,960 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 18:43:10,964 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 18:43:13,601 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 12120 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 18:43:13,603 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 18:43:14,121 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 18:43:14,172 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 44 ms. Found 5 JPA repository interfaces.
+2024-06-11 18:43:14,363 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4ac86d6a' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 18:43:14,371 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 18:43:14,532 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 18:43:14,538 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 18:43:14,539 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 18:43:14,539 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 18:43:14,604 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 18:43:14,604 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 968 ms
+2024-06-11 18:43:14,727 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 18:43:14,758 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 18:43:14,843 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 18:43:14,915 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 18:43:15,073 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 18:43:15,097 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 18:43:15,765 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 18:43:15,771 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 18:43:16,225 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 18:43:16,283 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 18:43:16,333 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 18:43:16,336 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@30a4a111, org.springframework.security.web.context.SecurityContextPersistenceFilter@4542af89, org.springframework.security.web.header.HeaderWriterFilter@3fdede3a, org.springframework.web.filter.CorsFilter@7f6a6d46, org.springframework.security.web.authentication.logout.LogoutFilter@1abea1ed, org.example.securityproject.auth.TokenAuthenticationFilter@238a7e3d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6aa18912, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@cce92b5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7ed5cc8c, org.springframework.security.web.session.SessionManagementFilter@2c6efee3, org.springframework.security.web.access.ExceptionTranslationFilter@7730da00, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@b5bddfe]
+2024-06-11 18:43:16,338 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 18:43:16,338 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 18:43:16,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 18:43:16,340 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 18:43:16,341 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 18:43:16,341 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 18:43:16,341 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 18:43:16,375 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 18:43:16,399 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 18:43:16,483 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 18:43:16,648 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 18:43:16,654 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.315 seconds (JVM running for 3.814)
+2024-06-11 18:43:27,754 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 18:43:27,756 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 18:43:27,759 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 18:43:43,699 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 4500 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 18:43:43,701 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 18:43:44,216 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 18:43:44,268 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 46 ms. Found 5 JPA repository interfaces.
+2024-06-11 18:43:44,470 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4fc3c165' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 18:43:44,478 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 18:43:44,633 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 18:43:44,639 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 18:43:44,639 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 18:43:44,640 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 18:43:44,716 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 18:43:44,717 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 985 ms
+2024-06-11 18:43:44,843 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 18:43:44,876 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 18:43:44,977 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 18:43:45,060 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 18:43:45,212 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 18:43:45,236 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 18:43:45,801 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 18:43:45,806 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 18:43:46,228 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 18:43:46,287 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 18:43:46,336 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 18:43:46,339 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5b827796, org.springframework.security.web.context.SecurityContextPersistenceFilter@862624f, org.springframework.security.web.header.HeaderWriterFilter@46c9ee28, org.springframework.web.filter.CorsFilter@27c827ec, org.springframework.security.web.authentication.logout.LogoutFilter@25dc2c0, org.example.securityproject.auth.TokenAuthenticationFilter@7d108063, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@78e7b83, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c8a91e2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@b272860, org.springframework.security.web.session.SessionManagementFilter@517d9cd5, org.springframework.security.web.access.ExceptionTranslationFilter@63896cf7, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7c07023]
+2024-06-11 18:43:46,349 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 18:43:46,349 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 18:43:46,350 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 18:43:46,351 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 18:43:46,390 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 18:43:46,415 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 18:43:46,501 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 18:43:46,666 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 18:43:46,675 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.237 seconds (JVM running for 3.748)
+2024-06-11 18:47:08,944 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 18:47:08,945 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 18:47:08,948 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 20:22:47,984 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 12320 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 20:22:47,987 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 20:22:48,577 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 20:22:48,639 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 53 ms. Found 5 JPA repository interfaces.
+2024-06-11 20:22:48,841 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4649d70a' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 20:22:48,849 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 20:22:49,027 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 20:22:49,035 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 20:22:49,035 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 20:22:49,035 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 20:22:49,106 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 20:22:49,107 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 1081 ms
+2024-06-11 20:22:49,239 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 20:22:49,285 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 20:22:49,396 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 20:22:49,475 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 20:22:49,619 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 20:22:49,642 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 20:22:50,262 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 20:22:50,268 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 20:22:50,705 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 20:22:50,762 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 20:22:50,817 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 20:22:50,820 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@579ee82, org.springframework.security.web.context.SecurityContextPersistenceFilter@9715d26, org.springframework.security.web.header.HeaderWriterFilter@4e782401, org.springframework.web.filter.CorsFilter@127320df, org.springframework.security.web.authentication.logout.LogoutFilter@5b86f4cb, org.example.securityproject.auth.TokenAuthenticationFilter@6c3884f5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35d8ba22, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3c5bb37d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6778636f, org.springframework.security.web.session.SessionManagementFilter@aca594d, org.springframework.security.web.access.ExceptionTranslationFilter@1a1f22f2, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@796613b7]
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 20:22:50,821 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 20:22:50,822 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 20:22:50,823 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 20:22:50,860 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 20:22:50,885 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 20:22:50,963 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 20:22:51,144 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 20:22:51,152 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.465 seconds (JVM running for 4.141)
+2024-06-11 20:22:56,712 INFO [https-jsse-nio-443-exec-5] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-11 20:22:56,712 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected StandardServletMultipartResolver
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected AcceptHeaderLocaleResolver
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected FixedThemeResolver
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3e7ddb7e
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.support.SessionFlashMapManager@2fbb098f
+2024-06-11 20:22:56,713 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-11 20:22:56,713 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 0 ms
+2024-06-11 20:22:56,725 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:22:56,739 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 20:22:56,740 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:22:56,804 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@106fe6d3]
+2024-06-11 20:22:56,905 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:22:56,907 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@6c64df94]
+2024-06-11 20:22:56,912 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:22:56,919 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:22:56,925 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 20:22:56,925 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:22:56,929 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@4149e670]
+2024-06-11 20:22:56,936 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Failed to complete request: org.springframework.security.authentication.BadCredentialsException: Incorrect password
+2024-06-11 20:22:56,937 ERROR [https-jsse-nio-443-exec-8] org.apache.juli.logging.DirectJDKLog: Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.security.authentication.BadCredentialsException: Incorrect password] with root cause
+org.springframework.security.authentication.BadCredentialsException: Incorrect password
+	at org.example.securityproject.auth.CustomAuthenticationProvider.authenticate(CustomAuthenticationProvider.java:48)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.example.securityproject.controller.AuthenticationController.createAuthenticationToken(AuthenticationController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:665)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:750)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:204)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-06-11 20:23:35,092 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 20:23:35,093 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:23:35,095 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@2230150e]
+2024-06-11 20:23:35,098 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:23:35,099 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@de50a4c]
+2024-06-11 20:23:35,100 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:23:35,104 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 20:23:35,106 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:23:35,106 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@747c507d]
+2024-06-11 20:23:35,111 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Failed to complete request: org.springframework.security.authentication.BadCredentialsException: Incorrect password
+2024-06-11 20:23:35,112 ERROR [https-jsse-nio-443-exec-10] org.apache.juli.logging.DirectJDKLog: Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.security.authentication.BadCredentialsException: Incorrect password] with root cause
+org.springframework.security.authentication.BadCredentialsException: Incorrect password
+	at org.example.securityproject.auth.CustomAuthenticationProvider.authenticate(CustomAuthenticationProvider.java:48)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.example.securityproject.controller.AuthenticationController.createAuthenticationToken(AuthenticationController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:665)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:750)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:204)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-06-11 20:23:43,816 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 20:23:43,816 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:23:43,817 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@69f8d01e]
+2024-06-11 20:23:43,821 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:23:43,822 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@48f0aa74]
+2024-06-11 20:23:43,823 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:23:43,828 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 20:23:43,828 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:23:43,830 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@347e1916]
+2024-06-11 20:23:43,834 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Failed to complete request: org.springframework.security.authentication.BadCredentialsException: Incorrect password
+2024-06-11 20:23:43,834 ERROR [https-jsse-nio-443-exec-2] org.apache.juli.logging.DirectJDKLog: Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.security.authentication.BadCredentialsException: Incorrect password] with root cause
+org.springframework.security.authentication.BadCredentialsException: Incorrect password
+	at org.example.securityproject.auth.CustomAuthenticationProvider.authenticate(CustomAuthenticationProvider.java:48)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.example.securityproject.controller.AuthenticationController.createAuthenticationToken(AuthenticationController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:665)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:750)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:204)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-06-11 20:23:47,383 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 20:23:47,384 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:23:47,384 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@7ca5fd5f]
+2024-06-11 20:23:47,387 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:23:47,387 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@2df74aa6]
+2024-06-11 20:23:47,388 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:23:47,394 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 20:23:47,394 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:23:47,396 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@6e8d9d2c]
+2024-06-11 20:23:47,400 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Failed to complete request: org.springframework.security.authentication.BadCredentialsException: Incorrect password
+2024-06-11 20:23:47,401 ERROR [https-jsse-nio-443-exec-4] org.apache.juli.logging.DirectJDKLog: Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.security.authentication.BadCredentialsException: Incorrect password] with root cause
+org.springframework.security.authentication.BadCredentialsException: Incorrect password
+	at org.example.securityproject.auth.CustomAuthenticationProvider.authenticate(CustomAuthenticationProvider.java:48)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.example.securityproject.controller.AuthenticationController.createAuthenticationToken(AuthenticationController.java:53)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:665)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:750)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:204)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:895)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1732)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2024-06-11 20:28:28,165 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 20:28:28,166 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 20:28:28,168 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@4ef09033]
+2024-06-11 20:28:28,171 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:28:28,171 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@653229e8]
+2024-06-11 20:28:28,173 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:28,178 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 20:28:28,179 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 20:28:28,180 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@e8bf2f1]
+2024-06-11 20:28:28,207 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json] and supported [application/json]
+2024-06-11 20:28:28,208 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.AccessRefreshTokenResponseDto@69c21294]
+2024-06-11 20:28:28,209 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:28,221 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 20:28:28,226 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 20:28:28,269 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/users/getLoggedInUser", parameters={}
+2024-06-11 20:28:28,269 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 20:28:28,275 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 20:28:28,276 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.UserDto@60388720]
+2024-06-11 20:28:28,282 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:33,238 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:33,242 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:33,248 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:33,248 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:33,250 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:33,250 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:33,250 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:38,232 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:38,242 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:38,243 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:38,244 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:38,245 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:38,245 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:43,975 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:43,982 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:43,983 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:43,984 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:43,985 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:43,985 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:48,969 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:48,977 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:48,977 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:48,978 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:48,979 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:48,979 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:53,973 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:53,978 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:53,978 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:53,979 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:53,979 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:53,979 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:28:58,970 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:58,976 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:28:58,976 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:28:58,978 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:28:58,978 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:28:58,978 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:03,961 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:03,966 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:03,966 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:03,968 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:03,968 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:03,968 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:08,973 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:08,978 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:08,979 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:08,980 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:08,981 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:08,981 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:13,975 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:13,979 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:13,980 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:13,981 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:13,981 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:13,982 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:18,233 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:18,237 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:18,238 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:18,238 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:18,239 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:18,240 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:23,971 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:23,980 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:23,980 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:23,983 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:23,983 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:23,984 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:28,966 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:28,970 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:28,971 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:28,972 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:28,972 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:28,973 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:33,965 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:33,972 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:33,972 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:33,974 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:33,974 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:33,974 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:38,964 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:38,969 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:38,970 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:38,971 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:38,971 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:38,972 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:43,976 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:43,983 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:43,983 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:43,984 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:43,984 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:43,984 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:48,964 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:48,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:48,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:48,973 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:48,974 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:48,975 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:53,967 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:53,970 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:53,971 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:53,972 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:53,973 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:53,973 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:29:58,974 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:58,979 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:29:58,980 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:29:58,982 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:29:58,983 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:29:58,983 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:30:03,960 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:03,965 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:30:03,966 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:03,967 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:30:03,968 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:30:03,968 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:30:08,971 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:08,977 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:30:08,977 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:08,978 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:30:08,978 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:30:08,979 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:30:13,966 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:13,970 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:30:13,970 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:30:13,972 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:30:13,972 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:30:13,972 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:31:14,976 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:31:14,979 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:31:14,979 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:31:14,980 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:31:14,980 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:31:14,980 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:32:15,982 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:32:15,988 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:32:15,989 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:32:15,990 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:32:15,991 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:32:15,991 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:33:16,977 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:33:16,982 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:33:16,982 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:33:16,984 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:33:16,984 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:33:16,984 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:34:16,967 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:34:16,972 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:34:16,972 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:34:16,974 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:34:16,974 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:34:16,974 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:35:16,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:35:16,974 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:35:16,974 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:35:16,975 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:35:16,975 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:35:16,977 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:36:16,977 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:36:16,982 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:36:16,982 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:36:16,984 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:36:16,984 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:36:16,985 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:37:16,967 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:37:16,973 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:37:16,974 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:37:16,976 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:37:16,977 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:37:16,978 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:38:16,979 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:16,985 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:38:16,986 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:16,988 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:38:16,988 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:38:16,988 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:38:48,158 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:48,164 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:38:48,165 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:48,167 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:38:48,167 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:38:48,168 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:38:53,974 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:53,978 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:38:53,978 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:53,980 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:38:53,980 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:38:53,980 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:38:58,972 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:58,977 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:38:58,978 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:38:58,979 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:38:58,979 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:38:58,980 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:03,969 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:03,974 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:03,975 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:03,976 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:03,976 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:03,976 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:08,962 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:08,966 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:08,967 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:08,967 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:08,967 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:08,968 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:13,964 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:13,968 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:13,968 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:13,969 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:13,969 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:13,969 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:18,236 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:18,239 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:18,239 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:18,241 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:18,241 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:18,241 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:23,971 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:23,975 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:23,976 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:23,977 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:23,977 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:23,977 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:28,972 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:28,977 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:28,977 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:28,978 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:28,978 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:28,979 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:33,233 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:33,239 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:33,239 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:33,241 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:33,241 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:33,241 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:38,234 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:38,239 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:38,239 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:38,240 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:38,241 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:38,241 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:43,236 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:43,243 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:43,243 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:43,244 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:43,244 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:43,245 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:48,238 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:48,245 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:48,246 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:48,248 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:48,248 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:48,249 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:53,231 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:53,236 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:53,236 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:53,238 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:53,239 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:53,239 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:39:58,226 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:58,233 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:39:58,234 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:39:58,236 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:39:58,236 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:39:58,237 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:03,973 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:03,978 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:03,978 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:03,981 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:03,981 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:03,981 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:08,965 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:08,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:08,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:08,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:08,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:08,969 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:13,233 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:13,236 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:13,237 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:13,238 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:13,238 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:13,238 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:18,637 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:18,643 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:18,644 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:18,646 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:18,646 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:18,647 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:23,236 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:23,241 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:23,242 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:23,243 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:23,243 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:23,243 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:28,223 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:28,227 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:28,227 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:28,227 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:28,228 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:28,228 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:33,967 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:33,970 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:33,971 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:33,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:33,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:33,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:38,234 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:38,238 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:38,238 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:38,238 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:38,238 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:38,239 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:43,235 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:43,240 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:43,240 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:43,242 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:43,243 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:43,243 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:40:48,248 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:48,252 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 20:40:48,253 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 20:40:48,254 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 20:40:48,254 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 20:40:48,255 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 20:43:16,347 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 20:43:16,348 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 20:43:16,350 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 21:00:51,326 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 12088 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 21:00:51,328 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 21:00:51,829 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 21:00:51,888 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 51 ms. Found 5 JPA repository interfaces.
+2024-06-11 21:00:52,084 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@60f70249' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:00:52,092 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:00:52,256 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 21:00:52,263 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:00:52,263 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 21:00:52,263 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 21:00:52,341 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 21:00:52,341 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 983 ms
+2024-06-11 21:00:52,464 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 21:00:52,496 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 21:00:52,575 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 21:00:52,635 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 21:00:52,762 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 21:00:52,782 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 21:00:53,419 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 21:00:53,425 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:00:53,758 INFO [main] org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: Autowired annotation is not supported on static fields: private static final org.slf4j.Logger org.example.securityproject.controller.AuthenticationController.logger
+2024-06-11 21:00:53,873 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 21:00:53,931 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 21:00:53,987 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 21:00:53,991 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@76c85485, org.springframework.security.web.context.SecurityContextPersistenceFilter@4e782401, org.springframework.security.web.header.HeaderWriterFilter@1e4a4ed5, org.springframework.web.filter.CorsFilter@65294247, org.springframework.security.web.authentication.logout.LogoutFilter@752ffce3, org.example.securityproject.auth.TokenAuthenticationFilter@4a7ac98b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4853f592, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5d035ab6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@35e3f3b8, org.springframework.security.web.session.SessionManagementFilter@1a1f22f2, org.springframework.security.web.access.ExceptionTranslationFilter@4b1b2255, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@15bcecf9]
+2024-06-11 21:00:53,993 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 21:00:53,994 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 21:00:53,994 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 21:00:53,994 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 21:00:53,994 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 21:00:53,995 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 21:00:53,995 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 21:00:53,995 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 21:00:53,996 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 21:00:54,039 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 21:00:54,063 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 21:00:54,134 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:00:54,312 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 21:00:54,320 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.248 seconds (JVM running for 3.745)
+2024-06-11 21:01:10,253 INFO [https-jsse-nio-443-exec-5] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-11 21:01:10,253 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected StandardServletMultipartResolver
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected AcceptHeaderLocaleResolver
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected FixedThemeResolver
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@eea0b48
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.support.SessionFlashMapManager@6e5fba90
+2024-06-11 21:01:10,254 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-11 21:01:10,254 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 1 ms
+2024-06-11 21:01:10,268 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 21:01:10,286 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 21:01:10,287 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 21:01:10,361 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@56069791]
+2024-06-11 21:01:10,560 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 21:01:10,561 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@5a68b6fe]
+2024-06-11 21:01:10,569 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:10,577 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 21:01:10,582 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 21:01:10,583 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 21:01:10,587 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@14b240ed]
+2024-06-11 21:01:10,618 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json] and supported [application/json]
+2024-06-11 21:01:10,619 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.AccessRefreshTokenResponseDto@42395f1a]
+2024-06-11 21:01:10,621 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:10,627 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 21:01:10,632 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 21:01:10,672 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/users/getLoggedInUser", parameters={}
+2024-06-11 21:01:10,672 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#getLogegdInUser()
+2024-06-11 21:01:10,680 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 21:01:10,680 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.UserDto@301003bc]
+2024-06-11 21:01:10,687 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:15,638 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:15,643 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:15,648 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:15,649 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:15,650 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:15,650 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:15,650 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:20,968 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:20,974 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:20,975 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:20,976 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:20,976 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:20,977 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:25,975 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:25,982 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:25,982 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:25,984 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:25,984 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:25,985 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:30,965 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:30,971 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:30,972 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:30,974 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:30,974 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:30,974 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:35,976 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:35,980 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:35,981 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:35,982 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:35,983 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:35,983 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:40,972 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:40,977 DEBUG [https-jsse-nio-443-exec-7] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:40,978 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:40,980 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:40,981 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:40,981 DEBUG [https-jsse-nio-443-exec-7] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:45,974 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:45,978 DEBUG [https-jsse-nio-443-exec-8] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:45,979 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:45,979 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:45,980 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:45,980 DEBUG [https-jsse-nio-443-exec-8] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:50,979 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:50,985 DEBUG [https-jsse-nio-443-exec-9] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:50,985 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:50,986 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:50,986 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:50,986 DEBUG [https-jsse-nio-443-exec-9] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:01:55,972 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:55,980 DEBUG [https-jsse-nio-443-exec-10] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:01:55,980 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:01:55,981 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:01:55,982 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:01:55,982 DEBUG [https-jsse-nio-443-exec-10] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:02:00,978 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:02:00,984 DEBUG [https-jsse-nio-443-exec-1] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:02:00,985 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:02:00,986 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:02:00,986 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:02:00,986 DEBUG [https-jsse-nio-443-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:02:05,636 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:02:05,642 DEBUG [https-jsse-nio-443-exec-2] org.springframework.core.log.LogFormatUtils: GET "/api/auth/check-token", parameters={}
+2024-06-11 21:02:05,643 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#checkAccessToken(HttpServletRequest)
+2024-06-11 21:02:05,644 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json]
+2024-06-11 21:02:05,644 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:02:05,644 DEBUG [https-jsse-nio-443-exec-2] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:02:19,217 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 21:02:19,218 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 21:02:19,219 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@7c05fbdd]
+2024-06-11 21:02:19,222 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 21:02:19,222 DEBUG [https-jsse-nio-443-exec-3] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@36651a3d]
+2024-06-11 21:02:19,223 DEBUG [https-jsse-nio-443-exec-3] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:02:19,226 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 21:02:19,227 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 21:02:19,228 DEBUG [https-jsse-nio-443-exec-4] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@1bce2628]
+2024-06-11 21:02:19,232 ERROR [https-jsse-nio-443-exec-4] org.example.securityproject.controller.AuthenticationController: Došlo je do greške prilikom autentifikacije korisnika anaa.radovanovic2001@gmail.com: Incorrect password
+2024-06-11 21:02:19,232 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json] and supported [application/json]
+2024-06-11 21:02:19,232 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:02:19,232 DEBUG [https-jsse-nio-443-exec-4] org.springframework.web.servlet.FrameworkServlet: Completed 401 UNAUTHORIZED
+2024-06-11 21:06:48,987 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:06:48,989 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 21:06:48,992 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 21:07:08,639 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 17416 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 21:07:08,641 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 21:07:09,153 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 21:07:09,207 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 49 ms. Found 5 JPA repository interfaces.
+2024-06-11 21:07:09,407 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@262816a8' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:07:09,415 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:07:09,579 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 21:07:09,585 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:07:09,586 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 21:07:09,587 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 21:07:09,666 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 21:07:09,666 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 995 ms
+2024-06-11 21:07:09,797 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 21:07:09,830 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 21:07:09,916 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 21:07:09,980 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 21:07:10,108 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 21:07:10,131 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 21:07:10,656 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 21:07:10,663 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:07:10,992 INFO [main] org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: Autowired annotation is not supported on static fields: private static final org.slf4j.Logger org.example.securityproject.controller.AuthenticationController.logger
+2024-06-11 21:07:11,104 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 21:07:11,163 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 21:07:11,218 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 21:07:11,222 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@76bdfc19, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ea8224b, org.springframework.security.web.header.HeaderWriterFilter@79ae3fb1, org.springframework.web.filter.CorsFilter@1248f83, org.springframework.security.web.authentication.logout.LogoutFilter@3331800f, org.example.securityproject.auth.TokenAuthenticationFilter@5c28009f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@623ded82, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@270be080, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@19b0a9f2, org.springframework.security.web.session.SessionManagementFilter@2fe2fcc2, org.springframework.security.web.access.ExceptionTranslationFilter@25fcdcc6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@75a6bd06]
+2024-06-11 21:07:11,226 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 21:07:11,227 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 21:07:11,227 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 21:07:11,227 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 21:07:11,227 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 21:07:11,228 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 21:07:11,228 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 21:07:11,228 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 21:07:11,228 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 21:07:11,228 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 21:07:11,229 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 21:07:11,268 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 21:07:11,292 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 21:07:11,362 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:07:11,523 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 21:07:11,531 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.173 seconds (JVM running for 3.751)
+2024-06-11 21:12:40,294 INFO [https-jsse-nio-443-exec-5] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-11 21:12:40,294 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
+2024-06-11 21:12:40,294 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected StandardServletMultipartResolver
+2024-06-11 21:12:40,294 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected AcceptHeaderLocaleResolver
+2024-06-11 21:12:40,294 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected FixedThemeResolver
+2024-06-11 21:12:40,295 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7bbd0006
+2024-06-11 21:12:40,296 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.support.SessionFlashMapManager@279ebd94
+2024-06-11 21:12:40,296 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-11 21:12:40,296 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 2 ms
+2024-06-11 21:12:40,305 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 21:12:40,307 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 21:12:40,376 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@4024bc09]
+2024-06-11 21:12:40,487 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 21:12:40,487 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@570238e7]
+2024-06-11 21:12:40,494 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:12:40,500 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 21:12:40,500 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 21:12:40,505 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@3dd6569]
+2024-06-11 21:12:40,512 ERROR [https-jsse-nio-443-exec-6] org.example.securityproject.controller.AuthenticationController: Došlo je do greške prilikom autentifikacije korisnika anaa.radovanovic2001@gmail.com: Incorrect password
+2024-06-11 21:12:40,514 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json] and supported [application/json]
+2024-06-11 21:12:40,517 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:12:40,517 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 401 UNAUTHORIZED
+2024-06-11 21:20:36,247 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:20:36,248 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 21:20:36,251 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 21:20:39.450 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 15704 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 21:20:39.451 DEBUG [main] org.springframework.boot.StartupInfoLogger: Running with Spring Boot v2.5.8, Spring v5.3.14
+2024-06-11 21:20:39.452 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 21:20:39.987 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 21:20:40.045 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 53 ms. Found 5 JPA repository interfaces.
+2024-06-11 21:20:40.238 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1b1f5012' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:20:40.250 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:20:40.430 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 21:20:40.437 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:20:40.438 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 21:20:40.438 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 21:20:40.503 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 21:20:40.503 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 1020 ms
+2024-06-11 21:20:40.633 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 21:20:40.667 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 21:20:40.750 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 21:20:40.815 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 21:20:40.936 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 21:20:40.956 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 21:20:41.514 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 21:20:41.519 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:20:41.843 INFO [main] org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: Autowired annotation is not supported on static fields: private static final org.slf4j.Logger org.example.securityproject.controller.AuthenticationController.logger
+2024-06-11 21:20:41.952 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 21:20:42.011 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 21:20:42.066 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 21:20:42.069 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@23e297d9, org.springframework.security.web.context.SecurityContextPersistenceFilter@61f08aa9, org.springframework.security.web.header.HeaderWriterFilter@1a6a4595, org.springframework.web.filter.CorsFilter@5e8e02a3, org.springframework.security.web.authentication.logout.LogoutFilter@72406594, org.example.securityproject.auth.TokenAuthenticationFilter@a74c940, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@37b5a51c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2bb84aa5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@66576bd2, org.springframework.security.web.session.SessionManagementFilter@5a9ef32e, org.springframework.security.web.access.ExceptionTranslationFilter@7c6fc278, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@166a5659]
+2024-06-11 21:20:42.072 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 21:20:42.072 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 21:20:42.072 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 21:20:42.073 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 21:20:42.112 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 21:20:42.137 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 21:20:42.214 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:20:42.392 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 21:20:42.399 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.209 seconds (JVM running for 3.696)
+2024-06-11 21:21:12.735 INFO [https-jsse-nio-443-exec-5] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-11 21:21:12.735 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
+2024-06-11 21:21:12.735 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected StandardServletMultipartResolver
+2024-06-11 21:21:12.736 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected AcceptHeaderLocaleResolver
+2024-06-11 21:21:12.736 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected FixedThemeResolver
+2024-06-11 21:21:12.737 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2ecf4b3e
+2024-06-11 21:21:12.738 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.DispatcherServlet: Detected org.springframework.web.servlet.support.SessionFlashMapManager@514b247b
+2024-06-11 21:21:12.738 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-11 21:21:12.738 INFO [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 3 ms
+2024-06-11 21:21:12.749 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: POST "/api/users/tryLogin", parameters={}
+2024-06-11 21:21:12.751 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.UserController#loginUser(UserLoginData)
+2024-06-11 21:21:12.819 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.UserLoginData@27a8ae1b]
+2024-06-11 21:21:13.030 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2024-06-11 21:21:13.031 DEBUG [https-jsse-nio-443-exec-5] org.springframework.core.log.LogFormatUtils: Writing [org.example.securityproject.dto.LoginReponseDto@5a28df08]
+2024-06-11 21:21:13.041 DEBUG [https-jsse-nio-443-exec-5] org.springframework.web.servlet.FrameworkServlet: Completed 200 OK
+2024-06-11 21:21:13.046 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: POST "/api/auth/login", parameters={}
+2024-06-11 21:21:13.046 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.handler.AbstractHandlerMapping: Mapped to org.example.securityproject.controller.AuthenticationController#createAuthenticationToken(JwtAuthenticationRequest, HttpServletResponse)
+2024-06-11 21:21:13.049 DEBUG [https-jsse-nio-443-exec-6] org.springframework.core.log.LogFormatUtils: Read "application/json;charset=UTF-8" to [org.example.securityproject.dto.JwtAuthenticationRequest@70cb251a]
+2024-06-11 21:21:13.056 ERROR [https-jsse-nio-443-exec-6] org.example.securityproject.controller.AuthenticationController: Došlo je do greške prilikom autentifikacije korisnika anaa.radovanovic2001@gmail.com: Incorrect password
+2024-06-11 21:21:13.058 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Using 'application/json', given [application/json] and supported [application/json]
+2024-06-11 21:21:13.059 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor: Nothing to write: null body
+2024-06-11 21:21:13.060 DEBUG [https-jsse-nio-443-exec-6] org.springframework.web.servlet.FrameworkServlet: Completed 401 UNAUTHORIZED
+2024-06-11 21:22:49.639 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:22:49.640 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 21:22:49.643 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
+2024-06-11 21:22:52,962 INFO [main] org.springframework.boot.StartupInfoLogger: Starting SecurityProjectApplication using Java 17.0.10 on DESKTOP-H96UFTE with PID 16104 (C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject\target\classes started by Miroslav in C:\Users\Miroslav\Desktop\bezbednostKT2\bsep-ra-2024-kt2-tim-29\back-end\SecurityProject)
+2024-06-11 21:22:52,964 INFO [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
+2024-06-11 21:22:53,495 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-11 21:22:53,556 INFO [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate: Finished Spring Data repository scanning in 56 ms. Found 5 JPA repository interfaces.
+2024-06-11 21:22:53,758 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1e58512c' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:22:53,766 INFO [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-11 21:22:53,927 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 443 (https)
+2024-06-11 21:22:53,933 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:22:53,934 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
+2024-06-11 21:22:53,934 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-11 21:22:54,006 INFO [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
+2024-06-11 21:22:54,007 INFO [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 1013 ms
+2024-06-11 21:22:54,131 INFO [main] org.hibernate.jpa.internal.util.LogHelper: HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-11 21:22:54,165 INFO [main] org.hibernate.Version: HHH000412: Hibernate ORM core version 5.4.33
+2024-06-11 21:22:54,248 INFO [main] org.hibernate.annotations.common.reflection.java.JavaReflectionManager: HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-11 21:22:54,317 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Starting...
+2024-06-11 21:22:54,441 INFO [main] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Start completed.
+2024-06-11 21:22:54,462 INFO [main] org.hibernate.dialect.Dialect: HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-11 21:22:55,085 INFO [main] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator: HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-11 21:22:55,093 INFO [main] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:22:55,439 INFO [main] org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor: Autowired annotation is not supported on static fields: private static final org.slf4j.Logger org.example.securityproject.controller.AuthenticationController.logger
+2024-06-11 21:22:55,558 WARN [main] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-11 21:22:55,617 DEBUG [main] org.springframework.web.servlet.handler.AbstractHandlerMethodMapping: 36 mappings in 'requestMappingHandlerMapping'
+2024-06-11 21:22:55,676 DEBUG [main] org.springframework.web.servlet.handler.SimpleUrlHandlerMapping: Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-11 21:22:55,682 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3c65f2e1, org.springframework.security.web.context.SecurityContextPersistenceFilter@27f31d91, org.springframework.security.web.header.HeaderWriterFilter@656c0eae, org.springframework.web.filter.CorsFilter@c247b02, org.springframework.security.web.authentication.logout.LogoutFilter@72406594, org.example.securityproject.auth.TokenAuthenticationFilter@78f1d29, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1a05ff8e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1abea1ed, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@76c85485, org.springframework.security.web.session.SessionManagementFilter@5644f664, org.springframework.security.web.access.ExceptionTranslationFilter@237ee2e1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@166a5659]
+2024-06-11 21:22:55,684 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-11 21:22:55,684 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-11 21:22:55,684 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/*.html', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-11 21:22:55,685 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-11 21:22:55,686 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-11 21:22:55,686 INFO [main] org.springframework.security.web.DefaultSecurityFilterChain: Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-11 21:22:55,724 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter: ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-11 21:22:55,749 DEBUG [main] org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-11 21:22:55,826 INFO [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-11 21:22:55,990 INFO [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 443 (https) with context path ''
+2024-06-11 21:22:55,998 INFO [main] org.springframework.boot.StartupInfoLogger: Started SecurityProjectApplication in 3.305 seconds (JVM running for 3.812)
+2024-06-11 21:23:03,784 INFO [SpringApplicationShutdownHook] org.springframework.orm.jpa.AbstractEntityManagerFactoryBean: Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-11 21:23:03,785 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown initiated...
+2024-06-11 21:23:03,787 INFO [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource: HikariPool-1 - Shutdown completed.
