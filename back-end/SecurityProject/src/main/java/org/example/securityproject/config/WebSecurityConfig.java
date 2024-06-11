@@ -195,6 +195,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/login/verify")
                 .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
                 .antMatchers(HttpMethod.POST, "/api/users/verify/**")
+                .antMatchers(HttpMethod.POST, "/api/users/verifyReCaptchaToken/**")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }

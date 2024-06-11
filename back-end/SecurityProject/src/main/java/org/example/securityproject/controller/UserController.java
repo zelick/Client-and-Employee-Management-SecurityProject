@@ -31,12 +31,13 @@ public class UserController {
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+       User user = userRepository.findByEmail("anaa.radovanovic2001+6@gmail.com");
        int userId = user.getId();
 
        List<UserRole> roles = user.getRoles();
 
        roles.remove(UserRole.CLIENT);
+       roles.add(UserRole.EMPLOYEE);
 
        user.setRoles(roles);
 
@@ -121,5 +122,11 @@ public class UserController {
     public ResponseEntity<ResponseDto> verifyCode(@RequestBody VerificationRequestDto verificationRequest)
     {
         return new ResponseEntity<>(userService.verifyCode(verificationRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyReCaptchaToken")
+    public ResponseEntity<ResponseDto> verifyReCaptchaToken(@RequestBody VerificationReCaptchaRequestDto verificationRequest)
+    {
+        return new ResponseEntity<>(userService.verifyReCaptchaToken(verificationRequest), HttpStatus.OK);
     }
 }

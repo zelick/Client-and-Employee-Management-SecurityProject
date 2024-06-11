@@ -144,4 +144,8 @@ export class UserService {
   verifyMfaCode(verificationData: any): Observable<ResponseMessage> {
     return this.http.post<ResponseMessage>(this.apiUrl + 'users/verify', verificationData);
   }
+
+  verifyReCaptchaToken(verificationData: any): Observable<ResponseMessage> {
+    return this.http.post<ResponseMessage>(this.apiUrl + 'users/verifyReCaptchaToken', verificationData);
+  }
 }

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { LoginResponse } from '../model/loginResponse.model';
+import { environment } from 'src/env/environment';
+
+declare var grecaptcha: any;
 
 @Component({
   selector: 'app-login',
@@ -18,10 +21,21 @@ export class LoginComponent implements OnInit {
   showVerificationCode: boolean = false;
   messageLogin: string | undefined;
   messagePassword: string | undefined;
-  messageVerification: string | undefined;
+  messageVerification: string | undefined = "";
   passwordForm: FormGroup = new FormGroup({});
 
-  constructor(private userService: UserService, private fb: FormBuilder, private authService: AuthService) { }
+  reCAPTCHAToken: string = "";
+  tokenVisible: boolean = false;
+
+  isEmployeed: boolean = false;
+
+  isEmployeedAndMfaEnabled: boolean = false;
+
+  siteKey = `${environment.recaptcha.siteKey}`;
+
+  constructor(private userService: UserService, 
+    private fb: FormBuilder, 
+    private authService: AuthService){}
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -44,15 +58,26 @@ export class LoginComponent implements OnInit {
           this.changePasswordFlag = false;
           return;
         }
-        if (response.mfaEnabled) {
-          this.showVerificationCode = true;
-          this.messageLogin = response.response;
-        } else {
-          this.messageLogin = response.response;
-          this.changePasswordFlag = !response.loggedInOnce;
-          if (response.loggedInOnce) {
-            this.loginUser();
+        
+        if (response.employeed) {
+          console.log("UPAO OVDE DA JE EMPLOYEE: " + response.employeed);
+
+          if (!response.loggedInOnce) {
+            this.changePasswordFlag = !response.loggedInOnce;
+            return;
           }
+
+          if (response.mfaEnabled) {
+            this.showVerificationCode = true;
+            this.messageVerification = "";
+            this.isEmployeedAndMfaEnabled = true;
+            return;
+          } 
+
+          this.loadReCaptcha();
+          
+        } else {
+          this.finalizeLogin(response);
         }
       },
       (error) => {
@@ -62,17 +87,95 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  loadReCaptcha() {
+    this.messageLogin = 'Please complete the reCAPTCHA to proceed.';
+          this.isEmployeed = true;
+          // Render reCAPTCHA
+          setTimeout(() => {
+            if (typeof grecaptcha !== 'undefined') {
+              grecaptcha.render('recaptcha-container', {
+                sitekey: this.siteKey,
+              });
+              /*
+              const response = grecaptcha.getResponse();
+              console.log("RECAPTCHA RESPONSE::: " + response);
+              */
+
+            } 
+          }, 0);
+  }
+
+  ngAfterViewInit(): void {
+    if (this.isEmployeed && typeof grecaptcha !== 'undefined') {
+      grecaptcha.ready(() => {
+        grecaptcha.render('recaptcha-container', {
+          sitekey: this.siteKey,
+        });
+      });
+    }
+  }
+
+  recaptcha() {
+    const response = grecaptcha.getResponse();
+    if (response.length === 0) {
+      this.messageLogin = 'Please complete the reCAPTCHA';
+      return;
+    } else {
+      console.log("reCAPTCHA response token: ", response);
+
+      //OVDE TREBA PROVERITI DA LI JE OK TOKEN NA BEKU
+      const verificationData = {
+        reCaptchaToken: response,
+      };
+      this.userService.verifyReCaptchaToken(verificationData).subscribe(
+        response => {
+          if (response.flag) {
+            this.messageLogin = response.responseMessage;
+            this.loginUser();
+          } else {
+            this.messageLogin = response.responseMessage;
+          }
+        },
+        error => {
+          this.messageLogin = 'Verification failed. Please try again later.';
+        }
+      );
+    }
+  }
+  
+  finalizeLogin(response: LoginResponse): void {
+    this.messageLogin = response.response;
+
+    if (response.mfaEnabled) {
+      this.showVerificationCode = true;
+      this.messageVerification = "";
+      this.isEmployeedAndMfaEnabled = false;
+      return;
+    } 
+
+    if (response.loggedInOnce) {
+      this.loginUser();
+    }
+  }
+
   verifyCode(): void {
     const verificationData = {
       email: this.email,
-      code: this.verificationCode
+      code: this.verificationCode,
+      fromLogin: true
     };
 
     this.userService.verifyMfaCode(verificationData).subscribe(
       response => {
         if (response.flag) {
           this.messageLogin = response.responseMessage;
-          this.loginUser();
+          if (this.isEmployeedAndMfaEnabled) {
+            this.messageLogin = "";
+            this.loadReCaptcha();
+          }
+          else {
+            this.loginUser();
+          }
         } else {
           this.messageVerification = 'Verification failed. Please check the code and try again.';
         }

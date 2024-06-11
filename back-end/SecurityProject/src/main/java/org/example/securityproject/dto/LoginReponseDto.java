@@ -4,6 +4,7 @@ public class LoginReponseDto {
     private String response;
     private boolean loggedInOnce;
     private boolean mfaEnabled;
+    private boolean employeed;
     public LoginReponseDto() {
     }
     public String getResponse() {
@@ -29,4 +30,13 @@ public class LoginReponseDto {
     public void setMfaEnabled(boolean mfaEnabled) {
         this.mfaEnabled = mfaEnabled;
     }
+
+    public void setEmployeed(boolean employeed) {
+        this.employeed = employeed;
+    }
+
+    public boolean isEmployeed() {
+        return employeed;
+    }
+
 }

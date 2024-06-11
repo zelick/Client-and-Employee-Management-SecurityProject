@@ -1,5 +1,6 @@
 export interface LoginResponse{
     response: string, 
     loggedInOnce: boolean,
-    mfaEnabled: boolean
+    mfaEnabled: boolean,
+    employeed: boolean;
 }

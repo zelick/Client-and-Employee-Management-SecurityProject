@@ -174,7 +174,8 @@ export class RegistrationComponent implements OnInit {
   verifyCode(): void {
     const verificationData = {
       email: this.userData.email,
-      code: this.verificationCode
+      code: this.verificationCode,
+      fromLogin: false
     };
 
     this.userService.verifyMfaCode(verificationData).subscribe(response => {

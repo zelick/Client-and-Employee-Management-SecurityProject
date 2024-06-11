@@ -41,12 +41,22 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private final TwoFactorAuthenticationService tfaService;
+    private ReCaptchaService reCaptchaService;
 
     public LoginReponseDto loginUser(UserLoginData loginData) {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
-
-        //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
+
+        if (user.getRoles().contains(UserRole.EMPLOYEE)) {
+            loginResponseDto.setEmployeed(true);
+        }
+        else {
+            loginResponseDto.setEmployeed(false);
+        }
+
+        System.out.println("EMPLOYEE: " + loginResponseDto.isEmployeed());
+
+        //PROBLEM ZA EMPLOYEE-A AKO ISPRAVNO RESI RECAHPCA ONDA TEK DA MU SE SETUJE LOGGED IN ONCE NA TRUE!!!
 
         if (!(user.isActive() && user.isEnabled())) {
             loginResponseDto.setMfaEnabled(false);
@@ -80,10 +90,34 @@ public class UserService {
             return loginResponseDto;
         }
 
+        if (loginResponseDto.isEmployeed()) {
+            if (user.isLoggedInOnce()) {
+                loginResponseDto.setLoggedInOnce(true);
+            }
+            else {
+                loginResponseDto.setLoggedInOnce(false);
+            }            
+            
+            loginResponseDto.setResponse("You are employed, you have to solve this problem and show that you are not a robot.");
+
+            if (user.isMfaEnabled() && user.isVerifiedMfaCode()) {
+                loginResponseDto.setMfaEnabled(true);
+                //loginonce -- tek ako potvrdi pravilno 2fa
+                loginResponseDto.setResponse("You are employed, you must solve this problem and show that you are not a robot, after that enter a 6-digit number because you have confirmed two-factor authentication.");
+            }
+
+            return loginResponseDto;
+        }
+
         if (user.isMfaEnabled() && user.isVerifiedMfaCode()) {
             loginResponseDto.setMfaEnabled(true);
             //loginonce -- tek ako potvrdi pravilno 2fa
-            loginResponseDto.setLoggedInOnce(false);
+            if (user.isLoggedInOnce()) {
+                loginResponseDto.setLoggedInOnce(true);
+            }
+            else {
+                loginResponseDto.setLoggedInOnce(false);
+            }
             loginResponseDto.setResponse("Enter the 6-digit authentication code.");
             return loginResponseDto;
         }
@@ -453,6 +487,8 @@ public class UserService {
         return (User)auth.getPrincipal();
     }
 
+    //OVDE DODATI ODAKLE DOLAZI ZAHTEV AKO JE IZ REGISTRACIJE DA NE SETUJE NA LOGGED IN ONCE TRUE
+    //AKO JE IZ LOGINA ONDA DA SETUJE NA LOGGED IN ONCE TRUE
     public ResponseDto verifyCode(VerificationRequestDto verificationRequestDto) {
         ResponseDto responseDto = new ResponseDto();
         User user = userRepository.findByEmail(verificationRequestDto.getEmail());
@@ -466,8 +502,33 @@ public class UserService {
         responseDto.setFlag(true);
         responseDto.setResponseMessage("Code is correct.");
 
+        if (verificationRequestDto.isFromLogin() && !user.isLoggedInOnce()) {
+            user.setLoggedInOnce(true);
+        }
+
         user.setVerifiedMfaCode(true);
         userRepository.save(user);
+        return responseDto;
+    }
+
+    public ResponseDto verifyReCaptchaToken(VerificationReCaptchaRequestDto verificationRequest) {
+        ResponseDto responseDto = new ResponseDto();
+
+        ReCaptchaResponseDto reCaptchaResponseDto = reCaptchaService.verifyReCaptchaToken(verificationRequest);
+
+        System.out.println("RECAPTCHA RESPONSE:");
+        System.out.println("RECAP SUCC: " + reCaptchaResponseDto.isSuccess());
+        System.out.println("RECAP HOST: " + reCaptchaResponseDto.getHostname());
+        System.out.println("RECAP ERROR: " + reCaptchaResponseDto.getError_codes());
+
+        if (reCaptchaResponseDto.isSuccess()) {
+            responseDto.setResponseMessage("Successful verification using ReCaptcha.");
+            responseDto.setFlag(true);
+            return responseDto;
+        }
+
+        responseDto.setResponseMessage("ReCaptcha verification failed.");
+        responseDto.setFlag(false);
         return responseDto;
     }
 }

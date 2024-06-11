@@ -7,7 +7,6 @@ import { LoginService } from './services/login.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './service/auth.service';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
@@ -31,6 +30,7 @@ import { UserService } from './services/user.service';
 import { HomePageComponent } from './homepage/homepage.component';
 import { PermissionsManipulationComponent } from './administrator/permissions-manipulation/permissionsManipulation.component';
 import { ClientHomepageComponent } from './client-homepage/client-homepage.component';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,8 @@ import { ClientHomepageComponent } from './client-homepage/client-homepage.compo
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxCaptchaModule
   ],
   providers: [
     AuthService,
@@ -72,7 +73,12 @@ import { ClientHomepageComponent } from './client-homepage/client-homepage.compo
     ApiService,
     UserService,
     ConfigService,
-    LoginService
+    LoginService,
+    /*[{
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.recaptcha.siteKey,
+    }]
+    */
   ],
   bootstrap: [AppComponent]
 })
