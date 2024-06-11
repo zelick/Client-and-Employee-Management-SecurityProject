@@ -1,5 +1,7 @@
 package org.example.securityproject.config;
 
+import org.example.securityproject.filter.MdcFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;

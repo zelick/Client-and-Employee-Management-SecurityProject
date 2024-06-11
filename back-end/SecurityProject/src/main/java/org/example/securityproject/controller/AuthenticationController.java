@@ -110,23 +110,52 @@ public class AuthenticationController {
          }
     }
 
+//    // Endpoint za proveru validnosti access tokena
+//    @GetMapping("/check-token")
+//    public ResponseEntity<Void> checkAccessToken(HttpServletRequest request) {
+//        //String accessToken = request.getHeader("Authorization"); // Uzmi access token iz headera
+//        String accessToken = tokenUtils.getToken(request);
+//        if (accessToken == null || accessToken.isEmpty()) {
+//            // Ako access token nije pronađen u zaglavlju zahteva, vraćamo grešku
+//            return ResponseEntity.badRequest().build();
+//        }
+//
+//        if (tokenUtils.isTokenExpired(accessToken)) {
+//            // Ako je access token istekao, vraćamo grešku
+//            return ResponseEntity.badRequest().build();
+//        }
+//
+//        // Ako je access token važeći, vraćamo status 200 OK
+//        return ResponseEntity.ok().build();
+//    }
+
     // Endpoint za proveru validnosti access tokena
     @GetMapping("/check-token")
     public ResponseEntity<Void> checkAccessToken(HttpServletRequest request) {
-        //String accessToken = request.getHeader("Authorization"); // Uzmi access token iz headera
-        String accessToken = tokenUtils.getToken(request);
-        if (accessToken == null || accessToken.isEmpty()) {
-            // Ako access token nije pronađen u zaglavlju zahteva, vraćamo grešku
-            return ResponseEntity.badRequest().build();
-        }
+        try {
+            String accessToken = tokenUtils.getToken(request);
 
-        if (tokenUtils.isTokenExpired(accessToken)) {
-            // Ako je access token istekao, vraćamo grešku
-            return ResponseEntity.badRequest().build();
-        }
+            // Provera da li je access token pronađen
+            if (accessToken == null || accessToken.isEmpty()) {
+                logger.info("Access token not found in the request headers.");
+                return ResponseEntity.badRequest().build();
+            }
 
-        // Ako je access token važeći, vraćamo status 200 OK
-        return ResponseEntity.ok().build();
+            // Provera da li je access token istekao
+            if (tokenUtils.isTokenExpired(accessToken)) {
+                logger.info("Access token has expired.");
+                return ResponseEntity.badRequest().build();
+            }
+
+            // Ako je access token važeći, vraćamo status 200 OK
+            logger.info("Access token is valid.");
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // Uhvati sve ostale izuzetke koje niste predvideli
+            logger.error("An unexpected error occurred while checking the access token validity: {}", e.getMessage());
+            // Vratite odgovarajući HTTP status kao odgovor na nepredviđenu grešku
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 
