@@ -69,7 +69,7 @@ public class AuthenticationController {
 
     // Endpoint za osvežavanje access tokena
     @GetMapping("/refresh-token")
-    public ResponseEntity<UserTokenState> refreshToken(HttpServletRequest request) {
+    public ResponseEntity<UserTokenState> refreshToken(HttpServletRequest request) throws Exception {
         //String refreshToken = request.getHeader("Authorization"); // Uzmi refresh token iz headera
         String refreshToken = tokenUtils.getToken(request);
         String username = tokenUtils.getUsernameFromToken(refreshToken);

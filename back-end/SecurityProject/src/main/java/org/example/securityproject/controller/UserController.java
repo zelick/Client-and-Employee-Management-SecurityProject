@@ -7,6 +7,7 @@ import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.service.UserDataEncryptionService;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class UserController {
     private UserService userService;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
+    private UserDataEncryptionService userDataEncryptionService;
 
     //TEST DA LI ROLE MOGU DA SE MENJAJU IZ KODA
 
@@ -64,12 +66,12 @@ public class UserController {
     }
 
     @PostMapping("/tryLogin")
-    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
+    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) throws Exception {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
     }
 
     @PostMapping("/registerUser")
-    public ResponseEntity<RegistrationResponseDto> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<RegistrationResponseDto> registerUser(@RequestBody UserDto userDto) throws Exception {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
@@ -84,7 +86,7 @@ public class UserController {
     }
 
     @PutMapping("/updatePassword")
-    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -102,14 +104,20 @@ public class UserController {
     }
 
     @PutMapping("/updateClient")
-    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) throws Exception {
         userService.updateUser(userDto);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
+
+    //NAPOMENA!!!
     @GetMapping("/findUserByEmail/{email}")
-    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
-        User user = userRepository.findByEmail(email);
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        //OVO AKO SE KORISTI ZA PRIKAZ NEKIH INFORMACIJA POTREBNO JE DEKRIPTOVATI --- VIDETI
+
         if (user != null) {
             UserDto userDto = new UserDto(user);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -119,8 +127,7 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<ResponseDto> verifyCode(@RequestBody VerificationRequestDto verificationRequest)
-    {
+    public ResponseEntity<ResponseDto> verifyCode(@RequestBody VerificationRequestDto verificationRequest) throws Exception {
         return new ResponseEntity<>(userService.verifyCode(verificationRequest), HttpStatus.OK);
     }
 

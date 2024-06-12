@@ -86,7 +86,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdminData")
-    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
+    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) throws Exception {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserData(adminDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -140,7 +140,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdminPassword")
-    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -43,7 +43,7 @@ public class LoginController {
     }
 
     @PostMapping("/send-email")
-    public ResponseEntity<String> sendEmail(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException {
+    public ResponseEntity<String> sendEmail(@RequestBody String email) throws Exception {
         if (!userService.checkIfExists(email)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with the provided email address was not found.");
         }

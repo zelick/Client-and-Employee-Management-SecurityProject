@@ -10,7 +10,6 @@ import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,14 +37,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     private EmailService emailService;
-    private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private final TwoFactorAuthenticationService tfaService;
     private ReCaptchaService reCaptchaService;
+    private UserDataEncryptionService userDataEncryptionService;
 
-    public LoginReponseDto loginUser(UserLoginData loginData) {
+    public LoginReponseDto loginUser(UserLoginData loginData) throws Exception {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
-        User user = userRepository.findByEmail(loginData.getEmail());
+        //User user = userRepository.findByEmail(loginData.getEmail());
+
+        //umesto metode userRepo.findByEmail koristiti ove dve metode
+        User user = userDataEncryptionService.findEncryptedUserByEmail(loginData.getEmail());
+        //NAJVRV NI NE TREBA DEKRIPTOVANJE - jer su svi ti podaci ne enkriptovani
+        //User user = userDataEncryptionService.decryptUserData(encryptedUser);
+        //
+
+        System.out.println("ENKRIPTOCAN USER: " + user.getEmail());
+        //System.out.println("DEKRIPTOVAN USER: " + user.getEmail());
 
         if (user.getRoles().contains(UserRole.EMPLOYEE)) {
             loginResponseDto.setEmployeed(true);
@@ -127,7 +135,7 @@ public class UserService {
         loginResponseDto.setResponse("This user has successfully logged in.");
         return loginResponseDto;
     }
-    public RegistrationResponseDto registerUser (UserDto userDto) {
+    public RegistrationResponseDto registerUser (UserDto userDto) throws Exception {
         RegistrationResponseDto response = new RegistrationResponseDto();
         if (!validatePassword(userDto.getPassword())) {
             response.setResponseMessage("The password does not meet the requirements.");
@@ -136,8 +144,12 @@ public class UserService {
             return response;
         }
 
-        User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
-        if (existingUser != null) {
+        //User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
+
+        User existingEncryptedUser = userDataEncryptionService.findByEmailAndRegistrationStatus(userDto.getEmail());
+        //User existingUser = userDataEncryptionService.decryptUserData(encryptedUser);
+
+        if (existingEncryptedUser != null) {
             response.setResponseMessage("A user with this email is already registered.");
             response.setFlag(false);
             response.setSecretImageUri("");
@@ -158,10 +170,11 @@ public class UserService {
             return response;
         }
 
-        User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
+        //User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
+        User existingEncryptedRejectedUser = userDataEncryptionService.findByEmailRejcetedUser(userDto.getEmail());
 
-        if (existingRejectedUser != null && existingRejectedUser.getRequestProcessingDate() != null) {
-            Date requestProcessedDate = existingRejectedUser.getRequestProcessingDate();
+        if (existingEncryptedRejectedUser != null && existingEncryptedRejectedUser.getRequestProcessingDate() != null) {
+            Date requestProcessedDate = existingEncryptedRejectedUser.getRequestProcessingDate();
             LocalDateTime requestProcessedTime = LocalDateTime.ofInstant(requestProcessedDate.toInstant(), ZoneId.systemDefault());
             LocalDateTime currentTime = LocalDateTime.now();
             long minutesPassed = ChronoUnit.MINUTES.between(requestProcessedTime, currentTime);
@@ -173,7 +186,7 @@ public class UserService {
                 return response;
             }
             else {
-               userRepository.delete(existingRejectedUser);
+               userRepository.delete(existingEncryptedRejectedUser);
             }
         }
 
@@ -224,7 +237,10 @@ public class UserService {
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
-        userRepository.save(user);
+        //userRepository.save(user);
+
+        userDataEncryptionService.encryptUserData(user);
+
         response.setResponseMessage("You have successfully registered.");
         response.setFlag(true);
         response.setSecretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()));
@@ -288,34 +304,40 @@ public class UserService {
         return userRepository.findByRegistrationStatus(RegistrationStatus.PENDING);
     }
 
-    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
-        User user = userRepository.findByEmail(responseData.getEmail());
+    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws Exception {
+        //User user = userRepository.findByEmail(responseData.getEmail());
+        User encryptedUser = userDataEncryptionService.findEncryptedUserByEmail(responseData.getEmail());
+        //User user = userDataEncryptionService.decryptUserData(encryptedUser);
+
         if (!responseData.isAccepted()) {
-            user.setRegistrationStatus(RegistrationStatus.REJECTED);
+            encryptedUser.setRegistrationStatus(RegistrationStatus.REJECTED);
         }
         else {
-            user.setRegistrationStatus(RegistrationStatus.WAITING);
+            encryptedUser.setRegistrationStatus(RegistrationStatus.WAITING);
         }
-        user.setRequestProcessingDate(new Date());
-        userRepository.save(user);
+        encryptedUser.setRequestProcessingDate(new Date());
+        userRepository.save(encryptedUser);
         emailService.sendRegistrationEmail(responseData);
     }
 
-    public boolean checkIfExists(String email)
-    {
-        User user = userRepository.findByEmail(email);
-        return user != null;
+    public boolean checkIfExists(String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
+        User encryptedUser = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        return encryptedUser != null;
     }
 
-    public boolean checkServicePackage(String email)
-    {
-        User user = userRepository.findByEmail(email);
+    public boolean checkServicePackage(String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
         return user.getServicesPackage() == ServicesPackage.STANDARD || user.getServicesPackage() == ServicesPackage.GOLDEN;
     }
 
-    public boolean checkRole(String email)
-    {
-        return userRepository.findByEmail(email).getRoles().contains(UserRole.CLIENT);
+    public boolean checkRole(String email) throws Exception {
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        return user.getRoles().contains(UserRole.CLIENT);
     }
     
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -374,11 +396,14 @@ public class UserService {
         return getLoggedInUser();
     }
 
-    public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
+    //OVDE MOZDA PROBLEM ZBOG ENKRIPCIJE PODATAKA
+    public String updateUserPassword(PasswordDataDto passwordData) throws Exception {
         if (passwordData.getEmail().isEmpty()) {
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-                User user = (User)auth.getPrincipal();
-                passwordData.setEmail(user.getEmail());
+                User user = (User)auth.getPrincipal(); //OVDE PROBLEM MOZDA
+                //ovom ulogovanom useru je trenutno ENKRIPTOVAN MEJL
+                String decryptedEmail = userDataEncryptionService.decryptData(user.getEmail());
+                passwordData.setEmail(decryptedEmail); //OVDE PROBLEM MOZDA
         }
         if (!checkOldPassword(passwordData)) {
             return "You have not entered a good current password.";
@@ -390,7 +415,8 @@ public class UserService {
             return "The password does not meet the requirements.";
         }
 
-        User user = userRepository.findByEmail(passwordData.getEmail());
+        //User user = userRepository.findByEmail(passwordData.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(passwordData.getEmail());
 
         String salt = BCrypt.gensalt();
         String hashedPassword = "";
@@ -410,20 +436,23 @@ public class UserService {
         return "Password successfully changed.";
     }
 
-    private boolean checkOldPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
-        User user = userRepository.findByEmail(passwordData.getEmail());
+    private boolean checkOldPassword(PasswordDataDto passwordData) throws Exception {
+        //User user = userRepository.findByEmail(passwordData.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(passwordData.getEmail());
+
         String salt = user.getSalt();
         String hashedOldPassword = hashPassword(passwordData.getOldPassword(), salt);
         return hashedOldPassword.equals(user.getPassword());
     }
 
-    public String updateUserData(EditAdminDto adminData) {
+    public String updateUserData(EditAdminDto adminData) throws Exception {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = (User)auth.getPrincipal();
         System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
 
+        //ovde moze ova metoda da ostane jer kada je dobavio ulogovanog njemu je mejl vec enkriptovan
         User user = userRepository.findByEmail(loggedInUser.getEmail());
 
         if (!areAllFieldsFilledAdmin(adminData)) {
@@ -437,7 +466,9 @@ public class UserService {
         user.setCountry(adminData.getCountry());
         user.setPhoneNumber(adminData.getPhoneNumber());
 
-        userRepository.save(user);
+        //userRepository.save(user);
+
+        userDataEncryptionService.encryptUpdateUserData(user);
 
         return "User successfully updated.";
     }
@@ -452,8 +483,10 @@ public class UserService {
     public List<User> getAllClients() {
         return userRepository.findByRolesAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
-    public void updateUser(UserDto userDto) {
-        User user = userRepository.findByEmail(userDto.getEmail());
+    public void updateUser(UserDto userDto) throws Exception {
+        //User user = userRepository.findByEmail(userDto.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(userDto.getEmail());
+
         if (user != null) {
             user.setAddress(userDto.getAddress());
             user.setCity(userDto.getCity());
@@ -468,12 +501,14 @@ public class UserService {
 
             user.setServicesPackage(userDto.getServicesPackage());
 
-            userRepository.save(user);
+            //userRepository.save(user);
+            userDataEncryptionService.encryptUpdateUserData(user);
         }
     }
 
-    public User findByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username);
+    public User findByUsername(String username) throws Exception {
+        //return userRepository.findByEmail(username);
+        return userDataEncryptionService.findEncryptedUserByEmail(username);
     }
 
     public User getLoggedInUser() {
@@ -487,11 +522,11 @@ public class UserService {
         return (User)auth.getPrincipal();
     }
 
-    //OVDE DODATI ODAKLE DOLAZI ZAHTEV AKO JE IZ REGISTRACIJE DA NE SETUJE NA LOGGED IN ONCE TRUE
-    //AKO JE IZ LOGINA ONDA DA SETUJE NA LOGGED IN ONCE TRUE
-    public ResponseDto verifyCode(VerificationRequestDto verificationRequestDto) {
+    public ResponseDto verifyCode(VerificationRequestDto verificationRequestDto) throws Exception {
         ResponseDto responseDto = new ResponseDto();
-        User user = userRepository.findByEmail(verificationRequestDto.getEmail());
+        //User user = userRepository.findByEmail(verificationRequestDto.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(verificationRequestDto.getEmail());
+
         if (tfaService.isOtpNotValid(user.getSecret(), verificationRequestDto.getCode())) {
 
             //throw new BadCredentialsException("Code is not correct");

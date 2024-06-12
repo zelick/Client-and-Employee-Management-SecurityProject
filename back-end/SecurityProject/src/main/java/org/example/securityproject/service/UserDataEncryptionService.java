@@ -1,6 +1,7 @@
 package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
+import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,24 @@ public class UserDataEncryptionService {
 
         User encryptedUser = userRepository.findByEmail(encryptedEmail);
         return encryptedUser;
+    }
+
+    public User findByEmailAndRegistrationStatus(String email) throws Exception {
+        User user = findEncryptedUserByEmail(email);
+
+        if (user.getRegistrationStatus().equals(RegistrationStatus.PENDING) || user.getRegistrationStatus().equals(RegistrationStatus.ACCEPTED)) {
+            return user;
+        }
+        return null;
+    }
+
+    public User findByEmailRejcetedUser(String email) throws Exception {
+        User user = findEncryptedUserByEmail(email);
+
+        if (user.getRegistrationStatus().equals(RegistrationStatus.REJECTED)) {
+            return user;
+        }
+        return null;
     }
 
     //KO ZELI DA KORISTI USERA SAMO POZOVE DECRYPT USER DATA
@@ -76,6 +95,10 @@ public class UserDataEncryptionService {
         System.out.println("ima ih: " + i);
     }
 
+    public String decryptData(String encryptedData) throws Exception {
+        return EncryptionService.decrypt(encryptedData, keyStoreService.loadKeyFromKeyStore());
+    }
+
     public void encryptUserData(User user) throws Exception {
         SecretKey loadedSecretKey = keyStoreService.loadKeyFromKeyStore();
 
@@ -88,6 +111,28 @@ public class UserDataEncryptionService {
         String encryptedPhoneNumber = EncryptionService.encrypt(user.getPhoneNumber(), loadedSecretKey);
 
         user.setEmail(encryptedEmail);
+        user.setName(encryptedName);
+        user.setSurname(encryptedSurname);
+        user.setCity(encryptedCity);
+        user.setCountry(encryptedCountry);
+        user.setAddress(encryptedAddress);
+        user.setPhoneNumber(encryptedPhoneNumber);
+
+        userRepository.save(user);
+    }
+
+    public void encryptUpdateUserData(User user) throws Exception {
+        SecretKey loadedSecretKey = keyStoreService.loadKeyFromKeyStore();
+
+        //String encryptedEmail = EncryptionService.encrypt(user.getEmail(), loadedSecretKey);
+        String encryptedName = EncryptionService.encrypt(user.getName(), loadedSecretKey);
+        String encryptedSurname = EncryptionService.encrypt(user.getSurname(), loadedSecretKey);
+        String encryptedAddress = EncryptionService.encrypt(user.getAddress(), loadedSecretKey);
+        String encryptedCountry = EncryptionService.encrypt(user.getCountry(), loadedSecretKey);
+        String encryptedCity = EncryptionService.encrypt(user.getCity(), loadedSecretKey);
+        String encryptedPhoneNumber = EncryptionService.encrypt(user.getPhoneNumber(), loadedSecretKey);
+
+        //user.setEmail(encryptedEmail);
         user.setName(encryptedName);
         user.setSurname(encryptedSurname);
         user.setCity(encryptedCity);
