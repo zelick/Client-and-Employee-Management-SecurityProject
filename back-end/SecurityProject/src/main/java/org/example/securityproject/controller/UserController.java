@@ -31,13 +31,13 @@ public class UserController {
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("anaa.radovanovic2001+6@gmail.com");
+       User user = userRepository.findByEmail("HVFOd+SCu8hlKStqkdYEcvwIwlDygx2Bb0FJo3NKlot3YZZLB5TAwpoqcyrOBYBoffwJdVaWvHOzpS8g+BoSuOfq/XL4QrWoymy3+d2CaZY=");
        int userId = user.getId();
 
        List<UserRole> roles = user.getRoles();
 
        roles.remove(UserRole.CLIENT);
-       roles.add(UserRole.EMPLOYEE);
+       //roles.add(UserRole.EMPLOYEE);
 
        user.setRoles(roles);
 
