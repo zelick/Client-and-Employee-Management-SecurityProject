@@ -20,6 +20,8 @@ export class ClientProfileComponent implements OnInit{
   passwordForm: FormGroup = new FormGroup({});
   messagePassword: string = "";
   email: any;
+  goldClient: boolean = false;
+  messageDeleteData: string = "";
 
 
   constructor(private userService: UserService, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
@@ -76,12 +78,31 @@ export class ClientProfileComponent implements OnInit{
         console.log("Uspesno dobavio ulogovanog usera: ", user);
         this.loggedUser = user;
         this.email = this.loggedUser.email;
+        const userRoles = this.auth.getLoggedInUserRoles();
+        if (this.loggedUser.servicesPackage === 'GOLDEN' && userRoles.includes(UserRole.CLIENT)) {
+          this.goldClient = true;
+        }
         //this.findUserByEmail();
       },
       (error) => {
         console.error('Error dobavljanja ulogovanog usera:', error);
       }
     );
+  }
+
+  deleteAllData(): void {
+    if (confirm("Are you sure you want to delete all your data?")) {
+      this.userService.deleteUserData(this.email).subscribe(
+        (response: ResponseMessage) => {
+          console.log('User data deleted successfully:', response);
+          this.messageDeleteData = response.responseMessage;
+        },
+        (error) => {
+          console.error('Failed to delete user data:', error);
+          // Dodajte logiku za neuspešan ishod, kao što je obaveštavanje korisnika
+        }
+      );
+    }
   }
 
   findUserByEmail(): void{

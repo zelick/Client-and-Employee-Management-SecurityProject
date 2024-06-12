@@ -39,6 +39,27 @@ public class UserService {
     private EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
+    private AdRequestService adRequestService;
+    private AdService adService;
+
+    public void deleteUserDataByEmail(String email)
+    {
+        adRequestService.deleteAdRequestsByEmail(email);
+        System.out.println("Prosao je brisanje zahteva za reklame");
+        adService.deleteAdsByEmail(email);
+        System.out.println("Prosoa je brisanje reklama i zahteva za reklame");
+        User user = userRepository.findByEmail(email);
+        System.out.println("Pronadjen user: " + user.getName());
+        if (user != null) {
+            user.setPhoneNumber("");
+            user.setCountry("");
+            user.setAddress("");
+            user.setCity("");
+            user.setSurname("");
+            user.setName("");
+            userRepository.save(user);
+        }
+    }
 
     public LoginReponseDto resetPassword(UserLoginData loginData){
         LoginReponseDto loginResponseDto = new LoginReponseDto();

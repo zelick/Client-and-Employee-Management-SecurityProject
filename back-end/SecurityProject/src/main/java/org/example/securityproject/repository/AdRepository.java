@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface AdRepository extends JpaRepository<Ad, Integer> {
     List<Ad> findAllByUser_Email(String email);
+    void deleteByUser_Email(String email);
+    List<Ad> findAll();
+    void delete(Ad ad);
+    List<Ad> findByUserEmail(String email);
 }

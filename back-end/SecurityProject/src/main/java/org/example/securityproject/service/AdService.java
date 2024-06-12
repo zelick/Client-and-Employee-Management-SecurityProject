@@ -50,6 +50,14 @@ public class AdService {
         return adsDtos;
     }
 
+    public void deleteAdsByEmail(String email) {
+        List<Ad> ads = adRepository.findByUserEmail(email);
+        for (Ad ad : ads) {
+            adRepository.delete(ad);
+        }
+    }
+
+
     public List<AdDto> getAllAdsByEmail(String email) {
         List<Ad> ads = adRepository.findAllByUser_Email(email);
         return ads.stream()

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.securityproject.model.User;
+import org.example.securityproject.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,12 +34,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private TokenUtils tokenUtils;
 
     private UserDetailsService userDetailsService;
+    private UserRepository userRepository;
 
     protected final Log LOGGER = LogFactory.getLog(getClass());
 
-    public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
+    public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService, UserRepository userRepository) {
         this.tokenUtils = tokenHelper;
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -60,6 +64,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
                 // 2. Citanje korisnickog imena iz tokena
                 username = tokenUtils.getUsernameFromToken(authToken);
+                User user = userRepository.findByEmail(username);
+                if (user != null && user.isBlocked()) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("User is blocked.");
+                    return;
+                }
 
                 if (username != null) {
 

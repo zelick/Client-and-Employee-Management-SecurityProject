@@ -29,6 +29,10 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl + 'admins/getAllUsers');
   }
 
+  deleteUserData(email: string): Observable<ResponseMessage> {
+    return this.http.delete<ResponseMessage>(`${this.apiUrl}users/deleteUserData/${email}`);
+  }
+
   blockUser(email: string): Observable<ResponseMessage> {
     return this.http.put<ResponseMessage>(`${this.apiUrl}admins/blockUser/${email}`, {});
   }

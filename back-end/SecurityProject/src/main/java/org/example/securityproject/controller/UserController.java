@@ -96,6 +96,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteUserData/{email}")
+    public ResponseEntity<String> deleteUserData(@PathVariable String email) {
+        try {
+            userService.deleteUserDataByEmail(email);
+            return new ResponseEntity<>("User data deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete user data: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping("/getLoggedInUser")
     public ResponseEntity<UserDto> getLogegdInUser() {
         User loggedInUser = userService.getLoggedInUser();

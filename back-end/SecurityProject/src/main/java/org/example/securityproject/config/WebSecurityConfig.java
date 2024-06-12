@@ -165,7 +165,7 @@ public class WebSecurityConfig {
                 .cors().and()
 
                 // umetni custom filter TokenAuthenticationFilter kako bi se vrsila provera JWT tokena umesto cistih korisnickog imena i lozinke (koje radi BasicAuthenticationFilter)
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService()), BasicAuthenticationFilter.class);
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService(), userRepository), BasicAuthenticationFilter.class);
 
         // zbog jednostavnosti primera ne koristimo Anti-CSRF token (https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
         http.csrf().disable();
@@ -196,6 +196,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/login/reset-password")
                 .antMatchers(HttpMethod.GET, "/api/login/verify")
                 .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
+                .antMatchers(HttpMethod.GET, "/api/auth/refresh-token")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }

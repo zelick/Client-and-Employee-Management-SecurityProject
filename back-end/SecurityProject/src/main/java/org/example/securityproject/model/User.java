@@ -36,22 +36,22 @@ public class User implements UserDetails {
     @Column(name = "salt", nullable = false)
     private String salt;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname", nullable = true)
     private String surname;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = true)
     private String city;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country", nullable = true)
     private String country;
 
-    @Column(name = "phoneNumber", nullable = false)
+    @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;
 
     @Column(name = "blocked", nullable = false)

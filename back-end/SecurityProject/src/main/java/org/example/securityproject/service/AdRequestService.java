@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.repository.AdRequestRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,17 @@ public class AdRequestService {
 
     public Optional<AdRequest> findById(Integer id) {
         return adRequestRepository.findById(id);
+    }
+    public void deleteAdRequestsByEmail(String email) {
+        List<AdRequest> adRequests = new ArrayList<>();
+        adRequests = adRequestRepository.findAll();
+        for(AdRequest ar : adRequests)
+        {
+            if(ar.getEmail().equals(email))
+            {
+                adRequestRepository.delete(ar);
+            }
+        }
     }
 
 }
