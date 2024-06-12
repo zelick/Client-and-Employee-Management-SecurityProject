@@ -17,24 +17,31 @@ import org.springframework.web.bind.annotation.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "api/admins")
 public class AdminController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
     private PermissionService permissionService;
 
+
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
+        logger.debug("Fetching all employees.");
         try {
             List<UserDto> userDtos = userService.getAllEmployees()
                     .stream()
                     .map(user -> new UserDto(user))
                     .collect(Collectors.toList());
+            logger.info("Retrieved {} employees successfully.", userDtos.size());
             return new ResponseEntity<>(userDtos, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Failed to fetch all employees: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -74,13 +81,16 @@ public class AdminController {
 
     @GetMapping("/getAllRegistrationRequests")
     public ResponseEntity<List<UserDto>> getAllRegistrationRequests() {
+        logger.debug("Fetching all registration requests.");
         try {
             List<UserDto> userDtos = userService.getAllRegistrationRequests()
                     .stream()
                     .map(user -> new UserDto(user))
                     .collect(Collectors.toList());
+            logger.info("Retrieved {} registration requests successfully.", userDtos.size());
             return new ResponseEntity<>(userDtos, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("Failed to fetch all registration requests: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -94,6 +104,7 @@ public class AdminController {
 
     @GetMapping("/getAllRoles")
     public List<UserRole> getAllRoles() {
+        logger.debug("Fetching all roles.");
        List<UserRole> roles = new ArrayList<>();
 
        roles.add(UserRole.ADMINISTRATOR);
@@ -105,22 +116,33 @@ public class AdminController {
 
     @GetMapping("/getAllPermissionsForRole/{role}")
     public ResponseEntity<Set<Permission>> getAllPermissionsForRole(@PathVariable UserRole role) {
+        logger.debug("Fetching permissions for role: {}", role);
         Set<Permission> permissions = role.getPermissions();
 
         if (permissions == null) {
+            logger.warn("Permissions not found for role: {}", role);
             return ResponseEntity.notFound().build();
         }
 
+        logger.info("Returning {} permissions for role: {}", permissions.size(), role);
         return ResponseEntity.ok(permissions);
     }
 
     @PutMapping("/removePermission")
     public ResponseEntity<ResponseDto> removePermission(@RequestBody PermissionRoleDto data) {
+        logger.debug("Removing permission '{}' from role '{}'", data.getPermission(), data.getRole());
         Permission permission = data.getPermission();
         UserRole role = data.getRole();
 
         ResponseDto response = permissionService.removePermissionFromRole(permission, role);
 
+        //proveri ovo nisam sigurna sa getResponseMessage - kristina loggovi
+        if (response != null && response.getResponseMessage() != null) {
+            logger.info(response.getResponseMessage());
+        } else {
+            logger.error("Failed to remove permission '{}' from role '{}'", data.getPermission(), data.getRole());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         return ResponseEntity.ok(response);
     }
 
@@ -131,19 +153,37 @@ public class AdminController {
 
     @PutMapping("/addPermission")
     public ResponseEntity<ResponseDto> addPermission(@RequestBody PermissionRoleDto data) {
+        logger.debug("Adding permission '{}' to role '{}'", data.getPermission(), data.getRole());
         Permission permission = data.getPermission();
         UserRole role = data.getRole();
 
         ResponseDto response = permissionService.addPermissionToRole(permission, role);
 
+        //proveri ovo nisam sigurna sa getResponseMessage - kristina loggovi
+        if (response != null && response.getResponseMessage() != null) {
+            logger.info(response.getResponseMessage());
+        } else {
+            logger.error("Failed to add permission '{}' to role '{}'", data.getPermission(), data.getRole());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/updateAdminPassword")
     public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+        logger.debug("Updating password for admin with email '{}'", passwordDataDto.getEmail());
+
         ResponseDto response = new ResponseDto();
-        response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        //try catch - log
+        try {
+            response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+            logger.info("Password updated successfully for admin with email '{}'", passwordDataDto.getEmail());
+            return ResponseEntity.ok(response);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("Failed to update password for admin with email '{}': {}", passwordDataDto.getEmail(), e.getMessage());
+            response.setResponseMessage("Failed to update password: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
 }

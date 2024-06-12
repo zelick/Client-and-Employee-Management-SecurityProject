@@ -184,6 +184,14 @@ public class WebSecurityConfig {
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring()
+                .antMatchers("/actuator/**")// Dodajte putanju /actuator/**
+//                .antMatchers( "/loki/**") // Dodajte putanje za Loki
+//                .antMatchers( "/loki/api/v1/push") // Dodajte putanju za Loki
+                //.antMatchers(HttpMethod.GET, "/loki/**") // Dodajte putanje za Loki (ovde je promenjen HttpMethod u GET)
+                //.antMatchers(HttpMethod.GET, "/loki/api/v1/push") // Dodajte putanju za Loki
+                .antMatchers("/loki/**") // Dodajte putanje za Loki (uklonjen HttpMethod)
+                .antMatchers(HttpMethod.POST, "/loki/api/v1/push") // Dodajte putanju za Loki
+                .antMatchers(HttpMethod.GET, "/favicon.ico") // Dodajte putanju za favicon.ico (ovde je promenjen HttpMethod u GET)
                 .antMatchers(HttpMethod.POST, "/api/auth/login")
                 .antMatchers(HttpMethod.POST, "/api/users/registerUser")
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")

@@ -12,23 +12,32 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Service
 @AllArgsConstructor
 public class AdService {
+    private static final Logger logger = LoggerFactory.getLogger(AdService.class);
     @Autowired
     private AdRepository adRepository;
     private UserRepository userRepository;
 
+
     public void createAd(AdDto ad) {
-        Ad ad1 = new Ad();
-        User user = userRepository.findByEmail(ad.getEmail());
-        ad1.setUser(user);
-        ad1.setSlogan(ad.getSlogan());
-        ad1.setActiveFrom(ad.getActiveFrom());
-        ad1.setActiveTo(ad.getActiveTo());
-        ad1.setDescription(ad.getDescription());
-        adRepository.save(ad1);
+        try {
+            Ad ad1 = new Ad();
+            User user = userRepository.findByEmail(ad.getEmail());
+            ad1.setUser(user);
+            ad1.setSlogan(ad.getSlogan());
+            ad1.setActiveFrom(ad.getActiveFrom());
+            ad1.setActiveTo(ad.getActiveTo());
+            ad1.setDescription(ad.getDescription());
+            adRepository.save(ad1);
+            logger.info("Created new ad for user '{}'", ad.getEmail());
+        } catch (Exception e) {
+            logger.error("Failed to create ad for user '{}': {}", ad.getEmail(), e.getMessage(), e);
+            throw new RuntimeException("Failed to create ad", e);
+        }
     }
 
     public List<AdDto> getAllAds() {

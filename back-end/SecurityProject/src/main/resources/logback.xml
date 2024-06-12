@@ -2,7 +2,7 @@
     <!-- Console Appender -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%-30(%d{yyyy-MM-dd HH:mm:ss.SSS} %p) %-30.30([%t] %C): eventId=%X{eventId} - %msg%n%throwable</Pattern>
+            <Pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} | %p | %t | %C | %msg%n%throwable</Pattern>
         </layout>
     </appender>
 
@@ -14,19 +14,72 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %p [%t] %C: eventId=%X{eventId} - %msg%n%throwable</Pattern>
+            <Pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} | %p | %t | %C | %msg%n%throwable</Pattern>
         </encoder>
     </appender>
+    <!-- Specific Loggers -->
+    <logger name="org.example" level="WARN">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </logger>
 
-    <!-- Hikari Logger -->
-<!--    <logger name="com.zaxxer.hikari" level="DEBUG">-->
-<!--        <appender-ref ref="File" />-->
-<!--    </logger>-->
 
-    <logger name="org.example" level="DEBUG"/>
+    <logger name="org.example.info" level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </logger>
+
+    <logger name="org.example.debug" level="DEBUG">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </logger>
+
+    <logger name="org.example.error" level="ERROR">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </logger>
 
     <root level="DEBUG">
         <appender-ref ref="Console" />
         <appender-ref ref="File" />
     </root>
+
+    <!--vrv ne treba ovo-->
+    <root level="ERROR">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </root>
+
+    <!--vrv ne treba ovo-->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+        <appender-ref ref="File" />
+    </root>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>http://localhost:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <pattern>
+                    {
+                    "level":"%level",
+                    "class":"%logger{36}",
+                    "thread":"%thread",
+                    "message": "%message",
+                    }
+                </pattern>
+            </message>
+        </format>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="LOKI" />
+    </root>
+
 </configuration>

@@ -17,15 +17,19 @@ import org.springframework.web.bind.annotation.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "api/users")
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private UserService userService;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
+
 
     //TEST DA LI ROLE MOGU DA SE MENJAJU IZ KODA
 
@@ -86,16 +90,19 @@ public class UserController {
     public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
+        logger.info("Password update response: {}", response.getResponseMessage());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/getLoggedInUser")
     public ResponseEntity<UserDto> getLogegdInUser() {
+        logger.info("Fetching logged in user details.");
         User loggedInUser = userService.getLoggedInUser();
         if (loggedInUser == null) {
+            logger.warn("No logged in user found.");
             return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
         }
-
+        logger.info("Logged in user found: {}", loggedInUser.getEmail());
         UserDto userDto = new UserDto(loggedInUser);
         return ResponseEntity.ok(userDto);
     }
@@ -108,11 +115,14 @@ public class UserController {
 
     @GetMapping("/findUserByEmail/{email}")
     public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
+        logger.debug("Fetching user details by email: {}", email);
         User user = userRepository.findByEmail(email);
         if (user != null) {
+            logger.info("User found with email {}: {}", email, user);
             UserDto userDto = new UserDto(user);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         } else {
+            logger.warn("User not found with email: {}", email);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

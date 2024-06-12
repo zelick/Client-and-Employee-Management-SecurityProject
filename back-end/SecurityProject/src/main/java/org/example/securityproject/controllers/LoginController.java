@@ -23,17 +23,23 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.net.URI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     private final LoginService loginService;
     private final UserService userService;
     @Autowired
     private LoginTokenRepository loginTokenRepository;
     private TokenUtils tokenUtils;
+
+
 
     @Autowired
     public LoginController(LoginService loginService, UserService userService, TokenUtils tokenUtils) {
@@ -44,20 +50,28 @@ public class LoginController {
 
     @PostMapping("/send-email")
     public ResponseEntity<String> sendEmail(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        logger.info("Sending email for email: {}", email);
         if (!userService.checkIfExists(email)) {
+            String errorMessage = "User with the provided email address was not found.";
+            logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with the provided email address was not found.");
         }
 
         if (!userService.checkServicePackage(email)) {
+            String errorMessage = "You do not have permission for passwordless login due to your service package type.";
+            logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have permission for passwordless login due to your service package type.");
         }
 
         if(!userService.checkRole(email))
         {
+            String errorMessage = "You do not have permission for passwordless login due to your role.";
+            logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have permission for paswordless login due to you role.");
         }
 
         loginService.sendEmail(email);
+        logger.info("Email sent successfully to email: {}", email);
         return ResponseEntity.ok().build();
     }
 
@@ -68,23 +82,27 @@ public class LoginController {
 
     @GetMapping("/verify")
     public ResponseEntity<String> handleLoginRequest(@RequestParam("token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
+        logger.info("Handling login request for token: {}", token);
         LoginToken loginToken = loginTokenRepository.findByToken(token);
         String email = loginToken.getUsername();
 
         if (loginToken == null) {
+            logger.error("Token not found for token: {}", token);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Token not found");
         }
         if (loginToken != null && !verifyHmac(token, "milica123", loginToken.getHmac())) {
+            logger.warn("Impaired integrity for token: {}", token);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Impaired integrity");
         }
         LocalDateTime expirationTime = loginToken.getExpirationTime();
         if (expirationTime.isBefore(LocalDateTime.now())) {
+            logger.warn("Token expired for token: {}", token);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token expired");
         }
 
         loginTokenRepository.delete(loginToken);
         String clientAppUrl = "https://localhost:4200/client-homepage/" + email;
-
+        logger.info("Redirecting to client homepage URL: {}", clientAppUrl);
         URI redirectUri = UriComponentsBuilder.fromUriString(clientAppUrl).build().toUri();
         return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
 
@@ -92,6 +110,7 @@ public class LoginController {
 
     @GetMapping("/tokens/{email}")
     public ResponseEntity<AccessRefreshTokenResponseDto> getTokens(@PathVariable("email") String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        logger.info("Generating tokens for email: {}", email);
         String accessToken = tokenUtils.generateAccessToken(email);
         String refreshToken = tokenUtils.generateRefreshToken(email);
 
@@ -100,6 +119,9 @@ public class LoginController {
 
         System.out.println("Access token generated: " + accessToken);
         System.out.println("Refresh token: " + refreshToken);
+
+        logger.debug("Access token generated: {}", accessToken);
+        logger.debug("Refresh token generated: {}", refreshToken);
 
         AccessRefreshTokenResponseDto tokensResponse = new AccessRefreshTokenResponseDto(accessToken, accessExpiresIn, refreshToken, refreshExpiresIn);
 
@@ -111,9 +133,5 @@ public class LoginController {
 
         return ResponseEntity.ok().headers(headers).body(tokensResponse);
     }
-
-
-
-
 
 }

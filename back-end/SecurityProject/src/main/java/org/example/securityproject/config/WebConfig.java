@@ -18,6 +18,8 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("https://localhost:4200")
+//                        .allowedOrigins("http://loki:3100")  //http://localhost:3100/loki/api/v1/push
+//                        .allowedOrigins("http://localhost:3100/loki/api/v1/push")
                         .allowedMethods(HttpMethod.GET.name(),
                                 HttpMethod.POST.name(),
                                 HttpMethod.DELETE.name(),

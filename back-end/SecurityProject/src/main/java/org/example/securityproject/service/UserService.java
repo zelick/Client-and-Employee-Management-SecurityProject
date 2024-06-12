@@ -1,6 +1,7 @@
 package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
+import org.example.securityproject.controller.AuthenticationController;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.enums.UserRole;
@@ -9,6 +10,8 @@ import org.example.securityproject.model.ConfirmationToken;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,19 +37,31 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 public class UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
     private EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
 
+
     public LoginReponseDto loginUser(UserLoginData loginData) {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
-
+        logger.debug("Starting try login registration for email: {}", loginData.getEmail());
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
 
+        // Provjeri postoji li korisnik s tim emailom
+        if (user == null) {
+            String errorMessage = "User login failed: User not found for email " + loginData.getEmail();
+            logger.error(errorMessage);
+            return null; //ovo mozda ana proveroti?
+        }
+
+        //ovde ce puci - pitaj Anu za porvatnu vrednost ?
         if (!(user.isActive() && user.isEnabled())) {
+            String errorMessage = "User login failed: Account is not active for email " + loginData.getEmail();
+            logger.error(errorMessage);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
             return loginResponseDto;
@@ -64,18 +79,26 @@ public class UserService {
                 .anyMatch(role -> role.equals(UserRole.ADMINISTRATOR) || role.equals(UserRole.EMPLOYEE));
 
         if (hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
+            String infoMessage = "User login requires password change for email " + loginData.getEmail();
+            logger.info(infoMessage);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This user must change his password because this is his first login.");
             return loginResponseDto;
         }
 
+        String successMessage = "User logged in successfully: " + loginData.getEmail();
+        logger.info(successMessage);
         loginResponseDto.setLoggedInOnce(true);
         loginResponseDto.setResponse("This user has successfully logged in.");
         return loginResponseDto;
     }
     public ResponseDto registerUser (UserDto userDto) {
         ResponseDto response = new ResponseDto();
+        logger.debug("Starting user registration for email: {}", userDto.getEmail());
+
         if (!validatePassword(userDto.getPassword())) {
+            String errorMessage = "User registration failed: The password does not meet the requirements for email " + userDto.getEmail();
+            logger.error(errorMessage);
             response.setResponseMessage("The password does not meet the requirements.");
             response.setFlag(false);
             return response;
@@ -83,18 +106,24 @@ public class UserService {
 
         User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
         if (existingUser != null) {
+            String errorMessage = "User registration failed: A user with this email is already registered: " + userDto.getEmail();
+            logger.error(errorMessage);
             response.setResponseMessage("A user with this email is already registered.");
             response.setFlag(false);
             return response;
         }
 
         if (!isValidEmail(userDto.getEmail())) {
+            String errorMessage = "User registration failed: Invalid email format for email " + userDto.getEmail();
+            logger.error(errorMessage);
             response.setResponseMessage("Invalid email format.");
             response.setFlag(false);
             return response;
         }
 
         if (!areAllFieldsFilled(userDto)) {
+            String errorMessage = "User registration failed: All fields are required for email " + userDto.getEmail();
+            logger.error(errorMessage);
             response.setResponseMessage("All fields are required.");
             response.setFlag(false);
             return response;
@@ -109,6 +138,8 @@ public class UserService {
             long minutesPassed = ChronoUnit.MINUTES.between(requestProcessedTime, currentTime);
 
             if (minutesPassed < 5) {
+                String warnMessage = "User registration attempt too soon after rejection for email " + userDto.getEmail();
+                logger.warn(warnMessage);
                 response.setResponseMessage("It is not possible to register - your request was recently rejected.");
                 response.setFlag(false);
                 return response;
@@ -150,12 +181,16 @@ public class UserService {
             user.setSalt(salt);
         } catch (NoSuchAlgorithmException e) {
             // Handle exception
+            String errorMessage = "User registration failed: Error hashing password for email " + userDto.getEmail();
+            logger.error(errorMessage, e);
         }
 
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
         userRepository.save(user);
+        logger.info("User registered successfully: {}", userDto.getEmail());
+        response.setResponseMessage("You have successfully registered.");
         response.setResponseMessage("You have successfully registered.");
         response.setFlag(true);
         return response;
@@ -215,20 +250,25 @@ public class UserService {
     }
 
     public List<User> getAllRegistrationRequests() {
+        logger.info("Fetching all registration requests with status: PENDING");
         return userRepository.findByRegistrationStatus(RegistrationStatus.PENDING);
     }
 
     public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
+        logger.info("Processing registration request for email: {}", responseData.getEmail());
         User user = userRepository.findByEmail(responseData.getEmail());
         if (!responseData.isAccepted()) {
+            logger.info("Registration request rejected for email: {}", responseData.getEmail());
             user.setRegistrationStatus(RegistrationStatus.REJECTED);
         }
         else {
+            logger.info("Registration request accepted for email: {}", responseData.getEmail());
             user.setRegistrationStatus(RegistrationStatus.WAITING);
         }
         user.setRequestProcessingDate(new Date());
         userRepository.save(user);
         emailService.sendRegistrationEmail(responseData);
+        logger.info("Registration request processing completed for email: {}", responseData.getEmail());
     }
 
     public boolean checkIfExists(String email)
@@ -249,6 +289,7 @@ public class UserService {
     }
     
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
+        logger.info("Confirming token: {}", token);
         ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(token);
         String htmlResponse = "";
 
@@ -256,6 +297,8 @@ public class UserService {
             boolean hmacValid = verifyHmac(token, "ana123", confirmationToken.getHmac());
 
             if (!hmacValid) {
+                String errorMessage = "HMAC signature invalid for token: " + token;
+                logger.error(errorMessage);
                 return "HMAC signature invalid";
             }
 
@@ -265,11 +308,13 @@ public class UserService {
             User user = confirmationToken.getUser();
 
             if (new Date().after(expiryDate)) {
+                logger.warn("Token expired for token: {}", token);
                 htmlResponse = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Token Expired</title></head><body><h1>Token Expired</h1><p>The token has expired. Please register again.</p></body></html>";
                 confirmationTokenRepository.delete(confirmationToken);
                 userRepository.delete(user);
             }
             else {
+                logger.info("Token confirmed successfully for token: {}", token);
                 user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
                 user.setActive(true);
                 user.setEnabled(true); //proveri!!
@@ -279,6 +324,7 @@ public class UserService {
             }
             return htmlResponse;
         } else {
+            logger.error("Token not found: {}", token);
             return"Token not found";
         }
     }
@@ -305,18 +351,25 @@ public class UserService {
     }
 
     public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
+        logger.info("Updating password for user with email: {}", passwordData.getEmail());
         if (passwordData.getEmail().isEmpty()) {
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                 User user = (User)auth.getPrincipal();
                 passwordData.setEmail(user.getEmail());
         }
         if (!checkOldPassword(passwordData)) {
+            String errorMessage = "Failed to update password: Incorrect current password for email " + passwordData.getEmail();
+            logger.error(errorMessage);
             return "You have not entered a good current password.";
         }
         if (!passwordData.getNewPassword().equals(passwordData.getConfirmPassword())) {
+            String errorMessage = "Failed to update password: New password and confirm password do not match for email " + passwordData.getEmail();
+            logger.error(errorMessage);
             return "The new password and confirm password do not match.";
         }
         if (!validatePassword(passwordData.getNewPassword())) {
+            String errorMessage = "Failed to update password: Password does not meet the requirements for email " + passwordData.getEmail();
+            logger.error(errorMessage);
             return "The password does not meet the requirements.";
         }
 
@@ -329,6 +382,8 @@ public class UserService {
             user.setPassword(hashedPassword);
             user.setSalt(salt);
         } catch (NoSuchAlgorithmException e) {
+            String errorMessage = "Failed to update password: Error hashing password for email " + passwordData.getEmail();
+            logger.error(errorMessage, e);
         }
 
         if (!user.isLoggedInOnce()) {
@@ -336,7 +391,7 @@ public class UserService {
         }
 
         userRepository.save(user);
-
+        logger.info("Password updated successfully for user with email: {}", passwordData.getEmail());
         return "Password successfully changed.";
     }
 
@@ -352,11 +407,13 @@ public class UserService {
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = (User)auth.getPrincipal();
-        System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
+        logger.info("Updating user data for user with email: {}", loggedInUser.getEmail());
 
         User user = userRepository.findByEmail(loggedInUser.getEmail());
 
         if (!areAllFieldsFilledAdmin(adminData)) {
+            String errorMessage = "Failed to update user data: All fields are required for user with email " + loggedInUser.getEmail();
+            logger.error(errorMessage);
             return "All fields are required.";
         }
 
@@ -368,14 +425,14 @@ public class UserService {
         user.setPhoneNumber(adminData.getPhoneNumber());
 
         userRepository.save(user);
-
+        logger.info("User data updated successfully for user with email: {}", loggedInUser.getEmail());
         return "User successfully updated.";
     }
 
     public List<User> getAllEmployees() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = (User)auth.getPrincipal();
-        System.out.println("ULOGOVAN USERRR:  " + loggedInUser.getEmail());
+        logger.info("Fetching all employees for logged in user: {}", loggedInUser.getEmail());
         return userRepository.findByRolesAndRegistrationStatus(UserRole.EMPLOYEE, RegistrationStatus.ACCEPTED);
     }
 
@@ -398,12 +455,28 @@ public class UserService {
 
             user.setServicesPackage(userDto.getServicesPackage());
 
-            userRepository.save(user);
+            try {
+                userRepository.save(user);
+                logger.info("User {} updated successfully.", user.getEmail());
+            } catch (Exception e) {
+                logger.error("Failed to update user {}: {}", user.getEmail(), e.getMessage());
+            }
+        } else {
+            logger.warn("User with email {} not found. Update operation aborted.", userDto.getEmail());
         }
     }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username);
+        User user = userRepository.findByEmail(username);
+
+        if (user == null) {
+            logger.warn("User with username {} not found.", username);
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        } else {
+            logger.debug("User found with username {}: {}", username, user);
+        }
+
+        return user;
     }
 
     public User getLoggedInUser() {
@@ -412,6 +485,7 @@ public class UserService {
             auth = SecurityContextHolder.getContext().getAuthentication();
         }
         catch (Exception e) {
+            logger.error("Failed to retrieve Authentication object: {}", e.getMessage());
             return null;
         }
         return (User)auth.getPrincipal();

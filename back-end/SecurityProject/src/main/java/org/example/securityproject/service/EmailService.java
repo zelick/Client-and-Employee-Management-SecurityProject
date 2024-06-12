@@ -22,18 +22,21 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @AllArgsConstructor
 public class EmailService {
 
-//    @Value("${security.project.secret}")
-//    private String SECRET_KEY;
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
     @Autowired
     private JavaMailSender javaMailSender;
     private LoginTokenRepository loginTokenRepository;
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
+
 
     public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
         String userEmail = responseData.getEmail();
@@ -51,30 +54,42 @@ public class EmailService {
                     "Reason: \n" +
                     responseData.getReason();
         }
-        
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("apliakcijemobilnea0gmail.com");
-        message.setTo(userEmail);
-        message.setSubject(subject);
-        message.setText(text);
 
-        javaMailSender.send(message);
+        //try catch - log
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("aplikacijemobilnea0gmail.com");
+            message.setTo(userEmail);
+            message.setSubject(subject);
+            message.setText(text);
+
+            javaMailSender.send(message);
+            logger.info("Email sent successfully to '{}'", userEmail);
+        } catch (Exception e) {
+            logger.error("Failed to send email to '{}': {}", userEmail, e.getMessage(), e);
+            throw new RuntimeException("Failed to send email", e);
+        }
     }
 
     public void sendPasswordlessMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
-        LoginToken objectToken = TokenGenerator.generateToken(email);
-        loginTokenRepository.save(objectToken);
-        String userEmail = email;
-        String subject = "Passwordless login";
-        String text = "Click on the following link to login: https://localhost:443/api/login/verify?token=" + objectToken.getToken();
+        try {
+            LoginToken objectToken = TokenGenerator.generateToken(email);
+            loginTokenRepository.save(objectToken);
+            String userEmail = email;
+            String subject = "Passwordless login";
+            String text = "Click on the following link to login: https://localhost:443/api/login/verify?token=" + objectToken.getToken();
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("aplikacijemobilnea0gmail.com");
-        message.setTo(userEmail);
-        message.setSubject(subject);
-        message.setText(text);
-
-        javaMailSender.send(message);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("aplikacijemobilnea0gmail.com");
+            message.setTo(userEmail);
+            message.setSubject(subject);
+            message.setText(text);
+            logger.info("Passwordless login email sent successfully to '{}'", email);
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            logger.error("Failed to send passwordless login email to '{}': {}", email, e.getMessage(), e);
+            throw new RuntimeException("Failed to send passwordless login email", e);
+        }
     }
     /*
     private String generateToken(String userEmail) {

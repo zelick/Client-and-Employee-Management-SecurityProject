@@ -38,6 +38,7 @@ import org.springframework.security.core.AuthenticationException;
 @RequestMapping(value = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
     @Autowired
     private TokenUtils tokenUtils;
 
@@ -47,14 +48,13 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
 
 
     @PostMapping("/login")
     public ResponseEntity<AccessRefreshTokenResponseDto> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
-
+        logger.debug("Usao je u generisanje generisanje tokena login '{}'.", authenticationRequest.getUsername());
         try {
             // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
             // AuthenticationException
@@ -71,17 +71,19 @@ public class AuthenticationController {
             int accessExpiresIn = tokenUtils.getAccessExpiresIn();
             int refreshExpiresIn = tokenUtils.getRefreshExpiresIn();
 
+            logger.info("Korisnik '{}' se uspešno autentifikovao.", authenticationRequest.getUsername());
+            logger.debug("Generisan je novi pristupni token za korisnika '{}'.", user.getUsername());
+
             // Vrati token kao odgovor na uspesnu autentifikaciju
             return ResponseEntity.ok(new AccessRefreshTokenResponseDto(accessToken, accessExpiresIn, refreshToken, refreshExpiresIn));
+
         } catch (AuthenticationException e) {
-            // Uhvatite AuthenticationException, koji može biti izuzetak ako autentifikacija nije uspela
-            logger.error("Došlo je do greške prilikom autentifikacije korisnika {}: {}", authenticationRequest.getUsername(), e.getMessage());
-            // Vratite odgovarajući HTTP status kao odgovor na grešku autentifikacije
+            String errorMessage = "Authentication failed for user: " + authenticationRequest.getUsername();
+            logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
-            // Uhvatite ostale izuzetke koje niste predvideli
-            logger.error("Došlo je do nepredviđene greške prilikom autentifikacije korisnika {}: {}", authenticationRequest.getUsername(), e.getMessage());
-            // Vratite odgovarajući HTTP status kao odgovor na nepredviđenu grešku
+            String errorMessage = "Unexpected error occurred during authentication for user: " + authenticationRequest.getUsername();
+            logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -89,49 +91,32 @@ public class AuthenticationController {
     // Endpoint za osvežavanje access tokena
     @GetMapping("/refresh-token")
     public ResponseEntity<UserTokenState> refreshToken(HttpServletRequest request) {
-         try{
-             //String refreshToken = request.getHeader("Authorization"); // Uzmi refresh token iz headera
+        try {
+            //String refreshToken = request.getHeader("Authorization"); // Uzmi refresh token iz headera
             String refreshToken = tokenUtils.getToken(request);
             String username = tokenUtils.getUsernameFromToken(refreshToken);
             User user = userService.findByUsername(username);
 
             if (tokenUtils.isTokenExpired(refreshToken)) { // Provjeri je li refresh token istekao
                 // Ako je refresh token istekao, vraćamo grešku
+                logger.warn("Refresh token je istekao za korisnika '{}'.", username);
                 return ResponseEntity.badRequest().build();
             } else {
                 // Ako refresh token nije istekao, osvježavamo access token
                 String newAccessToken = tokenUtils.refreshAccessToken(refreshToken);
                 int expiresIn = tokenUtils.getExpiredIn();
+                logger.info("Za korisnika '{}' uspešno osvežen access token.", username);
                 return ResponseEntity.ok(new UserTokenState(newAccessToken, expiresIn));
             }
-         } catch (Exception e) {
-             logger.error("Došlo je do greške prilikom osvežavanja tokena: {}", e.getMessage());
-             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-         }
+        } catch (Exception e) {
+            logger.error("Error occurred while refreshing token.", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
-//    // Endpoint za proveru validnosti access tokena
-//    @GetMapping("/check-token")
-//    public ResponseEntity<Void> checkAccessToken(HttpServletRequest request) {
-//        //String accessToken = request.getHeader("Authorization"); // Uzmi access token iz headera
-//        String accessToken = tokenUtils.getToken(request);
-//        if (accessToken == null || accessToken.isEmpty()) {
-//            // Ako access token nije pronađen u zaglavlju zahteva, vraćamo grešku
-//            return ResponseEntity.badRequest().build();
-//        }
-//
-//        if (tokenUtils.isTokenExpired(accessToken)) {
-//            // Ako je access token istekao, vraćamo grešku
-//            return ResponseEntity.badRequest().build();
-//        }
-//
-//        // Ako je access token važeći, vraćamo status 200 OK
-//        return ResponseEntity.ok().build();
-//    }
-
     // Endpoint za proveru validnosti access tokena
     @GetMapping("/check-token")
     public ResponseEntity<Void> checkAccessToken(HttpServletRequest request) {
+        logger.debug("Provera validnosti i isteka acces tokena.");
         try {
             String accessToken = tokenUtils.getToken(request);
 
@@ -151,9 +136,7 @@ public class AuthenticationController {
             logger.info("Access token is valid.");
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            // Uhvati sve ostale izuzetke koje niste predvideli
-            logger.error("An unexpected error occurred while checking the access token validity: {}", e.getMessage());
-            // Vratite odgovarajući HTTP status kao odgovor na nepredviđenu grešku
+            logger.error("An unexpected error occurred while checking access token validity.", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
