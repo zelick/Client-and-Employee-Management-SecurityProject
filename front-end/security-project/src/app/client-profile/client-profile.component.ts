@@ -22,6 +22,7 @@ export class ClientProfileComponent implements OnInit{
   email: any;
   goldClient: boolean = false;
   messageDeleteData: string = "";
+  client: boolean = false;
 
 
   constructor(private userService: UserService, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
@@ -29,6 +30,10 @@ export class ClientProfileComponent implements OnInit{
   ngOnInit(): void {
     const userRoles = this.auth.getLoggedInUserRoles(); 
     console.log(userRoles);
+    if (userRoles.includes(UserRole.CLIENT))
+      {
+        this.client = true;
+      }
     if (userRoles.length === 0) {
       this.router.navigate(['/']);
     }
@@ -88,6 +93,24 @@ export class ClientProfileComponent implements OnInit{
         console.error('Error dobavljanja ulogovanog usera:', error);
       }
     );
+  }
+
+  visitAd(): void {
+    if (this.loggedUser) {
+      this.userService.visitAd(this.email).subscribe(
+        (response: string) => {
+          console.log("Poseta reklami uspešna:", response);
+          // Dodaj logiku za obradu uspešne posete reklami ako je potrebno
+        },
+        (error) => {
+          console.error("Greška prilikom posete reklami:", error);
+          // Dodaj logiku za obradu greške prilikom posete reklami ako je potrebno
+        }
+      );
+    } else {
+      console.error("Nije moguće izvršiti posetu reklami - korisnik nije ulogovan.");
+      // Dodaj logiku za obradu ako korisnik nije ulogovan
+    }
   }
 
   deleteAllData(): void {

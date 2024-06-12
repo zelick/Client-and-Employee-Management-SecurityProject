@@ -160,4 +160,9 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser", { headers});
   }
 
+  visitAd(email: string): Observable<string> {
+    const params = new HttpParams().set('email', email);
+    return this.http.post<string>(`${this.apiUrl}ads/visit-ad`, null, { params: params, responseType: 'text' as 'json' });
+  }
+
 }

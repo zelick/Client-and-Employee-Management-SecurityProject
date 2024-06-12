@@ -134,6 +134,7 @@ public class WebSecurityConfig {
 
                 // CLIENT NOVO
                 .antMatchers(HttpMethod.POST,"/api/ad-requests/create").hasAuthority("CLIENT_CREATE")
+                .antMatchers(HttpMethod.POST,"/api/ads/visit-ad").hasAuthority("CLIENT_CREATE")
                 .antMatchers(HttpMethod.GET,"/api/ads/by-email").hasAuthority("CLIENT_READ")
                 //PO ROLI ZA PUTANJU USERS:
 

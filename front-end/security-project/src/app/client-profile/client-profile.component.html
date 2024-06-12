@@ -12,6 +12,7 @@
     <button class="dugme" (click)="editProfile(loggedUser.email)">Edit</button>
     <button class="dugme" (click)="changePasswordToggle()">Change password</button>
     <button *ngIf="goldClient" class="dugme" (click)="deleteAllData()">Delete all data</button>
+    <button *ngIf="client" class="dugme" (click)="visitAd()">Visit ad</button>
     <p *ngIf="goldClient">{{ messageDeleteData }}</p>
 </div>
 <div *ngIf="changePasswordFlag">
