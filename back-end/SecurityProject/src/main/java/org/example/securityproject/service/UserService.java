@@ -300,6 +300,7 @@ public class UserService {
         return password.matches(passwordRegex);
     }
 
+    //OVDE DEKRIPTOVATI NEKE PODATKE
     public List<User> getAllRegistrationRequests() {
         return userRepository.findByRegistrationStatus(RegistrationStatus.PENDING);
     }
@@ -392,8 +393,12 @@ public class UserService {
         return new Date(expiryTimeMillis);
     }
 
-    public User getUserData() {
-        return getLoggedInUser();
+    public User getUserData() throws Exception {
+        User encryptedUser = getLoggedInUser();
+
+        User decryptedUser = userDataEncryptionService.decryptUserData(encryptedUser);
+
+        return decryptedUser;
     }
 
     //OVDE MOZDA PROBLEM ZBOG ENKRIPCIJE PODATAKA

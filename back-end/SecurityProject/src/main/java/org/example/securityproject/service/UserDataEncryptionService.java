@@ -2,7 +2,9 @@ package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
 import org.example.securityproject.enums.RegistrationStatus;
+import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.model.User;
+import org.example.securityproject.repository.AdRequestRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,14 @@ public class UserDataEncryptionService {
     @Autowired
     private UserRepository userRepository;
     private KeyStoreService keyStoreService;
+    private AdRequestRepository adRequestRepository;
 
     /*
     @PostConstruct
     public void init() {
         System.out.println("PostConstruct method init() called.");
         try {
-            encryptAllUsers();
+            encryptAllAdsRequests();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,7 +63,7 @@ public class UserDataEncryptionService {
     //PRVO findEncryptedUserByEmail I ONDA KAD GA NADJE PROSLEDI SE U OVU METODU
     public User decryptUserData(User encryptedUser) throws Exception {
         SecretKey loadedSecretKey = keyStoreService.loadKeyFromKeyStore();
-        User decryptedUser = new User();
+        User decryptedUser = encryptedUser;
 
         String decryptedEmail = EncryptionService.decrypt(encryptedUser.getEmail(), loadedSecretKey);
         String decryptedName = EncryptionService.decrypt(encryptedUser.getName(), loadedSecretKey);
@@ -81,6 +84,29 @@ public class UserDataEncryptionService {
         return decryptedUser;
     }
 
+    public void encryptAllAdsRequests() throws Exception {
+        List<AdRequest> adRequests = adRequestRepository.findAll();
+        int i = 0;
+
+        for (AdRequest ar : adRequests) {
+            encryptAdRequestData(ar);
+            i++;
+        }
+
+        System.out.println("----------------- USPESNO ENKRIPTOVANJE SVIH AD REQUESTOVA ------------");
+        System.out.println("ima ih: " + i);
+    }
+
+    public void encryptAdRequestData(AdRequest adRequest) throws Exception {
+        SecretKey loadedSecretKey = keyStoreService.loadKeyFromKeyStore();
+
+        String encryptedEmail = EncryptionService.encrypt(adRequest.getEmail(), loadedSecretKey);
+
+        adRequest.setEmail(encryptedEmail);
+
+        adRequestRepository.save(adRequest);
+    }
+
     public void encryptAllUsers () throws Exception {
         List<User> users = userRepository.findAll();
 
@@ -97,6 +123,10 @@ public class UserDataEncryptionService {
 
     public String decryptData(String encryptedData) throws Exception {
         return EncryptionService.decrypt(encryptedData, keyStoreService.loadKeyFromKeyStore());
+    }
+
+    public String encryptData(String plainData) throws Exception {
+        return EncryptionService.encrypt(plainData, keyStoreService.loadKeyFromKeyStore());
     }
 
     public void encryptUserData(User user) throws Exception {
@@ -219,5 +249,4 @@ public class UserDataEncryptionService {
         System.out.println(decryptedAddress);
         System.out.println(decryptedPhoneNumber);
     }
-
 }

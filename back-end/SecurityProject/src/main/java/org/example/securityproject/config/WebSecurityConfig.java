@@ -2,6 +2,7 @@ package org.example.securityproject.config;
 
 import org.example.securityproject.auth.CustomAuthenticationProvider;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.service.UserDataEncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,8 @@ public class WebSecurityConfig {
 
     @Autowired
     private UserRepository userRepository; // mora da bi uzeo salt iz usera
+    @Autowired
+    private UserDataEncryptionService userDataEncryptionService;
 
     // Servis koji se koristi za citanje podataka o korisnicima aplikacije
     @Bean
@@ -71,7 +74,7 @@ public class WebSecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        return new CustomAuthenticationProvider(userDetailsService(), userRepository);
+        return new CustomAuthenticationProvider(userDetailsService(), userRepository, userDataEncryptionService);
     }
 
 

@@ -4,17 +4,13 @@ import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
-import org.example.securityproject.repository.ConfirmationTokenRepository;
-import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.PermissionService;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,6 +22,7 @@ public class AdminController {
     private UserService userService;
     private PermissionService permissionService;
 
+    //VEROVATNO CE PRIKAZ PODATAKA BITI ENKRIPTOVAN
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         try {
@@ -40,7 +37,7 @@ public class AdminController {
     }
 
     @GetMapping("/getAdminData")
-    public ResponseEntity<UserDto> getUserData() {
+    public ResponseEntity<UserDto> getUserData() throws Exception {
         UserDto userDto = new UserDto(userService.getUserData());
         return ResponseEntity.ok(userDto);
     }
@@ -145,5 +142,4 @@ public class AdminController {
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

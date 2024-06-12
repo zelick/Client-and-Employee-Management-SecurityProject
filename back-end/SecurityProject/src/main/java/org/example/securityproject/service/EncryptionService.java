@@ -34,5 +34,4 @@ public class EncryptionService {
         keyGen.init(256); // 256-bit AES
         return keyGen.generateKey();
     }
-
 }

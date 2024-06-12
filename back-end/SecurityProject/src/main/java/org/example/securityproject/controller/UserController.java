@@ -93,13 +93,15 @@ public class UserController {
     }
 
     @GetMapping("/getLoggedInUser")
-    public ResponseEntity<UserDto> getLogegdInUser() {
+    public ResponseEntity<UserDto> getLogegdInUser() throws Exception {
         User loggedInUser = userService.getLoggedInUser();
         if (loggedInUser == null) {
             return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
         }
 
-        UserDto userDto = new UserDto(loggedInUser);
+        User decryptedUser = userDataEncryptionService.decryptUserData(loggedInUser);
+
+        UserDto userDto = new UserDto(decryptedUser);
         return ResponseEntity.ok(userDto);
     }
 
@@ -108,7 +110,6 @@ public class UserController {
         userService.updateUser(userDto);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
-
 
     //NAPOMENA!!!
     @GetMapping("/findUserByEmail/{email}")

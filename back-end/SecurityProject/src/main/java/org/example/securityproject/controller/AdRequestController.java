@@ -18,13 +18,13 @@ public class AdRequestController {
     private AdRequestService adRequestService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createAdRequest(@RequestBody AdRequest adRequest) {
+    public ResponseEntity<String> createAdRequest(@RequestBody AdRequest adRequest) throws Exception {
         adRequestService.createAdRequest(adRequest);
         return new ResponseEntity<>("Ad request created successfully", HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AdRequest>> getAllAdRequests() {
+    public ResponseEntity<List<AdRequest>> getAllAdRequests() throws Exception {
         List<AdRequest> adRequests = adRequestService.getAllAdRequests();
         return new ResponseEntity<>(adRequests, HttpStatus.OK);
     }
@@ -35,5 +35,4 @@ public class AdRequestController {
         return adRequest.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 }

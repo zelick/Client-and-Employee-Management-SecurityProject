@@ -22,7 +22,7 @@ public class AdController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('EMPLOYEE')")
-    public ResponseEntity<String> createAd(@RequestBody AdDto ad) {
+    public ResponseEntity<String> createAd(@RequestBody AdDto ad) throws Exception {
         adService.createAd(ad);
         return new ResponseEntity<>("Ad request created successfully", HttpStatus.OK);
     }
@@ -34,9 +34,8 @@ public class AdController {
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<List<AdDto>> getAllAdsByEmail(@RequestParam String email) {
+    public ResponseEntity<List<AdDto>> getAllAdsByEmail(@RequestParam String email) throws Exception {
         List<AdDto> ads = adService.getAllAdsByEmail(email);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
-
 }

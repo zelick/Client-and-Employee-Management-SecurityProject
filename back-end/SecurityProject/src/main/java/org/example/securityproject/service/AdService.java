@@ -19,10 +19,13 @@ public class AdService {
     @Autowired
     private AdRepository adRepository;
     private UserRepository userRepository;
+    private UserDataEncryptionService userDataEncryptionService;
 
-    public void createAd(AdDto ad) {
+    public void createAd(AdDto ad) throws Exception {
         Ad ad1 = new Ad();
-        User user = userRepository.findByEmail(ad.getEmail());
+        //User user = userRepository.findByEmail(ad.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(ad.getEmail());
+
         ad1.setUser(user);
         ad1.setSlogan(ad.getSlogan());
         ad1.setActiveFrom(ad.getActiveFrom());
@@ -50,8 +53,9 @@ public class AdService {
         return adsDtos;
     }
 
-    public List<AdDto> getAllAdsByEmail(String email) {
-        List<Ad> ads = adRepository.findAllByUser_Email(email);
+    public List<AdDto> getAllAdsByEmail(String email) throws Exception {
+        String encryptedEmail = userDataEncryptionService.encryptData(email);
+        List<Ad> ads = adRepository.findAllByUser_Email(encryptedEmail);
         return ads.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());

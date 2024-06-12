@@ -9,6 +9,7 @@ import org.example.securityproject.dto.JwtAuthenticationRequest;
 import org.example.securityproject.dto.UserRequest;
 import org.example.securityproject.dto.UserTokenState;
 import org.example.securityproject.model.User;
+import org.example.securityproject.service.UserDataEncryptionService;
 import org.example.securityproject.service.UserService;
 import org.example.securityproject.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +43,22 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserDataEncryptionService userDataEncryptionService;
+
     // Prvi endpoint koji pogadja korisnik kada se loguje.
     // Tada zna samo svoje korisnicko ime i lozinku i to prosledjuje na backend.
     @PostMapping("/login")
    // @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<AccessRefreshTokenResponseDto> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) throws Exception {
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
+
+        //UMESTO encryptedUsername je islo authenticationRequest.getUsername()
+        String encryptedUsername = userDataEncryptionService.encryptData(authenticationRequest.getUsername());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+                encryptedUsername, authenticationRequest.getPassword()));
 
         // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
         // kontekst

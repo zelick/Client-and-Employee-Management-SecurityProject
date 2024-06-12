@@ -111,9 +111,4 @@ public class LoginController {
 
         return ResponseEntity.ok().headers(headers).body(tokensResponse);
     }
-
-
-
-
-
 }

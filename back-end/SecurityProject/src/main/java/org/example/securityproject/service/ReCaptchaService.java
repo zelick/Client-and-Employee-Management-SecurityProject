@@ -26,29 +26,6 @@ public class ReCaptchaService {
         this.restTemplate = restTemplate;
     }
 
-    /*
-    public ReCaptchaResponseDto verifyReCaptchaToken(VerificationReCaptchaRequestDto verificationRequest) {
-        ReCaptchaResponseDto responseDto = new ReCaptchaResponseDto();
-
-        // Formiranje zahteva
-        VerificationReCaptchaServerRequestDto serverRequest = new VerificationReCaptchaServerRequestDto();
-        serverRequest.setSecret(recaptchaSecret);
-        serverRequest.setResponse(verificationRequest.getReCaptchaToken());
-
-        // Pozivanje Google ReCAPTCHA API
-        ReCaptchaResponseDto apiResponse = restTemplate.postForObject(GOOGLE_RECAPTCHA_VERIFY_URL, serverRequest, ReCaptchaResponseDto.class);
-
-        // Upisivanje odgovora u ResponseDto
-        responseDto.setSuccess(apiResponse.isSuccess());
-        responseDto.setChallenge_ts(apiResponse.getChallenge_ts());
-        responseDto.setHostname(apiResponse.getHostname());
-        responseDto.setError_codes(apiResponse.getError_codes());
-
-        return responseDto;
-    }
-
-     */
-
     public ReCaptchaResponseDto verifyReCaptchaToken(VerificationReCaptchaRequestDto verificationReCaptchaRequestDto) {
         // Definišemo URL Google ReCAPTCHA API-ja
         String apiUrl = "https://www.google.com/recaptcha/api/siteverify";
