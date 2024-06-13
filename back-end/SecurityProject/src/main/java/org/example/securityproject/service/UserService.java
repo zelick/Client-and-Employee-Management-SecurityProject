@@ -51,6 +51,12 @@ public class UserService {
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
 
+//        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
+//            String errorMessage = "User login failed: User is blocked email" + loginData.getEmail();
+//            logger.error(errorMessage);
+//            return null;
+//        }
+
         // Provjeri postoji li korisnik s tim emailom
         if (user == null) {
             String errorMessage = "User login failed: User not found for email " + loginData.getEmail();
@@ -60,7 +66,7 @@ public class UserService {
 
         //ovde ce puci - pitaj Anu za porvatnu vrednost ?
         if (!(user.isActive() && user.isEnabled())) {
-            String errorMessage = "User login failed: Account is not active for email " + loginData.getEmail();
+            String errorMessage = "User login failed: Account is not active for email" + loginData.getEmail();
             logger.error(errorMessage);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");

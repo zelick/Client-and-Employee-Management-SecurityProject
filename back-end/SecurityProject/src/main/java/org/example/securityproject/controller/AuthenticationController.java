@@ -78,7 +78,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(new AccessRefreshTokenResponseDto(accessToken, accessExpiresIn, refreshToken, refreshExpiresIn));
 
         } catch (AuthenticationException e) {
-            String errorMessage = "Authentication failed for user: " + authenticationRequest.getUsername();
+            String errorMessage = "Authentication failed for user email " + authenticationRequest.getUsername();
             logger.error(errorMessage);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
