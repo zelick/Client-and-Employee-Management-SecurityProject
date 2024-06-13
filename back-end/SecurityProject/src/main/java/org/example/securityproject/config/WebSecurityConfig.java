@@ -134,7 +134,6 @@ public class WebSecurityConfig {
 
                 // CLIENT NOVO
                 .antMatchers(HttpMethod.POST,"/api/ad-requests/create").hasAuthority("CLIENT_CREATE")
-                .antMatchers(HttpMethod.POST,"/api/ads/visit-ad").hasAuthority("CLIENT_CREATE")
                 .antMatchers(HttpMethod.GET,"/api/ads/by-email").hasAuthority("CLIENT_READ")
                 //PO ROLI ZA PUTANJU USERS:
 
@@ -198,6 +197,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/login/verify")
                 .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
                 .antMatchers(HttpMethod.GET, "/api/auth/refresh-token")
+                .antMatchers(HttpMethod.POST,"/api/ads/visit-ad")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }

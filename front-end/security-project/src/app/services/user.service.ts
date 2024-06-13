@@ -10,6 +10,7 @@ import { AdRequest } from '../model/adRequest.model';
 import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
 import { Permission } from '../model/permission.model';
+import { Ads } from '../model/ads.model';
 
 @Injectable({
   providedIn: 'root',
@@ -145,8 +146,8 @@ export class UserService {
     return this.http.get<Ad[]>(this.apiUrl + 'ads/all');
   }
 
-  getAllAdsByEmail(email: string): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl + 'ads/by-email', { params: { email } });
+  getAllAdsByEmail(email: string): Observable<Ads[]> {
+    return this.http.get<Ads[]>(this.apiUrl + 'ads/by-email', { params: { email } });
   }
 
   getLoggedInUser(): Observable<User> {
@@ -160,8 +161,8 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser", { headers});
   }
 
-  visitAd(email: string): Observable<string> {
-    const params = new HttpParams().set('email', email);
+  visitAd(adId: number): Observable<string> {
+    const params = new HttpParams().set('adId', adId.toString());
     return this.http.post<string>(`${this.apiUrl}ads/visit-ad`, null, { params: params, responseType: 'text' as 'json' });
   }
 

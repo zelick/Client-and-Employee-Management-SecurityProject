@@ -7,6 +7,7 @@
         <p class="card-text">Active to: {{ ad.activeTo | date }}</p>
         <p class="card-text">Description: {{ ad.description }}</p>
         <p class="card-text">Slogan: {{ ad.slogan }}</p>
+        <button class="dugme" (click)="visitAd(ad.id)">Visit</button>
       </div>
     </div>
   </div>

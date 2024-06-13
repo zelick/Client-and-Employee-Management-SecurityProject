@@ -1,6 +1,7 @@
 package org.example.securityproject.controller;
 
 import org.example.securityproject.dto.AdDto;
+import org.example.securityproject.dto.AdsDto;
 import org.example.securityproject.model.Ad;
 import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.model.User;
@@ -38,13 +39,16 @@ public class AdController {
     }
 
     @PostMapping("/visit-ad")
-    public ResponseEntity<String> visitAd(@RequestParam String email) {
-        User user = userService.findByUsername(email);
+    public ResponseEntity<String> visitAd(@RequestParam Integer adId) {
+        Ad ad = adService.findAdById(adId);
+        User user = ad.getUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Korisnik nije pronađen!");
+        }
         if (rateLimiterService.allowVisit(user.getServicesPackage())) {
-            return ResponseEntity.ok("Poseta reklami uspešna!");
+            return ResponseEntity.ok("Visited ad!");
         } else {
-            // Korisnik nema dozvolu za posetu reklame
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Premašen broj poseta reklami za datu grupu!");
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Rate limited excedeed for package:" + user.getServicesPackage() + "!");
         }
     }
 
@@ -55,8 +59,8 @@ public class AdController {
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<List<AdDto>> getAllAdsByEmail(@RequestParam String email) {
-        List<AdDto> ads = adService.getAllAdsByEmail(email);
+    public ResponseEntity<List<AdsDto>> getAllAdsByEmail(@RequestParam String email) {
+        List<AdsDto> ads = adService.getAllAdsByEmail(email);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 

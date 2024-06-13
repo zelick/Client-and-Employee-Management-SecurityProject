@@ -5,6 +5,7 @@ import { UserRole } from '../model/userRole.model';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { User } from '../model/user.model';
+import { Ads } from '../model/ads.model';
 
 @Component({
   selector: 'app-all-client-ads',
@@ -12,7 +13,7 @@ import { User } from '../model/user.model';
   styleUrls: ['./all-client-ads.component.css']
 })
 export class AllClientAdsComponent implements OnInit{
-  allAds: Ad[] = [];
+  allAds: Ads[] = [];
   loggedUser!: User;
 
   constructor(private userService: UserService, private auth: AuthService, private router: Router) { }
@@ -48,12 +49,23 @@ export class AllClientAdsComponent implements OnInit{
 
   getAllAdsByEmail(): void{
     this.userService.getAllAdsByEmail(this.loggedUser.email).subscribe(
-      (data: Ad[]) => {
+      (data: Ads[]) => {
         this.allAds = data;
         console.log("ALL ADS: " + this.allAds);
       },
       (error) => {
         console.error('Error fetching ad requests: ', error);
+      }
+    );
+  }
+
+  visitAd(adId: number): void {
+    this.userService.visitAd(adId).subscribe(
+      (response: string) => {
+        console.log('Response from visiting ad:', response);
+      },
+      (error) => {
+        console.error('Error visiting ad:', error);
       }
     );
   }

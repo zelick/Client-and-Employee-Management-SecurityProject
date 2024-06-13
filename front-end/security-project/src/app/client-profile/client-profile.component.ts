@@ -95,23 +95,6 @@ export class ClientProfileComponent implements OnInit{
     );
   }
 
-  visitAd(): void {
-    if (this.loggedUser) {
-      this.userService.visitAd(this.email).subscribe(
-        (response: string) => {
-          console.log("Poseta reklami uspešna:", response);
-          // Dodaj logiku za obradu uspešne posete reklami ako je potrebno
-        },
-        (error) => {
-          console.error("Greška prilikom posete reklami:", error);
-          // Dodaj logiku za obradu greške prilikom posete reklami ako je potrebno
-        }
-      );
-    } else {
-      console.error("Nije moguće izvršiti posetu reklami - korisnik nije ulogovan.");
-      // Dodaj logiku za obradu ako korisnik nije ulogovan
-    }
-  }
 
   deleteAllData(): void {
     if (confirm("Are you sure you want to delete all your data?")) {
