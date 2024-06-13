@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.model';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { AuthService } from '../service/auth.service';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ResponseMessage } from '../model/responseMessage.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-client-profile',
@@ -25,7 +26,7 @@ export class ClientProfileComponent implements OnInit{
   client: boolean = false;
 
 
-  constructor(private userService: UserService, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private auth: AuthService, private location: Location) { }
 
   ngOnInit(): void {
     const userRoles = this.auth.getLoggedInUserRoles(); 
@@ -65,8 +66,19 @@ export class ClientProfileComponent implements OnInit{
       };
       this.userService.changePassword(passwordData).subscribe(
         (response: ResponseMessage) => {
-          this.messagePassword = response.responseMessage;
-          console.log('Password changed successfully:', response);
+          if (response.responseMessage === "You have not entered a good current password."){
+            this.messagePassword = response.responseMessage;
+            return;
+          }
+          if (response.responseMessage === "The new password and confirm password do not match."){
+            this.messagePassword = response.responseMessage;
+            return;
+          }
+          if (response.responseMessage === "The password does not meet the requirements."){
+            this.messagePassword = response.responseMessage;
+            return;
+          }
+          this.messageDeleteData = "You have successfully change your password.";
           this.router.navigate(['/']);
         },
         (error) => {
@@ -95,17 +107,18 @@ export class ClientProfileComponent implements OnInit{
     );
   }
 
-
   deleteAllData(): void {
     if (confirm("Are you sure you want to delete all your data?")) {
       this.userService.deleteUserData(this.email).subscribe(
         (response: ResponseMessage) => {
           console.log('User data deleted successfully:', response);
           this.messageDeleteData = response.responseMessage;
+          this.cdr.detectChanges();
+          this.refreshPage();
         },
         (error) => {
           console.error('Failed to delete user data:', error);
-          // Dodajte logiku za neuspešan ishod, kao što je obaveštavanje korisnika
+          this.messageDeleteData = "Failed to delete user data.";
         }
       );
     }
@@ -125,6 +138,11 @@ export class ClientProfileComponent implements OnInit{
 
   editProfile(email: string) {
     this.router.navigate(['/edit-client-profile/' + email]);
+  }
+
+  private refreshPage() {
+    this.location.go(this.location.path()); 
+    window.location.reload(); 
   }
   
 }
