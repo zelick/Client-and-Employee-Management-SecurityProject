@@ -32,7 +32,7 @@ import java.security.cert.CertificateException;
 public class VisitAdSimulationTest {
 
     private static final String BASE_URL = "https://localhost:443/api/ads/visit-ad";
-    private static final Integer adId = 9;
+    private static final Integer adId = 11;
 
     @Autowired
     private AdService adService;
