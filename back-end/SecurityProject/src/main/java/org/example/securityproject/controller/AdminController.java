@@ -1,6 +1,7 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -25,6 +27,21 @@ public class AdminController {
     @Autowired
     private UserService userService;
     private PermissionService permissionService;
+
+    private static final String VPN_SERVER_URL = "http://10.13.13.1/8083";
+
+    @GetMapping("/getMessageFromVPN")
+    public ResponseEntity<WebMessageDto> getMessageFromVPN() {
+        String endpointUrl = "http://10.13.13.1:3000/"; // VPN server URL
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            String response = restTemplate.getForObject(endpointUrl, String.class);
+            return ResponseEntity.ok(new WebMessageDto(response));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new WebMessageDto(e.getMessage()));
+        }
+    }
 
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {

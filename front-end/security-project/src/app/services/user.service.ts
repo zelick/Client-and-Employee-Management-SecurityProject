@@ -12,6 +12,7 @@ import { UserRole } from '../model/userRole.model';
 import { Permission } from '../model/permission.model';
 import { Ads } from '../model/ads.model';
 import { AdminUser } from '../model/adminUser.model';
+import { VpnMessage } from '../model/vpnMessage.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,10 @@ export class UserService {
 
   blockUser(email: string): Observable<ResponseMessage> {
     return this.http.put<ResponseMessage>(`${this.apiUrl}admins/blockUser/${email}`, {});
+  }
+
+  getMessageFromVPN(): Observable<VpnMessage> {
+    return this.http.get<VpnMessage>(`${this.apiUrl}admins/getMessageFromVPN`);
   }
 
   unblockUser(email: string): Observable<ResponseMessage> {

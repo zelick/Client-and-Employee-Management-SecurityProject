@@ -8,6 +8,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { Location } from '@angular/common';
+import { VpnMessage } from '../model/vpnMessage.model';
 
 @Component({
   selector: 'app-client-profile',
@@ -24,6 +25,7 @@ export class ClientProfileComponent implements OnInit{
   goldClient: boolean = false;
   messageDeleteData: string = "";
   client: boolean = false;
+  messageFromVPN: string = ""; 
 
 
   constructor(private userService: UserService, private cdr: ChangeDetectorRef, private fb: FormBuilder, private router: Router, private auth: AuthService, private location: Location) { }
@@ -50,6 +52,19 @@ export class ClientProfileComponent implements OnInit{
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     });
+  }
+
+  getMessage(): void {
+    this.userService.getMessageFromVPN().subscribe(
+      (message: VpnMessage) => {
+        this.messageFromVPN = message.message;
+        console.log(message);
+      },
+      (error) => {
+        console.error('Failed to fetch message from VPN:', error);
+        this.messageFromVPN = 'Failed to fetch message from VPN';
+      }
+    );
   }
 
   changePasswordToggle(): void{
