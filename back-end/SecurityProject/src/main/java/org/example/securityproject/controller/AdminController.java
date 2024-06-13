@@ -40,11 +40,11 @@ public class AdminController {
     }
 
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<AdminUserDto>> getAllUsers() {
         try {
-            List<UserDto> userDtos = userService.getAllUsers()
+            List<AdminUserDto> userDtos = userService.getAllUsers()
                     .stream()
-                    .map(user -> new UserDto(user))
+                    .map(user -> new AdminUserDto(user))
                     .collect(Collectors.toList());
             return new ResponseEntity<>(userDtos, HttpStatus.OK);
         } catch (Exception e) {
@@ -55,6 +55,12 @@ public class AdminController {
     @PutMapping("/blockUser/{email}")
     public ResponseEntity<ResponseDto> blockUser(@PathVariable String email) {
         ResponseDto response = userService.blockUser(email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/unblockUser/{email}")
+    public ResponseEntity<ResponseDto> unblockUser(@PathVariable String email) {
+        ResponseDto response = userService.unblockUser(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

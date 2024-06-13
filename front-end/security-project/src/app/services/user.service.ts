@@ -11,6 +11,7 @@ import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
 import { Permission } from '../model/permission.model';
 import { Ads } from '../model/ads.model';
+import { AdminUser } from '../model/adminUser.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,8 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + 'admins/getAdminData');
   }
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl + 'admins/getAllUsers');
+  getAllUsers(): Observable<AdminUser[]> {
+    return this.http.get<AdminUser[]>(this.apiUrl + 'admins/getAllUsers');
   }
 
   deleteUserData(email: string): Observable<ResponseMessage> {
@@ -36,6 +37,10 @@ export class UserService {
 
   blockUser(email: string): Observable<ResponseMessage> {
     return this.http.put<ResponseMessage>(`${this.apiUrl}admins/blockUser/${email}`, {});
+  }
+
+  unblockUser(email: string): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(`${this.apiUrl}admins/unblockUser/${email}`, {});
   }
 
   getAllEmployees(): Observable<User[]> {

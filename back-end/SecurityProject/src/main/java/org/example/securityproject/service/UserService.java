@@ -457,7 +457,7 @@ public class UserService {
         List<User> allFilteredUsers = new ArrayList<>();
         for(User u : allUsers)
         {
-            if(!u.isBlocked()) { allFilteredUsers.add(u); }
+            allFilteredUsers.add(u);
         }
         return allFilteredUsers;
     }
@@ -511,6 +511,24 @@ public class UserService {
         userRepository.save(user);
 
         response.setResponseMessage("User successfully blocked.");
+        response.setFlag(true);
+        return response;
+    }
+
+    public ResponseDto unblockUser(String email) {
+        ResponseDto response = new ResponseDto();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            response.setResponseMessage("User not found.");
+            response.setFlag(false);
+            return response;
+        }
+
+        user.setBlocked(false);
+        userRepository.save(user);
+
+        response.setResponseMessage("User successfully unblocked.");
         response.setFlag(true);
         return response;
     }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserRole } from 'src/app/model/userRole.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-all-users',
@@ -15,7 +16,8 @@ export class AllUsersComponent implements OnInit {
   constructor(private userService: UserService,
               private auth: AuthService,
               private router: Router,
-              private cdr: ChangeDetectorRef
+              private cdr: ChangeDetectorRef,
+              private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -46,14 +48,30 @@ export class AllUsersComponent implements OnInit {
     this.userService.blockUser(email).subscribe(
       (response: any) => {
         console.log('User blocked successfully:', response);
-        // Remove blocked user from the users array
-        this.users = this.users.filter(user => user.email !== email);
-        // Ručno pokrenuti promjene detekcije Angulara
         this.cdr.detectChanges();
+        this.refreshPage();
       },
       error => {
         console.error('Error blocking user:', error);
       }
     );
+  }
+
+  unblockUser(email: string) {
+    this.userService.unblockUser(email).subscribe(
+      (response: any) => {
+        console.log('User unblocked successfully:', response);
+        this.cdr.detectChanges();
+        this.refreshPage();
+      },
+      error => {
+        console.error('Error blocking user:', error);
+      }
+    );
+  }
+
+  private refreshPage() {
+    this.location.go(this.location.path()); 
+    window.location.reload();
   }
 }
