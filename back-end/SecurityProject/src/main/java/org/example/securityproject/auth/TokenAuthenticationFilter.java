@@ -21,6 +21,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.example.securityproject.util.TokenUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 // Filter koji ce presretati SVAKI zahtev klijenta ka serveru
 // (sem nad putanjama navedenim u WebSecurityConfig.configure(WebSecurity web))
@@ -32,8 +35,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private TokenUtils tokenUtils;
 
     private UserDetailsService userDetailsService;
+    private static final Log LOGGER = LogFactory.getLog(TokenAuthenticationFilter.class);
 
-    protected final Log LOGGER = LogFactory.getLog(getClass());
 
     public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
         this.tokenUtils = tokenHelper;
@@ -49,16 +52,16 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         // 1. Preuzimanje JWT tokena iz zahteva
         String authToken = tokenUtils.getToken(request);
-        System.out.println("NE BI TREBAO UCI OVDE");
+        LOGGER.debug("Request received with token: " + authToken);
         try {
 
             if (authToken != null) {
-
                 // 2. Citanje korisnickog imena iz tokena
+                LOGGER.debug("Analysis auth token from request: " + authToken);
                 username = tokenUtils.getUsernameFromToken(authToken);
 
                 if (username != null) {
-
+                    LOGGER.debug("Attempting to authenticate user: " + username);
                     // 3. Preuzimanje korisnika na osnovu username-a
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -69,12 +72,20 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                         TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
                         authentication.setToken(authToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }else{
+                        //nece da ispise?
+                        LOGGER.error("Invalid or expired JWT token detected for user email" + username);
                     }
+                }else{
+                    //nece da ispise?
+                    LOGGER.error("Invalid or expired JWT token detected. Username not available. Token: " + authToken);
                 }
             }
 
         } catch (ExpiredJwtException ex) {
-            LOGGER.debug("Token expired!");
+            String tokenUsername = ex.getClaims().getSubject();
+            //ovo nece da se ispise?
+            LOGGER.error("Invalid or expired JWT token detected for user email" + tokenUsername);
         }
 
         // prosledi request dalje u sledeci filter

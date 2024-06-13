@@ -125,4 +125,24 @@ public class EmailService {
         byte[] hmacData = sha256Hmac.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(hmacData);
     }
+
+    //obavesti admina da se desio kritican dogadjaj
+    public void sendCriticalEventAlert(String email, String eventType, String additionalInfo) {
+        try {
+            String subject = "Critical Event Alert: " + eventType;
+            String text = "A critical event has been detected: " + eventType + ".\n\n" + additionalInfo;
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("aplikacijemobilnea0gmail.com");
+            message.setTo(email);
+            message.setSubject(subject);
+            message.setText(text);
+
+            javaMailSender.send(message);
+            logger.info("Critical event alert email sent successfully to '{}'", email);
+        } catch (Exception e) {
+            logger.error("Failed to send critical event alert email to '{}': {}", email, e.getMessage(), e);
+            throw new RuntimeException("Failed to send critical event alert email", e);
+        }
+    }
 }

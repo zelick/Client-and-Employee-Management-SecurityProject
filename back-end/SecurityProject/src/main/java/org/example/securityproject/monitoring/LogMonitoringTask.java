@@ -21,8 +21,8 @@ public class LogMonitoringTask {
     @Scheduled(fixedRate = 3000)
     public void monitorLogs() {
         try {
-            System.out.println("------------UICTAVAM LOGOVE I ANALIZIRAM------------------");
-            List<String> logs = logReaderService.readLastNLogs(20);
+            System.out.println("------------UCITAVAM LOGOVE I ANALIZIRAM------------------");
+            List<String> logs = logReaderService.readLastNLogs(50); //bilo na 20
             logAnalyzerService.analyzeLogs(logs);
         } catch (IOException e) {
             e.printStackTrace();

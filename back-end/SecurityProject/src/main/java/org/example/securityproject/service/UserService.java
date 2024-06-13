@@ -51,11 +51,11 @@ public class UserService {
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         User user = userRepository.findByEmail(loginData.getEmail());
 
-//        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
-//            String errorMessage = "User login failed: User is blocked email" + loginData.getEmail();
-//            logger.error(errorMessage);
-//            return null;
-//        }
+        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
+            String errorMessage = "User login failed: User is blocked email" + loginData.getEmail();
+            logger.error(errorMessage);
+            return null;
+        }
 
         // Provjeri postoji li korisnik s tim emailom
         if (user == null) {
