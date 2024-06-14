@@ -9,6 +9,7 @@ import { FormBuilder } from '@angular/forms';
 import { ResponseMessage } from '../model/responseMessage.model';
 import { Location } from '@angular/common';
 import { VpnMessage } from '../model/vpnMessage.model';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-client-profile',
@@ -73,34 +74,33 @@ export class ClientProfileComponent implements OnInit{
 
   changePassword(): void {
     if (this.passwordForm.valid) {
+      const oldPassword = DOMPurify.sanitize(this.passwordForm.value.oldPassword);
+      const newPassword = DOMPurify.sanitize(this.passwordForm.value.newPassword);
+      const confirmPassword = DOMPurify.sanitize(this.passwordForm.value.confirmPassword);
+
       const passwordData = {
-        oldPassword: this.passwordForm.value.oldPassword,
-        newPassword: this.passwordForm.value.newPassword,
-        confirmPassword: this.passwordForm.value.confirmPassword,
-        email: this.email, 
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+        email: this.email
       };
+
       this.userService.changePassword(passwordData).subscribe(
         (response: ResponseMessage) => {
-          if (response.responseMessage === "You have not entered a good current password."){
+          if (response.responseMessage === "You have not entered a good current password." ||
+              response.responseMessage === "The new password and confirm password do not match." ||
+              response.responseMessage === "The password does not meet the requirements.") {
             this.messagePassword = response.responseMessage;
             return;
           }
-          if (response.responseMessage === "The new password and confirm password do not match."){
-            this.messagePassword = response.responseMessage;
-            return;
-          }
-          if (response.responseMessage === "The password does not meet the requirements."){
-            this.messagePassword = response.responseMessage;
-            return;
-          }
-          this.messageDeleteData = "You have successfully change your password.";
+          
+          this.messagePassword = "You have successfully changed your password.";
           this.router.navigate(['/']);
         },
         (error) => {
           console.error('Error changing password:', error);
         }
       );
-    } else {
     }
   }
 

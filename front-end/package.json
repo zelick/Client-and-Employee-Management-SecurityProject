@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.0.5"
   }
 }

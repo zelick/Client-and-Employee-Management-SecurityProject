@@ -9,6 +9,8 @@ import { ResponseMessage } from '../model/responseMessage.model';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { User } from '../model/user.model';
+import * as DOMPurify from 'dompurify';
+
 
 @Component({
   selector: 'app-registration',
@@ -94,6 +96,16 @@ export class RegistrationComponent implements OnInit{
       this.userData.roles.push(this.userRole);
       console.log('USAO DA PUSGUJE ROLU: ' + this.userData.roles);
     }
+
+    this.userData.email = DOMPurify.sanitize(this.userData.email);
+    this.userData.password = DOMPurify.sanitize(this.userData.password);
+    this.confirmPassword = DOMPurify.sanitize(this.confirmPassword);
+    this.userData.name = DOMPurify.sanitize(this.userData.name);
+    this.userData.surname = DOMPurify.sanitize(this.userData.surname);
+    this.userData.address = DOMPurify.sanitize(this.userData.address);
+    this.userData.city = DOMPurify.sanitize(this.userData.city);
+    this.userData.country = DOMPurify.sanitize(this.userData.country);
+    this.userData.phoneNumber = DOMPurify.sanitize(this.userData.phoneNumber);
 
     this.registerUser();
   }

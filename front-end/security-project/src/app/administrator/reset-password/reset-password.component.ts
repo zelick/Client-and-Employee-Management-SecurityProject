@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { LoginReponse } from 'src/app/model/loginResponse.model';
 import { Router } from '@angular/router';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-reset-password',
@@ -42,8 +43,8 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
-    const newPassword = this.passwordForm.get('newPassword')?.value;
-    const confirmPassword = this.passwordForm.get('confirmPassword')?.value;
+    const newPassword = DOMPurify.sanitize(this.passwordForm.get('newPassword')?.value);
+    const confirmPassword = DOMPurify.sanitize(this.passwordForm.get('confirmPassword')?.value);
 
     if (newPassword !== confirmPassword) {
       this.messagePassword = 'Passwords do not match.';

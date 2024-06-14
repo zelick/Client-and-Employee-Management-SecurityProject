@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-passwordless-login',
@@ -22,7 +23,10 @@ export class PasswordlessLoginComponent implements OnInit{
   onLoginClick() {
     const email = this.emailInput.nativeElement.value;
 
-    this.loginService.sendEmail(email).subscribe(
+    // Sanitizacija korisničkog unosa pomoću DOMPurify-ja
+    const sanitizedEmail = DOMPurify.sanitize(email);
+
+    this.loginService.sendEmail(sanitizedEmail).subscribe(
       response => {
         console.log(response);
         this.message = response;
