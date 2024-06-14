@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,7 +16,8 @@ public class LogAnalyzerService {
     private EmailService emailService;
 
     private static final int MAX_FAILED_ATTEMPTS = 5;
-    private static final int MAX_CLICK_ATTEMPTS = 100;
+    private static final int MAX_CLICK_ATTEMPTS = 30;
+    private static final int MAX_JWT_EXPIRED_ATTEMPTS = 3;
 
     private Map<String, Integer> failedLoginAttempts = new ConcurrentHashMap<>();
     private Map<String, Integer> incorrectPasswordAttempts = new ConcurrentHashMap<>();
@@ -27,12 +27,13 @@ public class LogAnalyzerService {
     private Map<String, Integer> endpointClickAttempts = new ConcurrentHashMap<>();
 
     private Map<String, Boolean> alertSentForBlockedUser = new ConcurrentHashMap<>();
+    private Map<String, Boolean> alertSentForIncorrectUsername = new ConcurrentHashMap<>();
     private Map<String, Boolean> alertSentForIncorrectPassword = new ConcurrentHashMap<>();
     private Map<String, Boolean> alertSentForTokenInvalid = new ConcurrentHashMap<>();
     private Map<String, Boolean> alertSentForUnauthorizedCriticalEvent = new ConcurrentHashMap<>();
     private Map<String, Boolean> alertSentForEndpointClicks = new ConcurrentHashMap<>();
 
-    private String adminEmail = "zelickika@gmail.com";
+    private String adminEmail = "zelickika@gmail.com";  //mozda izmena u bazi..
 
     public void analyzeLogs(List<String> logs) {
         boolean criticalEventDetected = false;
@@ -41,11 +42,11 @@ public class LogAnalyzerService {
             criticalEventDetected = true;
         }
 
-        if (isBlockedUserAccessAttempt(logs)) {
+        if (isRepeatedIncorrectPasswordAttempts(logs)) {
             criticalEventDetected = true;
         }
 
-        if (isRepeatedIncorrectPasswordAttempts(logs)) {
+        if (isBlockedUserAccessAttempt(logs)) {
             criticalEventDetected = true;
         }
 
@@ -66,15 +67,16 @@ public class LogAnalyzerService {
         }
     }
 
+    //kada vise puta promasi username, ili ako ga admin nije odobrio - 5 puta ili vise se desio log
     private boolean isRepeatedFailedLogins(List<String> logs) {
         for (String log : logs) {
-            if (log.contains("User login failed: User not found for email") || log.contains("User login failed: Account is not active for email")) {
+            if (log.contains("User login failed: User not found for email ") || log.contains("User login failed: Account is not active for email ")) {
                 String email = extractEmailFromLog(log);
-                failedLoginAttempts.put(email, failedLoginAttempts.getOrDefault(email, 0) + 1);
+                failedLoginAttempts.put(email, failedLoginAttempts.getOrDefault(email, 0) + 1);     //trazi kljuc u mapi, ne salje vise puta email
 
-                if (failedLoginAttempts.get(email) >= MAX_FAILED_ATTEMPTS && !alertSentForIncorrectPassword.getOrDefault(email, false)) {
-                    alertSentForIncorrectPassword.put(email, true);
-                    System.out.println("MULTIPLE INCORRECT USERNAME ATTEMPTS: " + email + " - Sending email alert");
+                if (failedLoginAttempts.get(email) >= MAX_FAILED_ATTEMPTS && !alertSentForIncorrectUsername.getOrDefault(email, false)) {
+                    alertSentForIncorrectUsername.put(email, true);
+                    System.out.println("---------MULTIPLE INCORRECT USERNAME ATTEMPTS: " + email + " - Sending email alert------");
                     emailService.sendCriticalEventAlert(adminEmail, "Multiple failed login attempts detected", "Email: " + email);
                     return true;
                 }
@@ -83,9 +85,10 @@ public class LogAnalyzerService {
         return false;
     }
 
+    //korisnik vise je 5 ili vise puta promasio lozinku
     private boolean isRepeatedIncorrectPasswordAttempts(List<String> logs) {
         for (String log : logs) {
-            if (log.contains("Authentication failed for user email")) {
+            if (log.contains("Authentication failed for user email ")) {
                 String email = extractEmailFromLog(log);
                 incorrectPasswordAttempts.put(email, incorrectPasswordAttempts.getOrDefault(email, 0) + 1);
 
@@ -100,9 +103,10 @@ public class LogAnalyzerService {
         return false;
     }
 
+    //ako blokiran korisnik pokusa da se prijavi 5 ili vise puta
     private boolean isBlockedUserAccessAttempt(List<String> logs) {
         for (String log : logs) {
-            if (log.contains("User login failed: User is blocked email")) {
+            if (log.contains("User login failed: User is blocked email ")) {
                 String email = extractEmailFromLog(log);
                 blockedUserAttempts.put(email, blockedUserAttempts.getOrDefault(email, 0) + 1);
 
@@ -117,13 +121,14 @@ public class LogAnalyzerService {
         return false;
     }
 
+    //pokusaj 3 puta pogadja putanju, korisnik kome je istekao JWT token
     private boolean isTokenInvalidDetected(List<String> logs) {
         for (String log : logs) {
-            if (log.contains("Invalid or expired JWT token detected for user email")) {
+            if (log.contains("Invalid or expired JWT token detected for user email ")) {
                 String email = extractEmailFromLog(log);
                 invalidTokenAttempts.put(email, invalidTokenAttempts.getOrDefault(email, 0) + 1);
 
-                if (invalidTokenAttempts.get(email) >= MAX_FAILED_ATTEMPTS && !alertSentForTokenInvalid.getOrDefault(email, false)) {
+                if (invalidTokenAttempts.get(email) >= MAX_JWT_EXPIRED_ATTEMPTS && !alertSentForTokenInvalid.getOrDefault(email, false)) {
                     alertSentForTokenInvalid.put(email, true);
                     System.out.println("EXPIRED OR INVALID JWT TOKEN DETECTED: " + email + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Expired JWT token detected", "Email: " + email);
@@ -134,12 +139,13 @@ public class LogAnalyzerService {
         return false;
     }
 
+    //ako neautorizovan koristnik 401 , pokusa da 5 ili vise puta da prisutpi putanji
     private boolean isUnauthorizedAccessAttempt(List<String> logs) {
         for (String log : logs) {
             if (log.contains("status=401") && log.contains("path=")) {
                 String path = extractPathFromLog(log);
                 unauthorizedAccessAttempts.put(path, unauthorizedAccessAttempts.getOrDefault(path, 0) + 1);
-
+//                System.out.println("------PUTANJA-------------: " + path);
                 if (unauthorizedAccessAttempts.get(path) >= MAX_FAILED_ATTEMPTS && !alertSentForUnauthorizedCriticalEvent.getOrDefault(path, false)) {
                     alertSentForUnauthorizedCriticalEvent.put(path, true);
                     System.out.println("UNAUTHORIZED ACCESS DETECTED: " + path + " - Sending email alert");
@@ -152,12 +158,14 @@ public class LogAnalyzerService {
     }
 
     //nisam tetsirala
+    //lupila sam kriticni dogadjaj 30 puta u minuti klikne nesto - ZA ISTU PUTANJU ZAHTEVA
+    //30 PUTA.. tesko testirati
     private boolean isExcessiveEndpointClicks(List<String> logs) {
         for (String log : logs) {
-            if (log.contains("Path: ")) {
+            if (log.contains("path=")) {
                 String path = extractPathFromLog(log);
                 endpointClickAttempts.put(path, endpointClickAttempts.getOrDefault(path, 0) + 1);
-
+//                System.out.println("-----------Brojac:-------------- " + endpointClickAttempts.get(path) );
                 if (endpointClickAttempts.get(path) >= MAX_CLICK_ATTEMPTS && !alertSentForEndpointClicks.getOrDefault(path, false)) {
                     alertSentForEndpointClicks.put(path, true);
                     System.out.println("EXCESSIVE CLICKS DETECTED: " + path + " - Sending email alert");
@@ -187,18 +195,26 @@ public class LogAnalyzerService {
         return log.substring(startIndex, endIndex).trim();
     }
 
+    //@Scheduled(fixedRate = 20000) // Every 20 seconds
     @Scheduled(fixedRate = 3600000) // Every hour   -- mozes smanjiti
     public void resetAlertSentMap() {
-        failedLoginAttempts.clear();        //da ne bi slao stalno mejlove za obavestenje
+        //da ne bi slao stalno mejlove za obavestenje
+        failedLoginAttempts.clear();
+        alertSentForIncorrectUsername.clear();
+        //
         incorrectPasswordAttempts.clear();
-        blockedUserAttempts.clear();
-        invalidTokenAttempts.clear();
-        unauthorizedAccessAttempts.clear();
-        endpointClickAttempts.clear();
-        alertSentForBlockedUser.clear();
         alertSentForIncorrectPassword.clear();
+        //
+        blockedUserAttempts.clear();
+        alertSentForBlockedUser.clear();
+        //
+        invalidTokenAttempts.clear();
         alertSentForTokenInvalid.clear();
+        //
+        unauthorizedAccessAttempts.clear();
         alertSentForUnauthorizedCriticalEvent.clear();
+        //
+        endpointClickAttempts.clear();
         alertSentForEndpointClicks.clear();
     }
 }

@@ -48,25 +48,30 @@ public class UserService {
     public LoginReponseDto loginUser(UserLoginData loginData) {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
         logger.debug("Starting try login registration for email: {}", loginData.getEmail());
-        //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
+
         User user = userRepository.findByEmail(loginData.getEmail());
 
-        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
-            String errorMessage = "User login failed: User is blocked email" + loginData.getEmail();
-            logger.error(errorMessage);
-            return null;
-        }
+//        Ako je user blokiran - MILICA DODAJ LOG
+//        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
+//            String errorMessage = "User login failed: User is blocked email " + loginData.getEmail();
+//            logger.error(errorMessage);
+//            return null;
+//        }
 
-        // Provjeri postoji li korisnik s tim emailom
+        // Provera postoji li korisnik s tim emailom
         if (user == null) {
             String errorMessage = "User login failed: User not found for email " + loginData.getEmail();
             logger.error(errorMessage);
-            return null; //ovo mozda ana proveroti?
+//            loginResponseDto.setLoggedInOnce(true); //izmena?
+//            loginResponseDto.setResponse("This email does not exist.");
+//            return loginResponseDto;
+            return null; //PROBLEM: ako vrati 200 poziva metodu login iz auth controllera - tu dobijamo 401
+            //return null; //ovo mozda ana proveroti? ANA POVRATNA VREDNOST??
         }
 
-        //ovde ce puci - pitaj Anu za porvatnu vrednost ?
+
         if (!(user.isActive() && user.isEnabled())) {
-            String errorMessage = "User login failed: Account is not active for email" + loginData.getEmail();
+            String errorMessage = "User login failed: Account is not active for email " + loginData.getEmail();
             logger.error(errorMessage);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
@@ -188,15 +193,19 @@ public class UserService {
         } catch (NoSuchAlgorithmException e) {
             // Handle exception
             String errorMessage = "User registration failed: Error hashing password for email " + userDto.getEmail();
-            logger.error(errorMessage, e);
+            logger.error(errorMessage);
         }
 
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
-        userRepository.save(user);
-        logger.info("User registered successfully: {}", userDto.getEmail());
-        response.setResponseMessage("You have successfully registered.");
+        try {
+            userRepository.save(user);
+            logger.info("User registered successfully: {}", userDto.getEmail());
+        } catch (Exception e) {
+            String errorMessage = "User registration failed: Error saving user for email " + userDto.getEmail();
+            logger.error(errorMessage);
+        }
         response.setResponseMessage("You have successfully registered.");
         response.setFlag(true);
         return response;

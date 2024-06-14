@@ -73,10 +73,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                         authentication.setToken(authToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }else{
-                        //nece da ispise?
-                        LOGGER.error("Invalid or expired JWT token detected for user email" + username);
+                        //ispise samo ako istekne..
+                        LOGGER.error("Invalid or expired JWT token detected for user email email " + username);
                     }
                 }else{
+                    //nema usera..
                     //nece da ispise?
                     LOGGER.error("Invalid or expired JWT token detected. Username not available. Token: " + authToken);
                 }
