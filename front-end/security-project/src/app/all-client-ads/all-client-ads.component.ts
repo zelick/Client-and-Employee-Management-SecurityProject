@@ -48,6 +48,8 @@ export class AllClientAdsComponent implements OnInit{
   }
 
   getAllAdsByEmail(): void{
+    console.log("Email koji se salje je: " + this.loggedUser.email);
+    const em = { email : this.loggedUser.email}
     this.userService.getAllAdsByEmail(this.loggedUser.email).subscribe(
       (data: Ads[]) => {
         this.allAds = data;

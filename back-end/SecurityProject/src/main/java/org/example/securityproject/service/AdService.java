@@ -71,9 +71,20 @@ public class AdService {
 
 
     public List<AdsDto> getAllAdsByEmail(String email) throws Exception{
-        String encryptedEmail = userDataEncryptionService.encryptData(email);
-        List<Ad> ads = adRepository.findAllByUser_Email(encryptedEmail);
-        return ads.stream()
+        System.out.println("Email koji dolazi u servis:" + email);
+        List<Ad> ads = adRepository.findAll();
+        List<Ad> filteredAds = new ArrayList<>();
+        for(Ad a : ads)
+        {
+            System.out.println(a.getSlogan() + ": enkritovan mejl: " + a.getUser().getEmail());
+            String decryptedUserEmail = userDataEncryptionService.decryptData(a.getUser().getEmail());
+            System.out.println(a.getSlogan() + ": dekriptovan mejl: " + decryptedUserEmail);
+            if(decryptedUserEmail.equalsIgnoreCase(email))
+            {
+                filteredAds.add(a);
+            }
+        }
+        return filteredAds.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }

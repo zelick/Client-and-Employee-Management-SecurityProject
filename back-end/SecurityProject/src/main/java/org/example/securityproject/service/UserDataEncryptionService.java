@@ -21,8 +21,7 @@ public class UserDataEncryptionService {
     private KeyStoreService keyStoreService;
     private AdRequestRepository adRequestRepository;
 
-    /*
-    @PostConstruct
+   /* @PostConstruct
     public void init() {
         System.out.println("PostConstruct method init() called.");
         try {
@@ -30,8 +29,7 @@ public class UserDataEncryptionService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-     */
+    }*/
 
     public User findEncryptedUserByEmail(String email) throws Exception {
         SecretKey loadedSecretKey = keyStoreService.loadKeyFromKeyStore();

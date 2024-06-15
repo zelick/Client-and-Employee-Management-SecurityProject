@@ -604,14 +604,15 @@ public class UserService {
     }
 
     //proveri da li je enkripotvano
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws Exception {
         List<User> allUsers = new ArrayList<>();
         allUsers.addAll(getAllClients());
         allUsers.addAll(getAllEmployees());
         List<User> allFilteredUsers = new ArrayList<>();
         for(User u : allUsers)
         {
-            allFilteredUsers.add(u);
+            User decryptedUser = userDataEncryptionService.decryptUserData(u);
+            allFilteredUsers.add(decryptedUser);
         }
         return allFilteredUsers;
     }
