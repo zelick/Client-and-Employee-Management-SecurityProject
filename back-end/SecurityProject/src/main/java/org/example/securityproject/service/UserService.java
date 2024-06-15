@@ -82,14 +82,15 @@ public class UserService {
 
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
         //User user = userRepository.findByEmail(loginData.getEmail());
-        User user = userDataEncryptionService.findEncryptedUserByEmail(loginData.getEmail());
+
         try{
+            User user = userDataEncryptionService.findEncryptedUserByEmail(loginData.getEmail());
             String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
             user.setPassword(enteredPasswordHash);
             userRepository.save(user);
             loginResponseDto.setLoggedInOnce(true);
             loginResponseDto.setResponse("You have successfully reset your password.");
-        }catch (NoSuchAlgorithmException e) {
+        }catch (Exception e) {
             // Handle exception
         }
         loginResponseDto.setLoggedInOnce(true); 
@@ -640,7 +641,7 @@ public class UserService {
         }
     }
 
-    public User findByUsername(String username) throws UsernameNotFoundException {
+    public User findByUsername(String username) throws Exception {
         User user = userDataEncryptionService.findEncryptedUserByEmail(username);
 
         if (user == null) {
@@ -669,10 +670,10 @@ public class UserService {
         return notificationRepository.findAll();
     }
     
-    public ResponseDto blockUser(String email) {
+    public ResponseDto blockUser(String email) throws Exception {
         ResponseDto response = new ResponseDto();
         //User user = userRepository.findByEmail(email);
-        User user = userDataEncryptionService.findEncryptedUserByEmail(username);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
 
         if (user == null) {
             response.setResponseMessage("User not found.");
@@ -688,10 +689,10 @@ public class UserService {
         return response;
     }
 
-    public ResponseDto unblockUser(String email) {
+    public ResponseDto unblockUser(String email) throws Exception {
         ResponseDto response = new ResponseDto();
         //User user = userRepository.findByEmail(email);
-        User user = userDataEncryptionService.findEncryptedUserByEmail(username);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
         
         if (user == null) {
             response.setResponseMessage("User not found.");

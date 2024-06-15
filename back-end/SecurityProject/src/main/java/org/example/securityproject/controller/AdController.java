@@ -59,8 +59,8 @@ public class AdController {
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<List<AdDto>> getAllAdsByEmail(@RequestParam String email) throws Exception {
-        List<AdDto> ads = adService.getAllAdsByEmail(email);
+    public ResponseEntity<List<AdsDto>> getAllAdsByEmail(@RequestParam String email) throws Exception {
+        List<AdsDto> ads = adService.getAllAdsByEmail(email);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 }

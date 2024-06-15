@@ -76,13 +76,13 @@ public class AdminController {
     }
 
     @PutMapping("/blockUser/{email}")
-    public ResponseEntity<ResponseDto> blockUser(@PathVariable String email) {
+    public ResponseEntity<ResponseDto> blockUser(@PathVariable String email) throws Exception {
         ResponseDto response = userService.blockUser(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/unblockUser/{email}")
-    public ResponseEntity<ResponseDto> unblockUser(@PathVariable String email) {
+    public ResponseEntity<ResponseDto> unblockUser(@PathVariable String email) throws Exception {
         ResponseDto response = userService.unblockUser(email);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -212,7 +212,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdminPassword")
-    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception, NoSuchAlgorithmException {
+    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception {
         
         logger.debug("Updating password for admin with email '{}'", passwordDataDto.getEmail());
         
@@ -222,7 +222,7 @@ public class AdminController {
             response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
             logger.info("Password updated successfully for admin with email '{}'", passwordDataDto.getEmail());
             return ResponseEntity.ok(response);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             logger.error("Failed to update password for admin with email '{}': {}", passwordDataDto.getEmail(), e.getMessage());
             response.setResponseMessage("Failed to update password: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);

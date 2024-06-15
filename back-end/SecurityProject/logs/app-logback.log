@@ -1,0 +1,280 @@
+2024-06-15T17:21:41.028+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-15T17:21:41.106+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 65 ms. Found 6 JPA repository interfaces.
+2024-06-15T17:21:41.360+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@5e99b9c' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:21:41.372+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:21:41.572+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat initialized with port(s): 443 (https)
+2024-06-15T17:21:41.579+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:21:41.580+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting service [Tomcat]
+2024-06-15T17:21:41.580+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-15T17:21:41.675+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing Spring embedded WebApplicationContext
+2024-06-15T17:21:41.676+02:00 | INFO | main | org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext | Root WebApplicationContext: initialization completed in 1567 ms
+2024-06-15T17:21:41.993+02:00 | INFO | main | org.hibernate.jpa.internal.util.LogHelper | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-15T17:21:42.042+02:00 | INFO | main | org.hibernate.Version | HHH000412: Hibernate ORM core version 5.4.33
+2024-06-15T17:21:42.140+02:00 | INFO | main | org.hibernate.annotations.common.reflection.java.JavaReflectionManager | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-15T17:21:42.220+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Starting...
+2024-06-15T17:21:42.481+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Start completed.
+2024-06-15T17:21:42.508+02:00 | INFO | main | org.hibernate.dialect.Dialect | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-15T17:21:43.250+02:00 | INFO | main | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-15T17:21:43.258+02:00 | INFO | main | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:21:43.973+02:00 | WARN | main | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-15T17:21:44.055+02:00 | DEBUG | main | org.springframework.web.servlet.handler.AbstractHandlerMethodMapping | 47 mappings in 'requestMappingHandlerMapping'
+2024-06-15T17:21:44.131+02:00 | DEBUG | main | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-15T17:21:44.250+02:00 | INFO | main | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-06-15T17:21:44.268+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e3d8e6c, org.springframework.security.web.context.SecurityContextPersistenceFilter@425a5c2e, org.springframework.security.web.header.HeaderWriterFilter@76ffd052, org.springframework.web.filter.CorsFilter@7fd3197b, org.springframework.security.web.authentication.logout.LogoutFilter@6a9f8c2f, org.example.securityproject.auth.TokenAuthenticationFilter@1d2ce035, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@44a7661d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@cf0bc92, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6a087c72, org.springframework.security.web.session.SessionManagementFilter@726dd367, org.springframework.security.web.access.ExceptionTranslationFilter@6bed434d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@48614fb3]
+2024-06-15T17:21:44.272+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/actuator/**'] with []
+2024-06-15T17:21:44.273+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/**'] with []
+2024-06-15T17:21:44.273+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/api/v1/push', POST] with []
+2024-06-15T17:21:44.273+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/favicon.ico', GET] with []
+2024-06-15T17:21:44.273+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-15T17:21:44.274+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-15T17:21:44.274+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-15T17:21:44.274+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-15T17:21:44.274+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/resetPassword', POST] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/reset-password', POST] with []
+2024-06-15T17:21:44.275+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-15T17:21:44.276+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-15T17:21:44.276+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/refresh-token', GET] with []
+2024-06-15T17:21:44.276+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/ads/visit-ad', POST] with []
+2024-06-15T17:21:44.277+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verify/**', POST] with []
+2024-06-15T17:21:44.277+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verifyReCaptchaToken/**', POST] with []
+2024-06-15T17:21:44.277+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/*.html', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-15T17:21:44.278+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-15T17:21:44.327+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-15T17:21:44.362+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-15T17:21:44.516+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:21:44.649+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat started on port(s): 443 (https) with context path ''
+2024-06-15T17:21:44.955+02:00 | INFO | RMI TCP Connection(3)-192.168.1.4 | org.apache.juli.logging.DirectJDKLog | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-15T17:21:44.955+02:00 | INFO | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | Initializing Servlet 'dispatcherServlet'
+2024-06-15T17:21:44.956+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected StandardServletMultipartResolver
+2024-06-15T17:21:44.956+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected AcceptHeaderLocaleResolver
+2024-06-15T17:21:44.956+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected FixedThemeResolver
+2024-06-15T17:21:44.957+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3c20abd6
+2024-06-15T17:21:44.958+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.support.SessionFlashMapManager@3be2ef56
+2024-06-15T17:21:44.958+02:00 | DEBUG | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-15T17:21:44.959+02:00 | INFO | RMI TCP Connection(3)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | Completed initialization in 3 ms
+2024-06-15T17:22:19.183+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:22:19.185+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
+2024-06-15T17:22:19.187+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.
+2024-06-15T17:23:49.022+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-15T17:23:49.088+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 58 ms. Found 6 JPA repository interfaces.
+2024-06-15T17:23:49.328+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@7d97e06c' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:23:49.338+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:23:49.550+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat initialized with port(s): 443 (https)
+2024-06-15T17:23:49.561+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:23:49.562+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting service [Tomcat]
+2024-06-15T17:23:49.563+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-15T17:23:49.666+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing Spring embedded WebApplicationContext
+2024-06-15T17:23:49.666+02:00 | INFO | main | org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext | Root WebApplicationContext: initialization completed in 1286 ms
+2024-06-15T17:23:50.032+02:00 | INFO | main | org.hibernate.jpa.internal.util.LogHelper | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-15T17:23:50.081+02:00 | INFO | main | org.hibernate.Version | HHH000412: Hibernate ORM core version 5.4.33
+2024-06-15T17:23:50.190+02:00 | INFO | main | org.hibernate.annotations.common.reflection.java.JavaReflectionManager | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-15T17:23:50.278+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Starting...
+2024-06-15T17:23:50.424+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Start completed.
+2024-06-15T17:23:50.489+02:00 | INFO | main | org.hibernate.dialect.Dialect | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-15T17:23:51.465+02:00 | INFO | main | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-15T17:23:51.474+02:00 | INFO | main | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:23:52.271+02:00 | WARN | main | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-15T17:23:52.381+02:00 | DEBUG | main | org.springframework.web.servlet.handler.AbstractHandlerMethodMapping | 47 mappings in 'requestMappingHandlerMapping'
+2024-06-15T17:23:52.497+02:00 | DEBUG | main | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-15T17:23:52.679+02:00 | INFO | main | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-06-15T17:23:52.701+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7e4a6afd, org.springframework.security.web.context.SecurityContextPersistenceFilter@2480acc3, org.springframework.security.web.header.HeaderWriterFilter@377cc0f8, org.springframework.web.filter.CorsFilter@c7aac7c, org.springframework.security.web.authentication.logout.LogoutFilter@2a6871ad, org.example.securityproject.auth.TokenAuthenticationFilter@7ab8f93, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@58ebfbcb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4960b819, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6037748a, org.springframework.security.web.session.SessionManagementFilter@7bbd944e, org.springframework.security.web.access.ExceptionTranslationFilter@40ed4674, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7890324e]
+2024-06-15T17:23:52.718+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/actuator/**'] with []
+2024-06-15T17:23:52.718+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/**'] with []
+2024-06-15T17:23:52.718+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/api/v1/push', POST] with []
+2024-06-15T17:23:52.719+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/favicon.ico', GET] with []
+2024-06-15T17:23:52.720+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-15T17:23:52.720+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-15T17:23:52.720+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-15T17:23:52.720+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-15T17:23:52.721+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/resetPassword', POST] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/reset-password', POST] with []
+2024-06-15T17:23:52.722+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-15T17:23:52.723+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-15T17:23:52.723+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/refresh-token', GET] with []
+2024-06-15T17:23:52.723+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/ads/visit-ad', POST] with []
+2024-06-15T17:23:52.723+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verify/**', POST] with []
+2024-06-15T17:23:52.724+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verifyReCaptchaToken/**', POST] with []
+2024-06-15T17:23:52.724+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/', GET] with []
+2024-06-15T17:23:52.724+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-15T17:23:52.725+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/*.html', GET] with []
+2024-06-15T17:23:52.725+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-15T17:23:52.725+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-15T17:23:52.725+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-15T17:23:52.725+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-15T17:23:52.789+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-15T17:23:52.830+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-15T17:23:53.192+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat started on port(s): 443 (https) with context path ''
+2024-06-15T17:23:53.254+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:23:53.258+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
+2024-06-15T17:23:53.268+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.
+2024-06-15T17:25:38.459+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-15T17:25:38.552+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 81 ms. Found 6 JPA repository interfaces.
+2024-06-15T17:25:38.846+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@7ddd84b5' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:25:38.856+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:25:39.050+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat initialized with port(s): 443 (https)
+2024-06-15T17:25:39.059+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:25:39.060+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting service [Tomcat]
+2024-06-15T17:25:39.060+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-15T17:25:39.165+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing Spring embedded WebApplicationContext
+2024-06-15T17:25:39.166+02:00 | INFO | main | org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext | Root WebApplicationContext: initialization completed in 2096 ms
+2024-06-15T17:25:39.538+02:00 | INFO | main | org.hibernate.jpa.internal.util.LogHelper | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-15T17:25:39.608+02:00 | INFO | main | org.hibernate.Version | HHH000412: Hibernate ORM core version 5.4.33
+2024-06-15T17:25:39.763+02:00 | INFO | main | org.hibernate.annotations.common.reflection.java.JavaReflectionManager | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-15T17:25:39.887+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Starting...
+2024-06-15T17:25:40.057+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Start completed.
+2024-06-15T17:25:40.091+02:00 | INFO | main | org.hibernate.dialect.Dialect | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-15T17:25:41.484+02:00 | INFO | main | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-15T17:25:41.497+02:00 | INFO | main | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:25:42.635+02:00 | WARN | main | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-15T17:25:42.724+02:00 | DEBUG | main | org.springframework.web.servlet.handler.AbstractHandlerMethodMapping | 47 mappings in 'requestMappingHandlerMapping'
+2024-06-15T17:25:42.812+02:00 | DEBUG | main | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-15T17:25:42.968+02:00 | INFO | main | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-06-15T17:25:42.987+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@49b73e6c, org.springframework.security.web.context.SecurityContextPersistenceFilter@5cef5fc9, org.springframework.security.web.header.HeaderWriterFilter@ab5dde4, org.springframework.web.filter.CorsFilter@1f138b74, org.springframework.security.web.authentication.logout.LogoutFilter@3f7bf0f6, org.example.securityproject.auth.TokenAuthenticationFilter@4c682826, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b6b8cea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55a29589, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@a1c4f69, org.springframework.security.web.session.SessionManagementFilter@1d1da00b, org.springframework.security.web.access.ExceptionTranslationFilter@12d8e6b6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@604e8a6]
+2024-06-15T17:25:42.990+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/actuator/**'] with []
+2024-06-15T17:25:42.990+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/**'] with []
+2024-06-15T17:25:42.990+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/api/v1/push', POST] with []
+2024-06-15T17:25:42.991+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/favicon.ico', GET] with []
+2024-06-15T17:25:42.991+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-15T17:25:42.991+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/resetPassword', POST] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-15T17:25:42.992+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/reset-password', POST] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/refresh-token', GET] with []
+2024-06-15T17:25:42.993+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/ads/visit-ad', POST] with []
+2024-06-15T17:25:42.994+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verify/**', POST] with []
+2024-06-15T17:25:42.994+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verifyReCaptchaToken/**', POST] with []
+2024-06-15T17:25:42.995+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/', GET] with []
+2024-06-15T17:25:42.995+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-15T17:25:42.996+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/*.html', GET] with []
+2024-06-15T17:25:42.996+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-15T17:25:42.996+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-15T17:25:42.996+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-15T17:25:42.996+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-15T17:25:43.050+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-15T17:25:43.107+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-15T17:25:43.475+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat started on port(s): 443 (https) with context path ''
+2024-06-15T17:25:43.517+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:25:43.519+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
+2024-06-15T17:25:43.522+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.
+2024-06-15T17:28:40.999+02:00 | ERROR | main | org.springframework.boot.SpringApplication | Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [LOKI]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [LOKI]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:328)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:282)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:240)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:216)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:82)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:117)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:111)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:62)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:374)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:332)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at org.example.securityproject.SecurityProjectApplication.main(SecurityProjectApplication.java:12)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [LOKI]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [LOKI]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:313)
+	... 18 common frames omitted
+2024-06-15T17:29:00.698+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-15T17:29:00.759+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 54 ms. Found 6 JPA repository interfaces.
+2024-06-15T17:29:01.075+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2e17a321' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:29:01.083+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T17:29:01.250+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat initialized with port(s): 443 (https)
+2024-06-15T17:29:01.258+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:29:01.259+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting service [Tomcat]
+2024-06-15T17:29:01.259+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-15T17:29:01.362+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing Spring embedded WebApplicationContext
+2024-06-15T17:29:01.362+02:00 | INFO | main | org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext | Root WebApplicationContext: initialization completed in 1503 ms
+2024-06-15T17:29:01.645+02:00 | INFO | main | org.hibernate.jpa.internal.util.LogHelper | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-15T17:29:01.683+02:00 | INFO | main | org.hibernate.Version | HHH000412: Hibernate ORM core version 5.4.33
+2024-06-15T17:29:01.774+02:00 | INFO | main | org.hibernate.annotations.common.reflection.java.JavaReflectionManager | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-15T17:29:01.879+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Starting...
+2024-06-15T17:29:02.018+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Start completed.
+2024-06-15T17:29:02.039+02:00 | INFO | main | org.hibernate.dialect.Dialect | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-15T17:29:02.658+02:00 | INFO | main | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-15T17:29:02.665+02:00 | INFO | main | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:29:03.231+02:00 | WARN | main | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-15T17:29:03.310+02:00 | DEBUG | main | org.springframework.web.servlet.handler.AbstractHandlerMethodMapping | 47 mappings in 'requestMappingHandlerMapping'
+2024-06-15T17:29:03.374+02:00 | DEBUG | main | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-15T17:29:03.512+02:00 | INFO | main | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-06-15T17:29:03.530+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@78a0d664, org.springframework.security.web.context.SecurityContextPersistenceFilter@601e7c97, org.springframework.security.web.header.HeaderWriterFilter@2446be5f, org.springframework.web.filter.CorsFilter@1237aa73, org.springframework.security.web.authentication.logout.LogoutFilter@7f7f544a, org.example.securityproject.auth.TokenAuthenticationFilter@1dbb9a4a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@18d09283, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6672b0ea, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@60e5b3a8, org.springframework.security.web.session.SessionManagementFilter@5248c05a, org.springframework.security.web.access.ExceptionTranslationFilter@32b8992e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@21251e43]
+2024-06-15T17:29:03.541+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/actuator/**'] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/**'] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/api/v1/push', POST] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/favicon.ico', GET] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-15T17:29:03.542+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/resetPassword', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/reset-password', POST] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/refresh-token', GET] with []
+2024-06-15T17:29:03.543+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/ads/visit-ad', POST] with []
+2024-06-15T17:29:03.544+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verify/**', POST] with []
+2024-06-15T17:29:03.544+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verifyReCaptchaToken/**', POST] with []
+2024-06-15T17:29:03.544+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/', GET] with []
+2024-06-15T17:29:03.544+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-15T17:29:03.544+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/*.html', GET] with []
+2024-06-15T17:29:03.545+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-15T17:29:03.545+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-15T17:29:03.545+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-15T17:29:03.545+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-15T17:29:03.591+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-15T17:29:03.623+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-15T17:29:03.753+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T17:29:03.978+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat started on port(s): 443 (https) with context path ''
+2024-06-15T17:29:04.494+02:00 | INFO | RMI TCP Connection(2)-192.168.1.4 | org.apache.juli.logging.DirectJDKLog | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-15T17:29:04.495+02:00 | INFO | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | Initializing Servlet 'dispatcherServlet'
+2024-06-15T17:29:04.495+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected StandardServletMultipartResolver
+2024-06-15T17:29:04.495+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected AcceptHeaderLocaleResolver
+2024-06-15T17:29:04.495+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected FixedThemeResolver
+2024-06-15T17:29:04.496+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2b33f7a0
+2024-06-15T17:29:04.497+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.support.SessionFlashMapManager@48cbb4c5
+2024-06-15T17:29:04.497+02:00 | DEBUG | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-15T17:29:04.497+02:00 | INFO | RMI TCP Connection(2)-192.168.1.4 | org.springframework.web.servlet.FrameworkServlet | Completed initialization in 2 ms
+2024-06-15T17:29:08.106+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T17:29:08.108+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
+2024-06-15T17:29:08.112+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.

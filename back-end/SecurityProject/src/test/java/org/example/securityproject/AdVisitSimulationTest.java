@@ -70,7 +70,7 @@ public class AdVisitSimulationTest {
     }
 
     @Test
-    public void simulateAdVisits() {
+    public void simulateAdVisits() throws Exception {
         User user = userService.findByUsername(EMAIL);
         int numberOfSimulations = 10000;
         long delay = 60 * 1000 / numberOfSimulations; // Delay in milliseconds between each request

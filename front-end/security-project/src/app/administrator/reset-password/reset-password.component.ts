@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { LoginReponse } from 'src/app/model/loginResponse.model';
+import { LoginResponse } from 'src/app/model/loginResponse.model';
 import { Router } from '@angular/router';
 import * as DOMPurify from 'dompurify';
 
@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
     if(this.email)
       {
         this.userService.resetPassword(this.email, newPassword).subscribe(
-          (response: LoginReponse) => {
+          (response: LoginResponse) => {
             if(response.response === "Password do not meet the requirements.")
               {
                 this.messagePassword = response.response;
