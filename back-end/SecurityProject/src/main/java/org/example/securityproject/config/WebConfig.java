@@ -1,5 +1,6 @@
 package org.example.securityproject.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -28,5 +29,14 @@ public class WebConfig {
                        .allowCredentials(true);;
             }
         };
+    }
+
+    @Bean
+    public FilterRegistrationBean<SanitizationFilter> sanitizationFilterRegistrationBean(SanitizationFilter sanitizationFilter) {
+        FilterRegistrationBean<SanitizationFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(sanitizationFilter);
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(2);
+        return registrationBean;
     }
 }

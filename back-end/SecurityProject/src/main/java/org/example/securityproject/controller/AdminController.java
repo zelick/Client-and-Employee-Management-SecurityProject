@@ -28,11 +28,9 @@ public class AdminController {
     private UserService userService;
     private PermissionService permissionService;
 
-    private static final String VPN_SERVER_URL = "http://10.13.13.1/8083";
-
     @GetMapping("/getMessageFromVPN")
     public ResponseEntity<WebMessageDto> getMessageFromVPN() {
-        String endpointUrl = "http://10.13.13.1:3000/"; // VPN server URL
+        String endpointUrl = "http://10.13.13.1:3000/";
         RestTemplate restTemplate = new RestTemplate();
 
         try {
