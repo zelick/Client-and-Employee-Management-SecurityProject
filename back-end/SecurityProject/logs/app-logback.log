@@ -278,3 +278,124 @@ ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback
 2024-06-15T17:29:08.106+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-06-15T17:29:08.108+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
 2024-06-15T17:29:08.112+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.
+2024-06-15T18:23:36.005+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-15T18:23:36.100+02:00 | INFO | main | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 89 ms. Found 6 JPA repository interfaces.
+2024-06-15T18:23:36.430+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@541179e7' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T18:23:36.446+02:00 | INFO | main | org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-06-15T18:23:36.731+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat initialized with port(s): 443 (https)
+2024-06-15T18:23:36.731+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T18:23:36.731+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting service [Tomcat]
+2024-06-15T18:23:36.731+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting Servlet engine: [Apache Tomcat/9.0.56]
+2024-06-15T18:23:36.841+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Initializing Spring embedded WebApplicationContext
+2024-06-15T18:23:36.841+02:00 | INFO | main | org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext | Root WebApplicationContext: initialization completed in 1874 ms
+2024-06-15T18:23:37.211+02:00 | INFO | main | org.hibernate.jpa.internal.util.LogHelper | HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-15T18:23:37.258+02:00 | INFO | main | org.hibernate.Version | HHH000412: Hibernate ORM core version 5.4.33
+2024-06-15T18:23:37.418+02:00 | INFO | main | org.hibernate.annotations.common.reflection.java.JavaReflectionManager | HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-15T18:23:37.545+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Starting...
+2024-06-15T18:23:37.765+02:00 | INFO | main | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Start completed.
+2024-06-15T18:23:37.797+02:00 | INFO | main | org.hibernate.dialect.Dialect | HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2024-06-15T18:23:38.852+02:00 | WARN | main | org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl | GenerationTarget encountered exception accepting command : Error executing DDL "
+    alter table if exists users 
+       add column blocked boolean not null" via JDBC Statement
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
+    alter table if exists users 
+       add column blocked boolean not null" via JDBC Statement
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:67)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:562)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:583)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.migrateTable(AbstractSchemaMigrator.java:297)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:75)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:318)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:468)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1259)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at org.example.securityproject.SecurityProjectApplication.main(SecurityProjectApplication.java:12)
+Caused by: org.postgresql.util.PSQLException: ERROR: column "blocked" of relation "users" contains null values
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2565)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2297)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:322)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:481)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:401)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:322)
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:308)
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:284)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:279)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	... 34 common frames omitted
+2024-06-15T18:23:38.902+02:00 | INFO | main | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-15T18:23:38.915+02:00 | INFO | main | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T18:23:39.694+02:00 | WARN | main | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-15T18:23:39.772+02:00 | DEBUG | main | org.springframework.web.servlet.handler.AbstractHandlerMethodMapping | 47 mappings in 'requestMappingHandlerMapping'
+2024-06-15T18:23:39.852+02:00 | DEBUG | main | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-15T18:23:40.003+02:00 | INFO | main | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-06-15T18:23:40.026+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3feb93a, org.springframework.security.web.context.SecurityContextPersistenceFilter@225fb75e, org.springframework.security.web.header.HeaderWriterFilter@3006aef5, org.springframework.web.filter.CorsFilter@4ae435a3, org.springframework.security.web.authentication.logout.LogoutFilter@601e7c97, org.example.securityproject.auth.TokenAuthenticationFilter@7f69c4c0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4936fbc6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@40ef1934, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6a9a6a0c, org.springframework.security.web.session.SessionManagementFilter@76ebd595, org.springframework.security.web.access.ExceptionTranslationFilter@a7fd77f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7b55f0a6]
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/actuator/**'] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/**'] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/loki/api/v1/push', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/favicon.ico', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/login', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/registerUser', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/confirm-account', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/tryLogin', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/resetPassword', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/updatePassword', PUT] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserRole', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/editUserPermission', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/send-email', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/reset-password', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/verify', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/login/tokens/**', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/auth/refresh-token', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/ads/visit-ad', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verify/**', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/api/users/verifyReCaptchaToken/**', POST] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/webjars/**', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/*.html', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='favicon.ico', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.html', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.css', GET] with []
+2024-06-15T18:23:40.042+02:00 | INFO | main | org.springframework.security.web.DefaultSecurityFilterChain | Will secure Ant [pattern='/**/*.js', GET] with []
+2024-06-15T18:23:40.105+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-15T18:23:40.152+02:00 | DEBUG | main | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-15T18:23:40.326+02:00 | INFO | main | org.apache.juli.logging.DirectJDKLog | Starting ProtocolHandler ["https-jsse-nio-443"]
+2024-06-15T18:23:40.642+02:00 | INFO | main | org.springframework.boot.web.embedded.tomcat.TomcatWebServer | Tomcat started on port(s): 443 (https) with context path ''
+2024-06-15T18:23:41.277+02:00 | INFO | RMI TCP Connection(2)-192.168.0.20 | org.apache.juli.logging.DirectJDKLog | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-15T18:23:41.277+02:00 | INFO | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.FrameworkServlet | Initializing Servlet 'dispatcherServlet'
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.DispatcherServlet | Detected StandardServletMultipartResolver
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.DispatcherServlet | Detected AcceptHeaderLocaleResolver
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.DispatcherServlet | Detected FixedThemeResolver
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5481f204
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.DispatcherServlet | Detected org.springframework.web.servlet.support.SessionFlashMapManager@79aa675b
+2024-06-15T18:23:41.277+02:00 | DEBUG | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.FrameworkServlet | enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-15T18:23:41.277+02:00 | INFO | RMI TCP Connection(2)-192.168.0.20 | org.springframework.web.servlet.FrameworkServlet | Completed initialization in 0 ms
+2024-06-15T18:26:24.021+02:00 | INFO | SpringApplicationShutdownHook | org.springframework.orm.jpa.AbstractEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-15T18:26:24.061+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown initiated...
+2024-06-15T18:26:24.076+02:00 | INFO | SpringApplicationShutdownHook | com.zaxxer.hikari.HikariDataSource | HikariPool-1 - Shutdown completed.
