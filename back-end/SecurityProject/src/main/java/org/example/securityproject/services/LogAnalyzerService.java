@@ -1,5 +1,6 @@
 package org.example.securityproject.services;
 
+import lombok.AllArgsConstructor;
 import org.example.securityproject.model.Notification;
 import org.example.securityproject.repository.NotificationRepository;
 import org.example.securityproject.service.EmailService;
@@ -16,6 +17,7 @@ public class LogAnalyzerService {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
     private NotificationRepository notificationRepository;  //sacuvaj notifikaciju
 
     private static final int MAX_FAILED_ATTEMPTS = 5;

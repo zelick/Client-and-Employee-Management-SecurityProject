@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("HVFOd+SCu8hlKStqkdYEcvwIwlDygx2Bb0FJo3NKlot3YZZLB5TAwpoqcyrOBYBoffwJdVaWvHOzpS8g+BoSuOfq/XL4QrWoymy3+d2CaZY=");
+       User user = userRepository.findByEmail("FwrVCKPESW2ncGxLdlxZRDbSB73dYKgClnze7bOJ7Ys=");
        int userId = user.getId();
 
        List<UserRole> roles = new ArrayList<>();

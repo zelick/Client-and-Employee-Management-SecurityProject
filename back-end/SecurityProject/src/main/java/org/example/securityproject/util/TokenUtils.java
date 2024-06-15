@@ -44,8 +44,8 @@ public class TokenUtils {
     private String AUTH_HEADER;
 
 //    // Ove vrednosti se sada izražavaju u milisekundama
-//    private static final int ACCESS_TOKEN_EXPIRATION = 15 * 60 * 1000; // 15 minuta
-//    private static final int REFRESH_TOKEN_EXPIRATION = 30 * 60 * 1000; // 30 minuta
+    private static final int ACCESS_TOKEN_EXPIRATION = 15 * 60 * 1000; // 15 minuta
+    private static final int REFRESH_TOKEN_EXPIRATION = 30 * 60 * 1000; // 30 minuta
 
     //test primer
     //private static final int ACCESS_TOKEN_EXPIRATION = 1 * 60 * 1000; // 1 minut
