@@ -118,7 +118,6 @@ export class RegistrationComponent implements OnInit {
         this.registrationMessage = response.responseMessage;
         if (response.flag) {
           if (this.userData.mfaEnabled && response.secretImageUri) {
-            this.qrCode = response.secretImageUri;
             this.showQrCode = true;
           } else {
             //ZA SAD VIDETI KAKO OVO OSMISLITI

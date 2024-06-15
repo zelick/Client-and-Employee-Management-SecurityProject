@@ -44,7 +44,7 @@ public class UserDataEncryptionService {
     public User findByEmailAndRegistrationStatus(String email) throws Exception {
         User user = findEncryptedUserByEmail(email);
 
-        if (user.getRegistrationStatus().equals(RegistrationStatus.PENDING) || user.getRegistrationStatus().equals(RegistrationStatus.ACCEPTED)) {
+        if (user!= null && (user.getRegistrationStatus().equals(RegistrationStatus.PENDING) || user.getRegistrationStatus().equals(RegistrationStatus.ACCEPTED))) {
             return user;
         }
         return null;
@@ -53,7 +53,7 @@ public class UserDataEncryptionService {
     public User findByEmailRejcetedUser(String email) throws Exception {
         User user = findEncryptedUserByEmail(email);
 
-        if (user.getRegistrationStatus().equals(RegistrationStatus.REJECTED)) {
+        if (user != null && (user.getRegistrationStatus().equals(RegistrationStatus.REJECTED))) {
             return user;
         }
         return null;
