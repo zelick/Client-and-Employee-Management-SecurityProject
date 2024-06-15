@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "@angular/forms": "^18.0.3",
+    "@stomp/ng2-stompjs": "^8.0.0",
+    "@stomp/stompjs": "^7.0.0",
+    "ngx-captcha": "^13.0.0",
+    "rxjs": "^7.8.1",
+    "sockjs-client": "^1.6.1",
     "tslib": "^2.6.2"
   },
   "devDependencies": {

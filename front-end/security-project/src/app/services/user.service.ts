@@ -159,9 +159,9 @@ export class UserService {
   }
 
   getAllAdsByEmail(email: string): Observable<Ads[]> {
-    return this.http.get<Ads[]>(this.apiUrl + 'ads/by-email', { params: { email } });
+    return this.http.get<Ads[]>(`${this.apiUrl}ads/by-email/` + email);
   }
-
+  
   getLoggedInUser(): Observable<User> {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser");
   }

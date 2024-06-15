@@ -2,19 +2,19 @@ package org.example.securityproject.controller;
 
 import org.example.securityproject.dto.AdDto;
 import org.example.securityproject.dto.AdsDto;
+import org.example.securityproject.dto.EmailDto;
 import org.example.securityproject.model.Ad;
 import org.example.securityproject.model.AdRequest;
 import org.example.securityproject.model.User;
-import org.example.securityproject.service.AdRequestService;
-import org.example.securityproject.service.AdService;
-import org.example.securityproject.service.RateLimiterService;
-import org.example.securityproject.service.UserService;
+import org.example.securityproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +29,9 @@ public class AdController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserDataEncryptionService userDataEncryptionService;
 
 
     @PostMapping("/create")
@@ -57,10 +60,12 @@ public class AdController {
         List<AdDto> ads = adService.getAllAds();
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
-
-    @GetMapping("/by-email")
-    public ResponseEntity<List<AdsDto>> getAllAdsByEmail(@RequestParam String email) throws Exception {
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<List<AdsDto>> getAllAdsByEmail(@PathVariable String email) throws Exception {
+        System.out.println("Email u ad controlleru: " + email);
         List<AdsDto> ads = adService.getAllAdsByEmail(email);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
+
 }
+
