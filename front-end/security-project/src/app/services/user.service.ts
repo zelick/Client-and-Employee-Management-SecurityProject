@@ -10,6 +10,7 @@ import { AdRequest } from '../model/adRequest.model';
 import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
 import { Permission } from '../model/permission.model';
+import {  Notification } from '../model/notification.model';
 
 @Injectable({
   providedIn: 'root',
@@ -140,4 +141,7 @@ export class UserService {
     return this.http.get<User>(this.apiUrl + "users/getLoggedInUser", { headers});
   }
 
+  getAllNotifications(): Observable<Notification[]> {
+    return this.http.get<Notification[]>(this.apiUrl + "api/admin/getAllNotifications");
+  }
 }

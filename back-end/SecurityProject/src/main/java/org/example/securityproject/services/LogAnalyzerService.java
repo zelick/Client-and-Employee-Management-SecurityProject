@@ -1,5 +1,7 @@
 package org.example.securityproject.services;
 
+import org.example.securityproject.model.Notification;
+import org.example.securityproject.repository.NotificationRepository;
 import org.example.securityproject.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,6 +16,7 @@ public class LogAnalyzerService {
 
     @Autowired
     private EmailService emailService;
+    private NotificationRepository notificationRepository;  //sacuvaj notifikaciju
 
     private static final int MAX_FAILED_ATTEMPTS = 5;
     private static final int MAX_CLICK_ATTEMPTS = 30;
@@ -78,6 +81,7 @@ public class LogAnalyzerService {
                     alertSentForIncorrectUsername.put(email, true);
                     System.out.println("---------MULTIPLE INCORRECT USERNAME ATTEMPTS: " + email + " - Sending email alert------");
                     emailService.sendCriticalEventAlert(adminEmail, "Multiple failed login attempts detected", "Email: " + email);
+                    createNotificationAndSave("Multiple failed login attempts detected Email: " + email);
                     return true;
                 }
             }
@@ -96,6 +100,7 @@ public class LogAnalyzerService {
                     alertSentForIncorrectPassword.put(email, true);
                     System.out.println("MULTIPLE INCORRECT PASSWORD ATTEMPTS: " + email + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Multiple incorrect password attempts detected", "Email: " + email);
+                    createNotificationAndSave("Multiple incorrect password attempts detected Email: " + email);
                     return true;
                 }
             }
@@ -114,6 +119,7 @@ public class LogAnalyzerService {
                     alertSentForBlockedUser.put(email, true);
                     System.out.println("USER IS BLOCKED: " + email + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Blocked user access attempt", "Email: " + email);
+                    createNotificationAndSave("Blocked user access attempt Email: " + email);
                     return true;
                 }
             }
@@ -132,6 +138,7 @@ public class LogAnalyzerService {
                     alertSentForTokenInvalid.put(email, true);
                     System.out.println("EXPIRED OR INVALID JWT TOKEN DETECTED: " + email + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Expired JWT token detected", "Email: " + email);
+                    createNotificationAndSave("Expired JWT token detected Email: " + email);
                     return true;
                 }
             }
@@ -150,6 +157,7 @@ public class LogAnalyzerService {
                     alertSentForUnauthorizedCriticalEvent.put(path, true);
                     System.out.println("UNAUTHORIZED ACCESS DETECTED: " + path + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Unauthorized access detected", "Path: " + path);
+                    createNotificationAndSave("Unauthorized access detected Path: " + path);
                     return true;
                 }
             }
@@ -170,6 +178,7 @@ public class LogAnalyzerService {
                     alertSentForEndpointClicks.put(path, true);
                     System.out.println("EXCESSIVE CLICKS DETECTED: " + path + " - Sending email alert");
                     emailService.sendCriticalEventAlert(adminEmail, "Excessive clicks on endpoint detected", "Path: " + path);
+                    createNotificationAndSave("Excessive clicks on endpoint detected Path: " + path);
                     return true;
                 }
             }
@@ -216,5 +225,16 @@ public class LogAnalyzerService {
         //
         endpointClickAttempts.clear();
         alertSentForEndpointClicks.clear();
+    }
+
+    private void createNotificationAndSave(String content) {
+        Notification notification = new Notification();
+        notification.setMessage(content);
+        try {
+            notificationRepository.save(notification);
+            System.out.println("Notification saved successfully: " + notification);
+        } catch (Exception e) {
+            System.err.println("Failed to save notification: " + e.getMessage());
+        }
     }
 }

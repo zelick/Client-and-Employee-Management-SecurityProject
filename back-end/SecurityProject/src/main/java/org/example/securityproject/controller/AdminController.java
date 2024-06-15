@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
+import org.example.securityproject.model.Notification;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.example.securityproject.service.PermissionService;
@@ -28,7 +29,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
     private PermissionService permissionService;
-
 
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
@@ -183,6 +183,29 @@ public class AdminController {
             logger.error("Failed to update password for admin with email '{}': {}", passwordDataDto.getEmail(), e.getMessage());
             response.setResponseMessage("Failed to update password: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/getAllNotifications")
+    public ResponseEntity<List<NotificationDto>> getAllNotifications() {
+        logger.debug("Fetching all notifications.");
+        try {
+            List<Notification> notifications = userService.getAllNotifications();
+            List<NotificationDto> notificationDtos = new ArrayList<>();
+
+            for (Notification notification : notifications) {
+                NotificationDto notificationDto = new NotificationDto();
+                notificationDto.setId(notification.getId());
+                notificationDto.setMessage(notification.getMessage());
+                notificationDto.setCreatedAt(notification.getCreatedAt());
+                notificationDtos.add(notificationDto);
+            }
+
+            logger.info("Retrieved {} notifications successfully.", notificationDtos.size());
+            return new ResponseEntity<>(notificationDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Failed to fetch all notifications: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

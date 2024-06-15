@@ -1,0 +1,19 @@
+<div class="notifications-container">
+    <h2>Notifications</h2>
+    <ul class="notification-list">
+      <li *ngFor="let notification of notifications">
+        <div class="notification-item">
+          <div class="notification-header">
+            <span class="notification-date">{{ notification.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="notification-body">
+            <p>{{ notification.message }}</p>
+          </div>
+        </div>
+      </li>
+      <li *ngIf="notifications.length === 0" class="no-notifications">
+        No notifications available.
+      </li>
+    </ul>
+  </div>
+  

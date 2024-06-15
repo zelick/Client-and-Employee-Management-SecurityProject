@@ -7,8 +7,10 @@ import org.example.securityproject.enums.RegistrationStatus;
 import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.enums.ServicesPackage;
 import org.example.securityproject.model.ConfirmationToken;
+import org.example.securityproject.model.Notification;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
+import org.example.securityproject.repository.NotificationRepository;
 import org.example.securityproject.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,7 @@ public class UserService {
     private EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
+    private NotificationRepository notificationRepository;
 
 
     public LoginReponseDto loginUser(UserLoginData loginData) {
@@ -504,6 +507,10 @@ public class UserService {
             return null;
         }
         return (User)auth.getPrincipal();
+    }
+
+    public List<Notification> getAllNotifications() {
+        return notificationRepository.findAll();
     }
 
 }
