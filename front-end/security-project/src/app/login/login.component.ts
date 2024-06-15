@@ -79,13 +79,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       (response: LoginResponse) => {
         console.log('Login response:', response);
         this.messageLogin = response.response;
+        if(response.response === "This email does not exist."){
+          this.changePasswordFlag = false;
+          return;
+        }
         if (response.response === "This account is not active, please wait for admin to activate your account.") {
           this.changePasswordFlag = false;
           return;
         }
         
         if (response.response === "The user did not enter the two-factor authentication code correctly, and his account is not active.") {
-          this.messageLogin = response.response;
+          //this.messageLogin = response.response;
           this.changePasswordFlag = false;
           return;
         }
