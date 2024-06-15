@@ -1,6 +1,7 @@
 package org.example.securityproject.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.example.securityproject.dto.*;
 import org.example.securityproject.enums.Permission;
 import org.example.securityproject.enums.UserRole;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -30,6 +32,19 @@ public class AdminController {
     private UserService userService;
     private PermissionService permissionService;
 
+    @GetMapping("/getMessageFromVPN")
+    public ResponseEntity<WebMessageDto> getMessageFromVPN() {
+        String endpointUrl = "http://10.13.13.1:3000/";
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            String response = restTemplate.getForObject(endpointUrl, String.class);
+            return ResponseEntity.ok(new WebMessageDto(response));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new WebMessageDto(e.getMessage()));
+        }
+    }
+
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         logger.debug("Fetching all employees.");
@@ -45,6 +60,32 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<AdminUserDto>> getAllUsers() {
+        try {
+            List<AdminUserDto> userDtos = userService.getAllUsers()
+                    .stream()
+                    .map(user -> new AdminUserDto(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/blockUser/{email}")
+    public ResponseEntity<ResponseDto> blockUser(@PathVariable String email) {
+        ResponseDto response = userService.blockUser(email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/unblockUser/{email}")
+    public ResponseEntity<ResponseDto> unblockUser(@PathVariable String email) {
+        ResponseDto response = userService.unblockUser(email);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @GetMapping("/getAdminData")
     public ResponseEntity<UserDto> getUserData() {

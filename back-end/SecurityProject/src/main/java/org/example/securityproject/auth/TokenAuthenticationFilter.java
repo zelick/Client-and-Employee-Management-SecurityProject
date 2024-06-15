@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.example.securityproject.model.User;
+import org.example.securityproject.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,11 +38,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private UserDetailsService userDetailsService;
     private static final Log LOGGER = LogFactory.getLog(TokenAuthenticationFilter.class);
+    private UserRepository userRepository;
 
 
-    public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService) {
+    public TokenAuthenticationFilter(TokenUtils tokenHelper, UserDetailsService userDetailsService, UserRepository userRepository) {
         this.tokenUtils = tokenHelper;
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -53,12 +57,24 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         // 1. Preuzimanje JWT tokena iz zahteva
         String authToken = tokenUtils.getToken(request);
         LOGGER.debug("Request received with token: " + authToken);
+        
+        System.out.println("NE BI TREBAO UCI OVDE");
+        if(authToken.isEmpty())
+        {
+            System.out.println("Token je prazan!!!!!!!!!");
+        }
         try {
 
             if (authToken != null) {
                 // 2. Citanje korisnickog imena iz tokena
                 LOGGER.debug("Analysis auth token from request: " + authToken);
                 username = tokenUtils.getUsernameFromToken(authToken);
+                User user = userRepository.findByEmail(username);
+                if (user != null && user.isBlocked()) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("User is blocked.");
+                    return;
+                }
 
                 if (username != null) {
                     LOGGER.debug("Attempting to authenticate user: " + username);

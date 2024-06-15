@@ -27,7 +27,6 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   private isIgnoredEndpoint(request: HttpRequest<any>): boolean {
-    // Add logic to determine if the request should be ignored
     const ignoredEndpoints = ['/refresh-token', '/check-token'];
     return ignoredEndpoints.some(endpoint => request.url.includes(endpoint));
   }

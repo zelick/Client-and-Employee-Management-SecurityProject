@@ -156,6 +156,8 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/api/admins/getAllCanBeAddedPermissions/**").hasAuthority("ADMIN_READ")
                 .antMatchers(HttpMethod.PUT,"/api/admins/addPermission").hasAuthority("ADMIN_UPDATE")
                 .antMatchers(HttpMethod.PUT,"/api/admins/updateAdminPassword").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.PUT,"/api/admins/blockUser").hasAuthority("ADMIN_UPDATE")
+                .antMatchers(HttpMethod.PUT,"/api/admins/unblockUser").hasAuthority("ADMIN_UPDATE")
 
                 //.antMatchers(HttpMethod.PUT,"/api/users/updatePassword").hasAnyAuthority("ADMIN_UPDATE", "EMPLOYEE_UPDATE")
 
@@ -165,7 +167,7 @@ public class WebSecurityConfig {
                 .cors().and()
 
                 // umetni custom filter TokenAuthenticationFilter kako bi se vrsila provera JWT tokena umesto cistih korisnickog imena i lozinke (koje radi BasicAuthenticationFilter)
-                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService()), BasicAuthenticationFilter.class);
+                .addFilterBefore(new TokenAuthenticationFilter(tokenUtils,  userDetailsService(), userRepository), BasicAuthenticationFilter.class);
 
         // zbog jednostavnosti primera ne koristimo Anti-CSRF token (https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
         http.csrf().disable();
@@ -196,12 +198,16 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/users/registerUser")
                 .antMatchers(HttpMethod.GET, "/api/users/confirm-account")
                 .antMatchers(HttpMethod.POST, "/api/users/tryLogin")
+                .antMatchers(HttpMethod.POST, "/api/users/resetPassword")
                 .antMatchers(HttpMethod.PUT, "/api/users/updatePassword")
                 .antMatchers(HttpMethod.POST, "/api/users/editUserRole") //TEST VELIKI
                 .antMatchers(HttpMethod.POST, "/api/users/editUserPermission") //TEST VELIKI
                 .antMatchers(HttpMethod.POST, "/api/login/send-email")
+                .antMatchers(HttpMethod.POST, "/api/login/reset-password")
                 .antMatchers(HttpMethod.GET, "/api/login/verify")
                 .antMatchers(HttpMethod.GET, "/api/login/tokens/**")
+                .antMatchers(HttpMethod.GET, "/api/auth/refresh-token")
+                .antMatchers(HttpMethod.POST,"/api/ads/visit-ad")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }

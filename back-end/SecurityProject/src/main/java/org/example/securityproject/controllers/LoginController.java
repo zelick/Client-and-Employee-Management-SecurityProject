@@ -75,6 +75,12 @@ public class LoginController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        loginService.sendResetPasswordMail(email);
+        return ResponseEntity.ok().build();
+    }
+
     private boolean verifyHmac(String data, String key, String hmacToVerify) throws NoSuchAlgorithmException, InvalidKeyException {
         String generatedHmac = TokenGenerator.generateHmac(data, key);
         return hmacToVerify.equals(generatedHmac);

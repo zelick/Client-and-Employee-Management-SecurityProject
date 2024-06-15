@@ -5,6 +5,7 @@ import { UserRole } from '../model/userRole.model';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../model/user.model';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-ad-request-form',
@@ -62,6 +63,7 @@ export class AdRequestFormComponent implements OnInit{
         this.message = 'Active from must be before active to date.';
         return;
       }
+      this.adRequest.description = DOMPurify.sanitize(this.adRequest.description);
 
       this.adRequest.email = this.loggedUser.email;
       this.userService.createAdRequest(this.adRequest).subscribe(

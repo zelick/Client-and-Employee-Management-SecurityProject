@@ -5,6 +5,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { UserRole } from '../model/userRole.model';
 import { AuthService } from '../service/auth.service';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-edit-client-profile',
@@ -72,15 +73,25 @@ export class EditClientProfileComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.loggedUser)
-    this.userService.updateClient(this.loggedUser).subscribe(
-      (response: any) => {
-        console.log('User updated successfully:', response);
-        this.router.navigate(['/client-profile']);
-      },
-      (error) => {
-        console.error('Error updating user:', error);
-      }
-    );
+    // Primena DOMPurify na sve propertije objekta loggedUser pre slanja
+    if (this.loggedUser) {
+      this.loggedUser.email = DOMPurify.sanitize(this.loggedUser.email);
+      this.loggedUser.surname = DOMPurify.sanitize(this.loggedUser.surname);
+      this.loggedUser.name = DOMPurify.sanitize(this.loggedUser.name);
+      this.loggedUser.address = DOMPurify.sanitize(this.loggedUser.address);
+      this.loggedUser.city = DOMPurify.sanitize(this.loggedUser.city);
+      this.loggedUser.country = DOMPurify.sanitize(this.loggedUser.country);
+      this.loggedUser.phoneNumber = DOMPurify.sanitize(this.loggedUser.phoneNumber);
+
+      this.userService.updateClient(this.loggedUser).subscribe(
+        (response: any) => {
+          console.log('User updated successfully:', response);
+          this.router.navigate(['/client-profile']);
+        },
+        (error) => {
+          console.error('Error updating user:', error);
+        }
+      );
+    }
   } 
 }

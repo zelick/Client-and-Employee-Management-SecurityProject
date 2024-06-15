@@ -20,6 +20,11 @@ public class LoginService {
         emailService.sendPasswordlessMail(email);
     }
 
+    public void sendResetPasswordMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
+        // Ovde pozovite sendPasswordlessMail metodu iz EmailService
+        emailService.sendResetPasswordMail(email);
+    }
+
     private String generateToken() {
         // Implementacija generisanja tokena
         // Ovde ćete implementirati kod za generisanje jednokratnog tokena

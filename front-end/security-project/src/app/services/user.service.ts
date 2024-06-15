@@ -11,6 +11,9 @@ import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
 import { Permission } from '../model/permission.model';
 import {  Notification } from '../model/notification.model';
+import { Ads } from '../model/ads.model';
+import { AdminUser } from '../model/adminUser.model';
+import { VpnMessage } from '../model/vpnMessage.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +27,26 @@ export class UserService {
 
   getUserData(): Observable<User> {
     return this.http.get<User>(this.apiUrl + 'admins/getAdminData');
+  }
+
+  getAllUsers(): Observable<AdminUser[]> {
+    return this.http.get<AdminUser[]>(this.apiUrl + 'admins/getAllUsers');
+  }
+
+  deleteUserData(email: string): Observable<ResponseMessage> {
+    return this.http.delete<ResponseMessage>(`${this.apiUrl}users/deleteUserData/${email}`);
+  }
+
+  blockUser(email: string): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(`${this.apiUrl}admins/blockUser/${email}`, {});
+  }
+
+  getMessageFromVPN(): Observable<VpnMessage> {
+    return this.http.get<VpnMessage>(`${this.apiUrl}admins/getMessageFromVPN`);
+  }
+
+  unblockUser(email: string): Observable<ResponseMessage> {
+    return this.http.put<ResponseMessage>(`${this.apiUrl}admins/unblockUser/${email}`, {});
   }
 
   getAllEmployees(): Observable<User[]> {
@@ -97,6 +120,14 @@ export class UserService {
     };
     return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
+
+  resetPassword(email: string, password: string): Observable<LoginReponse> { 
+    const loginData = {
+      email: email,
+      password: password
+    };
+    return this.http.post<LoginReponse>(this.apiUrl + 'users/resetPassword', loginData);
+  }
   
   findUserByEmail(email: string): Observable<User> {
     return this.http.get<User>(this.apiUrl + 'users/findUserByEmail/' + email);
@@ -126,8 +157,8 @@ export class UserService {
     return this.http.get<Ad[]>(this.apiUrl + 'ads/all');
   }
 
-  getAllAdsByEmail(email: string): Observable<Ad[]> {
-    return this.http.get<Ad[]>(this.apiUrl + 'ads/by-email', { params: { email } });
+  getAllAdsByEmail(email: string): Observable<Ads[]> {
+    return this.http.get<Ads[]>(this.apiUrl + 'ads/by-email', { params: { email } });
   }
 
   getLoggedInUser(): Observable<User> {
@@ -144,4 +175,9 @@ export class UserService {
   getAllNotifications(): Observable<Notification[]> {
     return this.http.get<Notification[]>(this.apiUrl + "api/admin/getAllNotifications");
   }
+  visitAd(adId: number): Observable<string> {
+    const params = new HttpParams().set('adId', adId.toString());
+    return this.http.post<string>(`${this.apiUrl}ads/visit-ad`, null, { params: params, responseType: 'text' as 'json' });
+  }
+
 }

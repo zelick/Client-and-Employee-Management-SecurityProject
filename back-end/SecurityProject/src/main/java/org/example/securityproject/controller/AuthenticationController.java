@@ -91,11 +91,18 @@ public class AuthenticationController {
     // Endpoint za osvežavanje access tokena
     @GetMapping("/refresh-token")
     public ResponseEntity<UserTokenState> refreshToken(HttpServletRequest request) {
+
         try {
+            
             //String refreshToken = request.getHeader("Authorization"); // Uzmi refresh token iz headera
             String refreshToken = tokenUtils.getToken(request);
             String username = tokenUtils.getUsernameFromToken(refreshToken);
             User user = userService.findByUsername(username);
+            
+            if (user.isBlocked()) {
+                System.out.println("User is blocked!");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserTokenState("User is blocked", -1L));
+            }
 
             if (tokenUtils.isTokenExpired(refreshToken)) { // Provjeri je li refresh token istekao
                 // Ako je refresh token istekao, vraćamo grešku

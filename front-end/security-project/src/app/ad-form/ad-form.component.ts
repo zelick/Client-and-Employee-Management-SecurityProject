@@ -7,6 +7,7 @@ import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-ad-form',
@@ -70,6 +71,7 @@ export class AdFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.slogan = DOMPurify.sanitize(this.slogan);
     const ad: Ad = { 
       email: this.client.email,
       name: this.client.name,

@@ -36,23 +36,26 @@ public class User implements UserDetails {
     @Column(name = "salt", nullable = false)
     private String salt;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname", nullable = true)
     private String surname;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = true)
     private String city;
 
-    @Column(name = "country", nullable = false)
+    @Column(name = "country", nullable = true)
     private String country;
 
-    @Column(name = "phoneNumber", nullable = false)
+    @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;
+
+    @Column(name = "blocked", nullable = false)
+    private boolean blocked;
 
     /*
     @Column(name = "role", nullable = false)
@@ -124,6 +127,29 @@ public class User implements UserDetails {
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    public User(Integer id, Date requestProcessingDate, boolean loggedInOnce, boolean active, boolean enabled, Timestamp lastPasswordResetDate, RegistrationStatus registrationStatus, ServicesPackage servicesPackage, ClientType clientType, List<UserRole> roles, String phoneNumber, String country, String address, String city, String surname, String salt, String name, String password, String email, boolean blocked) {
+        this.id = id;
+        this.requestProcessingDate = requestProcessingDate;
+        this.loggedInOnce = loggedInOnce;
+        this.active = active;
+        this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
+        this.registrationStatus = registrationStatus;
+        this.servicesPackage = servicesPackage;
+        this.clientType = clientType;
+        this.roles = roles;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.address = address;
+        this.city = city;
+        this.surname = surname;
+        this.salt = salt;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.blocked = blocked;
     }
 
     public Integer getId() {
@@ -319,6 +345,14 @@ public class User implements UserDetails {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public Date getRequestProcessingDate() {

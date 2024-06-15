@@ -33,4 +33,13 @@ public class WebConfig {
             }
         };
     }
+
+    @Bean
+    public FilterRegistrationBean<SanitizationFilter> sanitizationFilterRegistrationBean(SanitizationFilter sanitizationFilter) {
+        FilterRegistrationBean<SanitizationFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(sanitizationFilter);
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(2);
+        return registrationBean;
+    }
 }

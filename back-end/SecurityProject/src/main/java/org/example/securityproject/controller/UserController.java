@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,11 @@ public class UserController {
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("anaa.radovanovic2001@gmail.com");
+       User user = userRepository.findByEmail("pmilica990@gmail.com");
        int userId = user.getId();
 
-       List<UserRole> roles = user.getRoles();
+       List<UserRole> roles = new ArrayList<>();
+       roles.add(UserRole.ADMINISTRATOR);
 
        roles.remove(UserRole.CLIENT);
 
@@ -67,8 +69,13 @@ public class UserController {
     }
 
     @PostMapping("/tryLogin")
-    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) {
+    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData)  {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<LoginReponseDto> resetPassword(@RequestBody UserLoginData loginData)  {
+        return new ResponseEntity<>(userService.resetPassword(loginData), HttpStatus.OK);
     }
 
     @PostMapping("/registerUser")
@@ -93,6 +100,21 @@ public class UserController {
         logger.info("Password update response: {}", response.getResponseMessage());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteUserData/{email}")
+    public ResponseEntity<ResponseDto> deleteUserData(@PathVariable String email) {
+        try {
+            userService.deleteUserDataByEmail(email);
+            ResponseDto response = new ResponseDto();
+            response.setResponseMessage("You have successfully delete all data.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            ResponseDto response = new ResponseDto();
+            response.setResponseMessage("Failed to delete all data.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("/getLoggedInUser")
     public ResponseEntity<UserDto> getLogegdInUser() {

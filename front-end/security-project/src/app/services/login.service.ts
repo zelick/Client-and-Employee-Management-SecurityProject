@@ -14,4 +14,8 @@ export class LoginService {
   sendEmail(email: string): Observable<string> {
     return this.http.post<string>(`${this.apiUrl}login/send-email`, email);
   }
+
+  resetPassword(email: string): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}login/reset-password`, email);
+  }
 }

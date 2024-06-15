@@ -1,0 +1,22 @@
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Surname</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.email }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.surname }}</td>
+      <button class="dugme" *ngIf="user.blocked === false" (click)="blockUser(user.email)">Block</button>
+      <button class="dugme" *ngIf="user.blocked === true" (click)="unblockUser(user.email)">Unblock</button>
+    </tr>
+  </tbody>
+</table>

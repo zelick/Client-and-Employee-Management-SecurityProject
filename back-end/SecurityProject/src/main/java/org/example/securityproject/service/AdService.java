@@ -2,6 +2,7 @@ package org.example.securityproject.service;
 
 import lombok.AllArgsConstructor;
 import org.example.securityproject.dto.AdDto;
+import org.example.securityproject.dto.AdsDto;
 import org.example.securityproject.model.Ad;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.AdRepository;
@@ -59,20 +60,33 @@ public class AdService {
         return adsDtos;
     }
 
-    public List<AdDto> getAllAdsByEmail(String email) {
+    public void deleteAdsByEmail(String email) {
+        List<Ad> ads = adRepository.findByUserEmail(email);
+        for (Ad ad : ads) {
+            adRepository.delete(ad);
+        }
+    }
+
+
+    public List<AdsDto> getAllAdsByEmail(String email) {
         List<Ad> ads = adRepository.findAllByUser_Email(email);
         return ads.stream()
                 .map(this::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    private AdDto mapToDto(Ad ad) {
-        AdDto adDto = new AdDto();
+    private AdsDto mapToDto(Ad ad) {
+        AdsDto adDto = new AdsDto();
+        adDto.setId(ad.getId());
         adDto.setEmail(ad.getUser().getEmail());
         adDto.setSlogan(ad.getSlogan());
         adDto.setActiveFrom(ad.getActiveFrom());
         adDto.setActiveTo(ad.getActiveTo());
         adDto.setDescription(ad.getDescription());
         return adDto;
+    }
+
+    public Ad findAdById(Integer adId) {
+        return adRepository.findById(adId).orElse(null);
     }
 }

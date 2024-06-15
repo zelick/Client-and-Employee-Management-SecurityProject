@@ -8,8 +8,24 @@ form {
     background-color: #f9f9f9;
   }
 
+  .messageLogin {
+    margin-left: 570px; 
+    color: red;
+  }
+
   label {
     font-weight: bold;
+  }
+
+  .resetPassword{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   input[type="email"],

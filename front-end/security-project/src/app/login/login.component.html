@@ -11,7 +11,8 @@
   <button type="submit">Login</button>
 </form>
 
-<div *ngIf="messageLogin">{{ messageLogin }}</div>
+<div *ngIf="messageLogin" class="messageLogin">{{ messageLogin }}</div>
+<div *ngIf="resetPasswordFlag"><button class="resetPassword" (click)="resetPassword()">Forgot password</button></div>
 
 <div *ngIf="changePasswordFlag">
   <h2>Change Password</h2>

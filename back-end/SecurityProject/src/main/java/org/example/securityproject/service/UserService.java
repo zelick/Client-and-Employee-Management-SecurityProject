@@ -47,12 +47,59 @@ public class UserService {
     private ConfirmationTokenRepository confirmationTokenRepository;
     private NotificationRepository notificationRepository;
 
+    private AdRequestService adRequestService;
+    private AdService adService;
 
-    public LoginReponseDto loginUser(UserLoginData loginData) {
+    public void deleteUserDataByEmail(String email)
+    {
+        adRequestService.deleteAdRequestsByEmail(email);
+        System.out.println("Prosao je brisanje zahteva za reklame");
+        adService.deleteAdsByEmail(email);
+        System.out.println("Prosoa je brisanje reklama i zahteva za reklame");
+        User user = userRepository.findByEmail(email);
+        System.out.println("Pronadjen user: " + user.getName());
+        if (user != null) {
+            user.setPhoneNumber("");
+            user.setCountry("");
+            user.setAddress("");
+            user.setCity("");
+            user.setSurname("");
+            user.setName("");
+            userRepository.save(user);
+        }
+    }
+
+    public LoginReponseDto resetPassword(UserLoginData loginData){
+        LoginReponseDto loginResponseDto = new LoginReponseDto();
+
+        if(!validatePassword(loginData.getPassword())){
+            loginResponseDto.setLoggedInOnce(true);
+            loginResponseDto.setResponse("Password do not meet the requirements.");
+            return loginResponseDto;
+        }
+
+        //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
+        User user = userRepository.findByEmail(loginData.getEmail());
+        try{
+            String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
+            user.setPassword(enteredPasswordHash);
+            userRepository.save(user);
+            loginResponseDto.setLoggedInOnce(true);
+            loginResponseDto.setResponse("You have successfully reset your password.");
+        }catch (NoSuchAlgorithmException e) {
+            // Handle exception
+        }
+        loginResponseDto.setLoggedInOnce(true);
+        loginResponseDto.setResponse("Reset password failed.");
+        return loginResponseDto;
+    }
+
+    public LoginReponseDto loginUser(UserLoginData loginData)  {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
         logger.debug("Starting try login registration for email: {}", loginData.getEmail());
 
         User user = userRepository.findByEmail(loginData.getEmail());
+        System.out.println("Ulogovan user ime" + user.getName());
 
 //        Ako je user blokiran - MILICA DODAJ LOG
 //        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
@@ -79,6 +126,25 @@ public class UserService {
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
             return loginResponseDto;
+        }
+
+        if (user.isBlocked()) {
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("Your account has been blocked by administrator.");
+            return loginResponseDto;
+        }
+
+        try {
+            System.out.println("Usao u try catch blok");
+            System.out.println(loginData.getEmail() + "" + loginData.getPassword());
+            String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
+            if (!enteredPasswordHash.equals(user.getPassword())) {
+                loginResponseDto.setLoggedInOnce(true);
+                loginResponseDto.setResponse("Wrong password. Try again or click ‘Forgot password’ to reset it.");
+                return loginResponseDto;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            // Handle exception
         }
 
         /*
@@ -184,6 +250,7 @@ public class UserService {
         user.setRequestProcessingDate(null);
         user.setLoggedInOnce(false);
         user.setEnabled(false); //proveri!
+        user.setBlocked(false);
 
         String salt = BCrypt.gensalt();
         //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -457,6 +524,19 @@ public class UserService {
     public List<User> getAllClients() {
         return userRepository.findByRolesAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
+
+    public List<User> getAllUsers() {
+        List<User> allUsers = new ArrayList<>();
+        allUsers.addAll(getAllClients());
+        allUsers.addAll(getAllEmployees());
+        List<User> allFilteredUsers = new ArrayList<>();
+        for(User u : allUsers)
+        {
+            allFilteredUsers.add(u);
+        }
+        return allFilteredUsers;
+    }
+
     public void updateUser(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
         if (user != null) {
@@ -511,6 +591,42 @@ public class UserService {
 
     public List<Notification> getAllNotifications() {
         return notificationRepository.findAll();
+    }
+    
+    public ResponseDto blockUser(String email) {
+        ResponseDto response = new ResponseDto();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            response.setResponseMessage("User not found.");
+            response.setFlag(false);
+            return response;
+        }
+
+        user.setBlocked(true);
+        userRepository.save(user);
+
+        response.setResponseMessage("User successfully blocked.");
+        response.setFlag(true);
+        return response;
+    }
+
+    public ResponseDto unblockUser(String email) {
+        ResponseDto response = new ResponseDto();
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            response.setResponseMessage("User not found.");
+            response.setFlag(false);
+            return response;
+        }
+
+        user.setBlocked(false);
+        userRepository.save(user);
+
+        response.setResponseMessage("User successfully unblocked.");
+        response.setFlag(true);
+        return response;
     }
 
 }
