@@ -170,18 +170,55 @@ public class LogAnalyzerService {
     //nisam tetsirala
     //lupila sam kriticni dogadjaj 30 puta u minuti klikne nesto - ZA ISTU PUTANJU ZAHTEVA
     //30 PUTA.. tesko testirati
-    private boolean isExcessiveEndpointClicks(List<String> logs) {
-        for (String log : logs) {
-            if (log.contains("path=")) {
-                String path = extractPathFromLog(log);
-                endpointClickAttempts.put(path, endpointClickAttempts.getOrDefault(path, 0) + 1);
+//    private boolean isExcessiveEndpointClicks(List<String> logs) {
+//        for (String log : logs) {
+//            if (log.contains("path=")) {
+//                String path = extractPathFromLog(log);
+//                endpointClickAttempts.put(path, endpointClickAttempts.getOrDefault(path, 0) + 1);
 //                System.out.println("-----------Brojac:-------------- " + endpointClickAttempts.get(path) );
-                if (endpointClickAttempts.get(path) >= MAX_CLICK_ATTEMPTS && !alertSentForEndpointClicks.getOrDefault(path, false)) {
-                    alertSentForEndpointClicks.put(path, true);
-                    System.out.println("EXCESSIVE CLICKS DETECTED: " + path + " - Sending email alert");
-                    emailService.sendCriticalEventAlert(adminEmail, "Excessive clicks on endpoint detected", "Path: " + path);
-                    createNotificationAndSave("Excessive clicks on endpoint detected Path: " + path);
-                    return true;
+//                if (endpointClickAttempts.get(path) >= MAX_CLICK_ATTEMPTS && !alertSentForEndpointClicks.getOrDefault(path, false)) {
+//                    alertSentForEndpointClicks.put(path, true);
+//                    System.out.println("EXCESSIVE CLICKS DETECTED: " + path + " - Sending email alert");
+//                    emailService.sendCriticalEventAlert(adminEmail, "Excessive clicks on endpoint detected", "Path: " + path);
+//                    createNotificationAndSave("Excessive clicks on endpoint detected Path: " + path);
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
+
+    private String extractPathFromLogEndpoint(String log) {
+        // Assuming logs contain path information in a consistent format
+        int pathStart = log.indexOf("GET \"") + 5;
+        if (pathStart < 5) {
+            pathStart = log.indexOf("POST \"") + 6;
+        }
+        if (pathStart < 6) {
+            pathStart = log.indexOf("PUT \"") + 5;
+        }
+        int pathEnd = log.indexOf("\"", pathStart);
+        if (pathStart >= 0 && pathEnd > pathStart) {
+            return log.substring(pathStart, pathEnd);
+        }
+        return "";
+    }
+
+    public boolean isExcessiveEndpointClicks(List<String> logs) {
+        for (String log : logs) {
+            if (log.contains("GET \"") || log.contains("POST \"") || log.contains("PUT \"")) {
+                String path = extractPathFromLogEndpoint(log);
+                if (!path.isEmpty() && !path.equals("/api/auth/check-token") && !path.equals("/error")) {
+                    endpointClickAttempts.put(path, endpointClickAttempts.getOrDefault(path, 0) + 1);
+//                    System.out.println("-----------Brojac za " + path + ":-------------- " + endpointClickAttempts.get(path));
+                    if (endpointClickAttempts.get(path) >= MAX_CLICK_ATTEMPTS && !alertSentForEndpointClicks.getOrDefault(path, false)) {
+                        alertSentForEndpointClicks.put(path, true);
+                        System.out.println("EXCESSIVE CLICKS DETECTED: " + path + " - Sending email alert");
+                        emailService.sendCriticalEventAlert(adminEmail, "Excessive clicks on endpoint detected", "Path: " + path);
+                        createNotificationAndSave("Excessive clicks on endpoint detected Path: " + path);
+                        return true;
+                    }
                 }
             }
         }

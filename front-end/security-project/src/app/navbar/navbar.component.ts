@@ -79,4 +79,8 @@ export class NavbarComponent implements OnInit {
   permissionsManipulation() {
     this.router.navigate(['/permissionsManipulation']);
   }
+
+  getAllAdminNotifications() {
+    this.router.navigate(['/notifications']);
+  }
 }

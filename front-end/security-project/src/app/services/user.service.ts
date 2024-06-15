@@ -174,7 +174,8 @@ export class UserService {
   }
 
   getAllNotifications(): Observable<Notification[]> {
-    return this.http.get<Notification[]>(this.apiUrl + "api/admin/getAllNotifications");
+   // return this.http.get<Notification[]>(this.apiUrl + "api/admin/getAllNotifications");
+   return this.http.get<Notification[]>("https://localhost:443/api/admins/getAllNotifications");
   }
   visitAd(adId: number): Observable<string> {
     const params = new HttpParams().set('adId', adId.toString());

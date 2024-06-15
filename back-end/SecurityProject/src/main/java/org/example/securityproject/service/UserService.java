@@ -153,6 +153,7 @@ public class UserService {
 
          try {
             System.out.println("Usao u try catch blok");
+            logger.error("Authentication failed for user email " + loginData.getEmail());
             System.out.println(loginData.getEmail() + "" + loginData.getPassword());
             String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
             if (!enteredPasswordHash.equals(user.getPassword())) {

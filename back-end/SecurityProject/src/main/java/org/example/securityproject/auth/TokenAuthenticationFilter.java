@@ -58,11 +58,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String authToken = tokenUtils.getToken(request);
         LOGGER.debug("Request received with token: " + authToken);
         
-        System.out.println("NE BI TREBAO UCI OVDE");
-        if(authToken.isEmpty())
-        {
-            System.out.println("Token je prazan!!!!!!!!!");
-        }
+//        System.out.println("NE BI TREBAO UCI OVDE");
+//        if(authToken.isEmpty())
+//        {
+//            System.out.println("Token je prazan!!!!!!!!!");
+//        }
         try {
 
             if (authToken != null) {

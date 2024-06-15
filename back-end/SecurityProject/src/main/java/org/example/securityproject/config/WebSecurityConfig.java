@@ -213,6 +213,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST,"/api/ads/visit-ad")
                 .antMatchers(HttpMethod.POST, "/api/users/verify/**")
                 .antMatchers(HttpMethod.POST, "/api/users/verifyReCaptchaToken/**")
+               // .antMatchers(HttpMethod.GET, "/api/admins/getAllNotifications")
                 .antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js");
     }
