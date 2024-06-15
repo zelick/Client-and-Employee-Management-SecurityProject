@@ -13,11 +13,9 @@ import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -32,6 +30,7 @@ public class AdminController {
     private UserService userService;
     private PermissionService permissionService;
 
+
     @GetMapping("/getMessageFromVPN")
     public ResponseEntity<WebMessageDto> getMessageFromVPN() {
         String endpointUrl = "http://10.13.13.1:3000/";
@@ -45,6 +44,8 @@ public class AdminController {
         }
     }
 
+
+    //VEROVATNO CE PRIKAZ PODATAKA BITI ENKRIPTOVAN
     @GetMapping("/getAllEmployees")
     public ResponseEntity<List<UserDto>> getAllEmployees() {
         logger.debug("Fetching all employees.");
@@ -88,7 +89,7 @@ public class AdminController {
 
 
     @GetMapping("/getAdminData")
-    public ResponseEntity<UserDto> getUserData() {
+    public ResponseEntity<UserDto> getUserData() throws Exception {
         UserDto userDto = new UserDto(userService.getUserData());
         return ResponseEntity.ok(userDto);
     }
@@ -137,7 +138,7 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdminData")
-    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) {
+    public ResponseEntity<ResponseDto> updateUserData (@RequestBody EditAdminDto adminDto) throws Exception {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserData(adminDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -211,9 +212,10 @@ public class AdminController {
     }
 
     @PutMapping("/updateAdminPassword")
-    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+    public ResponseEntity<ResponseDto> updateAdminPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception, NoSuchAlgorithmException {
+        
         logger.debug("Updating password for admin with email '{}'", passwordDataDto.getEmail());
-
+        
         ResponseDto response = new ResponseDto();
         //try catch - log
         try {
@@ -249,5 +251,4 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

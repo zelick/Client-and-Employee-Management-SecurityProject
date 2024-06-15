@@ -1,4 +1,4 @@
-package org.example.securityproject.controllers;
+package org.example.securityproject.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,8 +49,9 @@ public class LoginController {
     }
 
     @PostMapping("/send-email")
-    public ResponseEntity<String> sendEmail(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException {
+    public ResponseEntity<String> sendEmail(@RequestBody String email) throws NoSuchAlgorithmException, InvalidKeyException, Exception {
         logger.info("Sending email for email: {}", email);
+
         if (!userService.checkIfExists(email)) {
             String errorMessage = "User with the provided email address was not found.";
             logger.error(errorMessage);
@@ -139,5 +140,4 @@ public class LoginController {
 
         return ResponseEntity.ok().headers(headers).body(tokensResponse);
     }
-
 }

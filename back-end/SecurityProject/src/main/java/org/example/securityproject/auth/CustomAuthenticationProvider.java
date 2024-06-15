@@ -2,6 +2,8 @@ package org.example.securityproject.auth;
 
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.service.UserDataEncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -18,10 +21,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private final UserDataEncryptionService userDataEncryptionService;
 
-    public CustomAuthenticationProvider(UserDetailsService userDetailsService, UserRepository userRepository) {
+    public CustomAuthenticationProvider(UserDetailsService userDetailsService, UserRepository userRepository, UserDataEncryptionService userDataEncryptionService) {
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
+        this.userDataEncryptionService = userDataEncryptionService;
     }
 
     @Override
@@ -29,10 +34,21 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
+        System.out.println("USERNAME: " + username);
+
+        /*
+        String encryptedUsername = "";
+        try {
+            encryptedUsername = userDataEncryptionService.encryptData(username);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+         */
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         String storedPasswordHash = userDetails.getPassword();
-        User foundUser= userRepository.findByEmail(userDetails.getUsername()); // username isti kao email
+        User foundUser= userRepository.findByEmail(userDetails.getUsername()); //username isti kao email
         String storedSalt = foundUser.getSalt();
         String hashedPassword = null;
         try {

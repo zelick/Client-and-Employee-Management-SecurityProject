@@ -5,44 +5,37 @@ import { ClientType } from '../model/clientType.model';
 import { ServicesPackage } from '../model/servicesPackage.model';
 import { UserService } from '../services/user.service';
 import { RegistrationStatus } from '../model/registrationStatus.model';
-import { ResponseMessage } from '../model/responseMessage.model';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { User } from '../model/user.model';
 import * as DOMPurify from 'dompurify';
-
+import { RegistrationResponse } from '../model/registrationResponse';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-
-export class RegistrationComponent implements OnInit{
+export class RegistrationComponent implements OnInit {
 
   constructor(private router: Router, 
-    private userService: UserService,
-    private auth: AuthService) {
-  }
+              private userService: UserService,
+              private auth: AuthService) {}
+
   ngOnInit(): void {
     const userRoles = this.auth.getLoggedInUserRoles(); 
-    console.log(userRoles);
-
     if (userRoles && userRoles.includes(UserRole.ADMINISTRATOR)) {
       this.isAdmin = true;
-    }
-    else {
-      if (userRoles && userRoles.includes(UserRole.CLIENT) || userRoles.includes(UserRole.EMPLOYEE)) {
+    } else {
+      if (userRoles && (userRoles.includes(UserRole.CLIENT) || userRoles.includes(UserRole.EMPLOYEE))) {
         this.router.navigate(['/homepage']);
-      }
-      else {
+      } else {
         this.isUnAuthorize = true;
       }
     }
   }
 
   userRole: UserRole | undefined;
-
   userRoles = Object.values(UserRole);
   clientTypes = Object.values(ClientType);
   servicesPackages = Object.values(ServicesPackage);
@@ -50,10 +43,12 @@ export class RegistrationComponent implements OnInit{
   passwordInvalid: boolean = false;
   registrationMessage: string = '';
   passwordMismatch: boolean = false;
-
   isAdmin: boolean = false;
   isUnAuthorize: boolean = false;
-  includesClient: boolean = true; //posle izmeni logiku
+  includesClient: boolean = true;
+  showQrCode: boolean = false;
+  qrCode: string = '';
+  verificationCode: string = '';
 
   userData = {
     email: '',
@@ -67,7 +62,8 @@ export class RegistrationComponent implements OnInit{
     roles: [] as UserRole[],
     clientType: ClientType.NONE,
     servicesPackage: ServicesPackage.NONE,
-    registrationStatus: RegistrationStatus.PENDING
+    registrationStatus: RegistrationStatus.PENDING,
+    mfaEnabled: false
   };
 
   confirmPassword: string = '';
@@ -94,7 +90,6 @@ export class RegistrationComponent implements OnInit{
 
     if (this.userRole) {
       this.userData.roles.push(this.userRole);
-      console.log('USAO DA PUSGUJE ROLU: ' + this.userData.roles);
     }
 
     this.userData.email = DOMPurify.sanitize(this.userData.email);
@@ -118,25 +113,21 @@ export class RegistrationComponent implements OnInit{
   }
 
   private registerUser(): void {
-    console.log("USER KOJI SE REGISTRUJE: ");
-    console.log(this.userData);
     this.userService.registerUser(this.userData).subscribe(
-      (response: ResponseMessage) => {
-        //console.log('USPESNO REGISTROVANJE: ' + this.userData.email);
+      (response: RegistrationResponse) => {
         this.registrationMessage = response.responseMessage;
-        console.log("ADMIN JE ULOGOVAN: " + this.isAdmin);
-        console.log("RESPONSE FLAG: " + response.flag)
-        if (response.flag === true && this.isAdmin === true) {
-          console.log("USAAO GDE TREBA samo nece u homepage ");
-          this.router.navigate(['/homepage']);
+        if (response.flag) {
+          if (this.userData.mfaEnabled && response.secretImageUri) {
+            this.qrCode = response.secretImageUri;
+            this.showQrCode = true;
+          } else {
+            //ZA SAD VIDETI KAKO OVO OSMISLITI
+            //this.redirectUser();
+          }
         }
-        else if (response.flag === true && this.isAdmin === false) {
-          this.router.navigate(['/']);
-        }
-        //this.clearFields();
       },
       (error) => {
-        console.error('GREŠKA PRILIKOM REGISTRACIJE: ', error);
+        console.error('Error during registration:', error);
         this.clearFields();
       }
     );
@@ -178,5 +169,36 @@ export class RegistrationComponent implements OnInit{
       default:
         break;
     }
+  }
+
+  onMfaChange(enable: boolean) {
+    this.userData.mfaEnabled = enable;
+  }
+
+  redirectUser(): void {
+    if (this.isAdmin) {
+      this.router.navigate(['/homepage']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  verifyCode(): void {
+    const verificationData = {
+      email: this.userData.email,
+      code: this.verificationCode,
+      fromLogin: false
+    };
+
+    this.userService.verifyMfaCode(verificationData).subscribe(response => {
+      if (response.flag) {
+        this.registrationMessage = response.responseMessage;
+        this.redirectUser();
+      } else {
+        this.registrationMessage = 'Verification failed. Please check the code and try again.';
+      }
+    }, error => {
+      this.registrationMessage = 'Verification failed. Please try again later.';
+    });
   }
 }

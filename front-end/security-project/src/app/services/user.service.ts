@@ -5,7 +5,7 @@ import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
 import { RegistrationRequestResponse } from '../model/registrationRequestResponse.model';
 import { ResponseMessage } from '../model/responseMessage.model';
-import { LoginReponse } from '../model/loginResponse.model';
+import { LoginResponse } from '../model/loginResponse.model';
 import { AdRequest } from '../model/adRequest.model';
 import { Ad } from '../model/ad.model';
 import { UserRole } from '../model/userRole.model';
@@ -14,6 +14,7 @@ import {  Notification } from '../model/notification.model';
 import { Ads } from '../model/ads.model';
 import { AdminUser } from '../model/adminUser.model';
 import { VpnMessage } from '../model/vpnMessage.model';
+import { RegistrationResponse } from '../model/registrationResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -105,28 +106,28 @@ export class UserService {
 
   //...
 
-  registerUser(user: User): Observable<ResponseMessage> {
-    return this.http.post<ResponseMessage>(this.apiUrl + 'users/registerUser', user);
+  registerUser(user: User): Observable<RegistrationResponse> {
+    return this.http.post<RegistrationResponse>(this.apiUrl + 'users/registerUser', user);
   }
 
   changePassword(passwordData: any): Observable<ResponseMessage> {
     return this.http.put<ResponseMessage>(this.apiUrl + 'users/updatePassword', passwordData);
   }
 
-  tryLogin(email: string, password: string): Observable<LoginReponse> { 
+  tryLogin(email: string, password: string): Observable<LoginResponse> { 
     const loginData = {
       email: email,
       password: password
     };
-    return this.http.post<LoginReponse>(this.apiUrl + 'users/tryLogin', loginData);
+    return this.http.post<LoginResponse>(this.apiUrl + 'users/tryLogin', loginData);
   }
 
-  resetPassword(email: string, password: string): Observable<LoginReponse> { 
+  resetPassword(email: string, password: string): Observable<LoginResponse> { 
     const loginData = {
       email: email,
       password: password
     };
-    return this.http.post<LoginReponse>(this.apiUrl + 'users/resetPassword', loginData);
+    return this.http.post<LoginResponse>(this.apiUrl + 'users/resetPassword', loginData);
   }
   
   findUserByEmail(email: string): Observable<User> {
@@ -180,4 +181,11 @@ export class UserService {
     return this.http.post<string>(`${this.apiUrl}ads/visit-ad`, null, { params: params, responseType: 'text' as 'json' });
   }
 
+  verifyMfaCode(verificationData: any): Observable<ResponseMessage> {
+    return this.http.post<ResponseMessage>(this.apiUrl + 'users/verify', verificationData);
+  }
+
+  verifyReCaptchaToken(verificationData: any): Observable<ResponseMessage> {
+    return this.http.post<ResponseMessage>(this.apiUrl + 'users/verifyReCaptchaToken', verificationData);
+  }
 }

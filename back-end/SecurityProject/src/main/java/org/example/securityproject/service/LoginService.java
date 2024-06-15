@@ -16,19 +16,14 @@ public class LoginService {
     private EmailService emailService;
 
     public void sendEmail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
-        // Ovde pozovite sendPasswordlessMail metodu iz EmailService
         emailService.sendPasswordlessMail(email);
     }
 
     public void sendResetPasswordMail(String email) throws NoSuchAlgorithmException, InvalidKeyException {
-        // Ovde pozovite sendPasswordlessMail metodu iz EmailService
         emailService.sendResetPasswordMail(email);
     }
 
     private String generateToken() {
-        // Implementacija generisanja tokena
-        // Ovde ćete implementirati kod za generisanje jednokratnog tokena
-        // Na primer, možete koristiti neku od biblioteka za generisanje JWT tokena
         return "random-token"; // Dummy token za testiranje
     }
 }

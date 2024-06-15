@@ -43,12 +43,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     private EmailService emailService;
-    private final BCryptPasswordEncoder passwordEncoder;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private NotificationRepository notificationRepository;
-
     private AdRequestService adRequestService;
     private AdService adService;
+    private final TwoFactorAuthenticationService tfaService;
+    private ReCaptchaService reCaptchaService;
+    private UserDataEncryptionService userDataEncryptionService;
 
     public void deleteUserDataByEmail(String email)
     {
@@ -69,6 +70,7 @@ public class UserService {
         }
     }
 
+
     public LoginReponseDto resetPassword(UserLoginData loginData){
         LoginReponseDto loginResponseDto = new LoginReponseDto();
 
@@ -79,7 +81,8 @@ public class UserService {
         }
 
         //OVO CEMO NA DRUGACIJI NACIN DOBAVITI USERA - MOZDA??? zbog jwt
-        User user = userRepository.findByEmail(loginData.getEmail());
+        //User user = userRepository.findByEmail(loginData.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(loginData.getEmail());
         try{
             String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
             user.setPassword(enteredPasswordHash);
@@ -89,52 +92,65 @@ public class UserService {
         }catch (NoSuchAlgorithmException e) {
             // Handle exception
         }
-        loginResponseDto.setLoggedInOnce(true);
+        loginResponseDto.setLoggedInOnce(true); 
         loginResponseDto.setResponse("Reset password failed.");
         return loginResponseDto;
     }
 
-    public LoginReponseDto loginUser(UserLoginData loginData)  {
+
+    public LoginReponseDto loginUser(UserLoginData loginData) throws Exception {
         LoginReponseDto loginResponseDto = new LoginReponseDto();
         logger.debug("Starting try login registration for email: {}", loginData.getEmail());
-
-        User user = userRepository.findByEmail(loginData.getEmail());
-        System.out.println("Ulogovan user ime" + user.getName());
-
-//        Ako je user blokiran - MILICA DODAJ LOG
-//        if(user.getEmail().equals("anaa.radovanovic2001@gmail.com")){
-//            String errorMessage = "User login failed: User is blocked email " + loginData.getEmail();
-//            logger.error(errorMessage);
-//            return null;
-//        }
+        //User user = userRepository.findByEmail(loginData.getEmail());
+        //umesto metode userRepo.findByEmail koristiti ove dve metode
+        User user = userDataEncryptionService.findEncryptedUserByEmail(loginData.getEmail());
+        //NAJVRV NI NE TREBA DEKRIPTOVANJE - jer su svi ti podaci ne enkriptovani
+        //User user = userDataEncryptionService.decryptUserData(encryptedUser);
 
         // Provera postoji li korisnik s tim emailom
         if (user == null) {
             String errorMessage = "User login failed: User not found for email " + loginData.getEmail();
             logger.error(errorMessage);
-//            loginResponseDto.setLoggedInOnce(true); //izmena?
-//            loginResponseDto.setResponse("This email does not exist.");
-//            return loginResponseDto;
-            return null; //PROBLEM: ako vrati 200 poziva metodu login iz auth controllera - tu dobijamo 401
-            //return null; //ovo mozda ana proveroti? ANA POVRATNA VREDNOST??
+            loginResponseDto.setMfaEnabled(false);
+            loginResponseDto.setLoggedInOnce(false); 
+            loginResponseDto.setResponse("This email does not exist.");
+            return loginResponseDto;
+            //return null; //PROBLEM: ako vrati 200 poziva metodu login iz auth controllera - tu dobijamo 401
         }
 
+        System.out.println("ENKRIPTOCAN USER: " + user.getEmail());
+        //System.out.println("DEKRIPTOVAN USER: " + user.getEmail());
+
+        if (user.getRoles().contains(UserRole.EMPLOYEE)) {
+            loginResponseDto.setEmployeed(true);
+        }
+        else {
+            loginResponseDto.setEmployeed(false);
+        }
+
+        System.out.println("EMPLOYEE: " + loginResponseDto.isEmployeed());
+
+        //PROBLEM ZA EMPLOYEE-A AKO ISPRAVNO RESI RECAHPCA ONDA TEK DA MU SE SETUJE LOGGED IN ONCE NA TRUE!!!
 
         if (!(user.isActive() && user.isEnabled())) {
             String errorMessage = "User login failed: Account is not active for email " + loginData.getEmail();
             logger.error(errorMessage);
+            loginResponseDto.setMfaEnabled(false);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This account is not active, please wait for admin to activate your account.");
             return loginResponseDto;
         }
 
+
         if (user.isBlocked()) {
-            loginResponseDto.setLoggedInOnce(false);
+            String errorMessage = "User login failed: User is blocked email " + loginData.getEmail();
+            logger.error(errorMessage);
+            loginResponseDto.setLoggedInOnce(true);
             loginResponseDto.setResponse("Your account has been blocked by administrator.");
             return loginResponseDto;
         }
 
-        try {
+         try {
             System.out.println("Usao u try catch blok");
             System.out.println(loginData.getEmail() + "" + loginData.getPassword());
             String enteredPasswordHash = hashPassword(loginData.getPassword(), user.getSalt());
@@ -147,85 +163,118 @@ public class UserService {
             // Handle exception
         }
 
-        /*
-        if (!(user.getRole().equals(UserRole.CLIENT)) && !user.isLoggedInOnce()) {
-            loginReponseDto.setLoggedInOnce(false);
-            loginReponseDto.setResponse("This user must change his password because this is his first login.");
-            return loginReponseDto;
-        }
-         */
-
         boolean hasAdministratorOrEmployeeRole = user.getRoles().stream()
                 .anyMatch(role -> role.equals(UserRole.ADMINISTRATOR) || role.equals(UserRole.EMPLOYEE));
 
         if (hasAdministratorOrEmployeeRole && !user.isLoggedInOnce()) {
             String infoMessage = "User login requires password change for email " + loginData.getEmail();
             logger.info(infoMessage);
+            loginResponseDto.setMfaEnabled(false);
             loginResponseDto.setLoggedInOnce(false);
             loginResponseDto.setResponse("This user must change his password because this is his first login.");
             return loginResponseDto;
         }
 
+        if (user.isMfaEnabled() && !user.isVerifiedMfaCode()) {
+            loginResponseDto.setMfaEnabled(false);
+            loginResponseDto.setLoggedInOnce(false);
+            loginResponseDto.setResponse("The user did not enter the two-factor authentication code correctly, and his account is not active.");
+            return loginResponseDto;
+        }
+
+        if (loginResponseDto.isEmployeed()) {
+            if (user.isLoggedInOnce()) {
+                loginResponseDto.setLoggedInOnce(true);
+            }
+            else {
+                loginResponseDto.setLoggedInOnce(false);
+            }            
+            
+            loginResponseDto.setResponse("You are employed, you have to solve this problem and show that you are not a robot.");
+
+            if (user.isMfaEnabled() && user.isVerifiedMfaCode()) {
+                loginResponseDto.setMfaEnabled(true);
+                //loginonce -- tek ako potvrdi pravilno 2fa
+                loginResponseDto.setResponse("You are employed, you must solve this problem and show that you are not a robot, after that enter a 6-digit number because you have confirmed two-factor authentication.");
+            }
+
+            return loginResponseDto;
+        }
+
+        if (user.isMfaEnabled() && user.isVerifiedMfaCode()) {
+            loginResponseDto.setMfaEnabled(true);
+            //loginonce -- tek ako potvrdi pravilno 2fa
+            if (user.isLoggedInOnce()) {
+                loginResponseDto.setLoggedInOnce(true);
+            }
+            else {
+                loginResponseDto.setLoggedInOnce(false);
+            }
+            loginResponseDto.setResponse("Enter the 6-digit authentication code.");
+            return loginResponseDto;
+        }
+
         String successMessage = "User logged in successfully: " + loginData.getEmail();
         logger.info(successMessage);
+        loginResponseDto.setMfaEnabled(false);
         loginResponseDto.setLoggedInOnce(true);
         loginResponseDto.setResponse("This user has successfully logged in.");
         return loginResponseDto;
     }
-    public ResponseDto registerUser (UserDto userDto) {
-        ResponseDto response = new ResponseDto();
-        logger.debug("Starting user registration for email: {}", userDto.getEmail());
 
+    //dodaj logove
+    public RegistrationResponseDto registerUser (UserDto userDto) throws Exception {
+        RegistrationResponseDto response = new RegistrationResponseDto();
         if (!validatePassword(userDto.getPassword())) {
-            String errorMessage = "User registration failed: The password does not meet the requirements for email " + userDto.getEmail();
-            logger.error(errorMessage);
             response.setResponseMessage("The password does not meet the requirements.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
-        User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
-        if (existingUser != null) {
-            String errorMessage = "User registration failed: A user with this email is already registered: " + userDto.getEmail();
-            logger.error(errorMessage);
+        //User existingUser = userRepository.findByEmailAndRegistrationStatusIn(userDto.getEmail(), Arrays.asList(RegistrationStatus.PENDING, RegistrationStatus.ACCEPTED));
+
+        User existingEncryptedUser = userDataEncryptionService.findByEmailAndRegistrationStatus(userDto.getEmail());
+        //User existingUser = userDataEncryptionService.decryptUserData(encryptedUser);
+
+        if (existingEncryptedUser != null) {
             response.setResponseMessage("A user with this email is already registered.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
         if (!isValidEmail(userDto.getEmail())) {
-            String errorMessage = "User registration failed: Invalid email format for email " + userDto.getEmail();
-            logger.error(errorMessage);
             response.setResponseMessage("Invalid email format.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
         if (!areAllFieldsFilled(userDto)) {
-            String errorMessage = "User registration failed: All fields are required for email " + userDto.getEmail();
-            logger.error(errorMessage);
             response.setResponseMessage("All fields are required.");
             response.setFlag(false);
+            response.setSecretImageUri("");
             return response;
         }
 
-        User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
+        //User existingRejectedUser = userRepository.findByEmailAndRegistrationStatus(userDto.getEmail(), RegistrationStatus.REJECTED);
+        User existingEncryptedRejectedUser = userDataEncryptionService.findByEmailRejcetedUser(userDto.getEmail());
 
-        if (existingRejectedUser != null && existingRejectedUser.getRequestProcessingDate() != null) {
-            Date requestProcessedDate = existingRejectedUser.getRequestProcessingDate();
+        if (existingEncryptedRejectedUser != null && existingEncryptedRejectedUser.getRequestProcessingDate() != null) {
+            Date requestProcessedDate = existingEncryptedRejectedUser.getRequestProcessingDate();
             LocalDateTime requestProcessedTime = LocalDateTime.ofInstant(requestProcessedDate.toInstant(), ZoneId.systemDefault());
             LocalDateTime currentTime = LocalDateTime.now();
             long minutesPassed = ChronoUnit.MINUTES.between(requestProcessedTime, currentTime);
 
             if (minutesPassed < 5) {
-                String warnMessage = "User registration attempt too soon after rejection for email " + userDto.getEmail();
-                logger.warn(warnMessage);
                 response.setResponseMessage("It is not possible to register - your request was recently rejected.");
                 response.setFlag(false);
+                response.setSecretImageUri("");
                 return response;
             }
             else {
-               userRepository.delete(existingRejectedUser);
+               userRepository.delete(existingEncryptedRejectedUser);
             }
         }
 
@@ -250,7 +299,6 @@ public class UserService {
         user.setRequestProcessingDate(null);
         user.setLoggedInOnce(false);
         user.setEnabled(false); //proveri!
-        user.setBlocked(false);
 
         String salt = BCrypt.gensalt();
         //String hashedPassword = passwordEncoder.encode(userDto.getPassword() + salt);
@@ -262,24 +310,31 @@ public class UserService {
             user.setSalt(salt);
         } catch (NoSuchAlgorithmException e) {
             // Handle exception
-            String errorMessage = "User registration failed: Error hashing password for email " + userDto.getEmail();
-            logger.error(errorMessage);
         }
+
+        //DODATO ZA 2FA
+        user.setMfaEnabled(userDto.isMfaEnabled());
+
+        if (userDto.isMfaEnabled()) {
+            user.setSecret(tfaService.generateNewSecret());
+        }
+
+        user.setVerifiedMfaCode(false);
+        //
 
         user.setPassword(hashedPassword);
         user.setSalt(salt);
 
-        try {
-            userRepository.save(user);
-            logger.info("User registered successfully: {}", userDto.getEmail());
-        } catch (Exception e) {
-            String errorMessage = "User registration failed: Error saving user for email " + userDto.getEmail();
-            logger.error(errorMessage);
-        }
+        //userRepository.save(user);
+
+        userDataEncryptionService.encryptUserData(user);
+
         response.setResponseMessage("You have successfully registered.");
         response.setFlag(true);
+        response.setSecretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()));
         return response;
     }
+   
 
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -334,43 +389,50 @@ public class UserService {
         return password.matches(passwordRegex);
     }
 
+    //OVDE DEKRIPTOVATI NEKE PODATKE
     public List<User> getAllRegistrationRequests() {
         logger.info("Fetching all registration requests with status: PENDING");
         return userRepository.findByRegistrationStatus(RegistrationStatus.PENDING);
     }
 
-    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
+    public void processRegistrationRequest(RegistrationRequestResponseDto responseData) throws Exception {
+        //User user = userRepository.findByEmail(responseData.getEmail());
         logger.info("Processing registration request for email: {}", responseData.getEmail());
-        User user = userRepository.findByEmail(responseData.getEmail());
+        User encryptedUser = userDataEncryptionService.findEncryptedUserByEmail(responseData.getEmail());
+        //User user = userDataEncryptionService.decryptUserData(encryptedUser);
+
         if (!responseData.isAccepted()) {
-            logger.info("Registration request rejected for email: {}", responseData.getEmail());
-            user.setRegistrationStatus(RegistrationStatus.REJECTED);
+             logger.info("Registration request rejected for email: {}", responseData.getEmail());
+            encryptedUser.setRegistrationStatus(RegistrationStatus.REJECTED);
         }
         else {
             logger.info("Registration request accepted for email: {}", responseData.getEmail());
-            user.setRegistrationStatus(RegistrationStatus.WAITING);
+            encryptedUser.setRegistrationStatus(RegistrationStatus.WAITING);
         }
-        user.setRequestProcessingDate(new Date());
-        userRepository.save(user);
+        encryptedUser.setRequestProcessingDate(new Date());
+        userRepository.save(encryptedUser);
         emailService.sendRegistrationEmail(responseData);
         logger.info("Registration request processing completed for email: {}", responseData.getEmail());
     }
 
-    public boolean checkIfExists(String email)
-    {
-        User user = userRepository.findByEmail(email);
-        return user != null;
+    public boolean checkIfExists(String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
+        User encryptedUser = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        return encryptedUser != null;
     }
 
-    public boolean checkServicePackage(String email)
-    {
-        User user = userRepository.findByEmail(email);
+    public boolean checkServicePackage(String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
         return user.getServicesPackage() == ServicesPackage.STANDARD || user.getServicesPackage() == ServicesPackage.GOLDEN;
     }
 
-    public boolean checkRole(String email)
-    {
-        return userRepository.findByEmail(email).getRoles().contains(UserRole.CLIENT);
+    public boolean checkRole(String email) throws Exception {
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        return user.getRoles().contains(UserRole.CLIENT);
     }
     
     public String confirmToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -431,16 +493,25 @@ public class UserService {
         return new Date(expiryTimeMillis);
     }
 
-    public User getUserData() {
-        return getLoggedInUser();
+    public User getUserData() throws Exception {
+        User encryptedUser = getLoggedInUser();
+
+        User decryptedUser = userDataEncryptionService.decryptUserData(encryptedUser);
+
+        return decryptedUser;
     }
 
-    public String updateUserPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
-        logger.info("Updating password for user with email: {}", passwordData.getEmail());
+    //OVDE MOZDA PROBLEM ZBOG ENKRIPCIJE PODATAKA
+    public String updateUserPassword(PasswordDataDto passwordData) throws Exception {
+
+         logger.info("Updating password for user with email: {}", passwordData.getEmail());
+
         if (passwordData.getEmail().isEmpty()) {
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-                User user = (User)auth.getPrincipal();
-                passwordData.setEmail(user.getEmail());
+                User user = (User)auth.getPrincipal(); //OVDE PROBLEM MOZDA
+                //ovom ulogovanom useru je trenutno ENKRIPTOVAN MEJL
+                String decryptedEmail = userDataEncryptionService.decryptData(user.getEmail());
+                passwordData.setEmail(decryptedEmail); //OVDE PROBLEM MOZDA
         }
         if (!checkOldPassword(passwordData)) {
             String errorMessage = "Failed to update password: Incorrect current password for email " + passwordData.getEmail();
@@ -458,7 +529,8 @@ public class UserService {
             return "The password does not meet the requirements.";
         }
 
-        User user = userRepository.findByEmail(passwordData.getEmail());
+        //User user = userRepository.findByEmail(passwordData.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(passwordData.getEmail());
 
         String salt = BCrypt.gensalt();
         String hashedPassword = "";
@@ -480,20 +552,23 @@ public class UserService {
         return "Password successfully changed.";
     }
 
-    private boolean checkOldPassword(PasswordDataDto passwordData) throws NoSuchAlgorithmException {
-        User user = userRepository.findByEmail(passwordData.getEmail());
+    private boolean checkOldPassword(PasswordDataDto passwordData) throws Exception {
+        //User user = userRepository.findByEmail(passwordData.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(passwordData.getEmail());
+
         String salt = user.getSalt();
         String hashedOldPassword = hashPassword(passwordData.getOldPassword(), salt);
         return hashedOldPassword.equals(user.getPassword());
     }
 
-    public String updateUserData(EditAdminDto adminData) {
+    public String updateUserData(EditAdminDto adminData) throws Exception {
         //ovde bi trebalo da znam koji user je ulogovan i njega da izvucem iz baze
         //za sad zakucam sa emailom, pa cemo videti kad budemo dobavljali ulogovanog usera
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedInUser = (User)auth.getPrincipal();
         logger.info("Updating user data for user with email: {}", loggedInUser.getEmail());
 
+        //ovde moze ova metoda da ostane jer kada je dobavio ulogovanog njemu je mejl vec enkriptovan
         User user = userRepository.findByEmail(loggedInUser.getEmail());
 
         if (!areAllFieldsFilledAdmin(adminData)) {
@@ -509,8 +584,9 @@ public class UserService {
         user.setCountry(adminData.getCountry());
         user.setPhoneNumber(adminData.getPhoneNumber());
 
-        userRepository.save(user);
+        //userRepository.save(user);
         logger.info("User data updated successfully for user with email: {}", loggedInUser.getEmail());
+        userDataEncryptionService.encryptUpdateUserData(user);
         return "User successfully updated.";
     }
 
@@ -525,6 +601,7 @@ public class UserService {
         return userRepository.findByRolesAndRegistrationStatus(UserRole.CLIENT, RegistrationStatus.ACCEPTED);
     }
 
+    //proveri da li je enkripotvano
     public List<User> getAllUsers() {
         List<User> allUsers = new ArrayList<>();
         allUsers.addAll(getAllClients());
@@ -537,8 +614,11 @@ public class UserService {
         return allFilteredUsers;
     }
 
-    public void updateUser(UserDto userDto) {
-        User user = userRepository.findByEmail(userDto.getEmail());
+
+    public void updateUser(UserDto userDto) throws Exception {
+        //User user = userRepository.findByEmail(userDto.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(userDto.getEmail());
+
         if (user != null) {
             user.setAddress(userDto.getAddress());
             user.setCity(userDto.getCity());
@@ -550,22 +630,18 @@ public class UserService {
 
             //OVO VIDETI!!!
             user.setRoles(userDto.getRoles());
-
             user.setServicesPackage(userDto.getServicesPackage());
 
-            try {
-                userRepository.save(user);
-                logger.info("User {} updated successfully.", user.getEmail());
-            } catch (Exception e) {
-                logger.error("Failed to update user {}: {}", user.getEmail(), e.getMessage());
-            }
-        } else {
+            //userRepository.save(user);
+            userDataEncryptionService.encryptUpdateUserData(user);
+            logger.info("User {} updated successfully.", user.getEmail());
+        }else {
             logger.warn("User with email {} not found. Update operation aborted.", userDto.getEmail());
         }
     }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(username);
 
         if (user == null) {
             logger.warn("User with username {} not found.", username);
@@ -595,7 +671,8 @@ public class UserService {
     
     public ResponseDto blockUser(String email) {
         ResponseDto response = new ResponseDto();
-        User user = userRepository.findByEmail(email);
+        //User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(username);
 
         if (user == null) {
             response.setResponseMessage("User not found.");
@@ -613,8 +690,9 @@ public class UserService {
 
     public ResponseDto unblockUser(String email) {
         ResponseDto response = new ResponseDto();
-        User user = userRepository.findByEmail(email);
-
+        //User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(username);
+        
         if (user == null) {
             response.setResponseMessage("User not found.");
             response.setFlag(false);
@@ -629,6 +707,50 @@ public class UserService {
         return response;
     }
 
+    public ResponseDto verifyCode(VerificationRequestDto verificationRequestDto) throws Exception {
+        ResponseDto responseDto = new ResponseDto();
+        //User user = userRepository.findByEmail(verificationRequestDto.getEmail());
+        User user = userDataEncryptionService.findEncryptedUserByEmail(verificationRequestDto.getEmail());
+
+        if (tfaService.isOtpNotValid(user.getSecret(), verificationRequestDto.getCode())) {
+
+            //throw new BadCredentialsException("Code is not correct");
+            responseDto.setFlag(false);
+            responseDto.setResponseMessage("Code is not correct");
+            return responseDto;
+        }
+        responseDto.setFlag(true);
+        responseDto.setResponseMessage("Code is correct.");
+
+        if (verificationRequestDto.isFromLogin() && !user.isLoggedInOnce()) {
+            user.setLoggedInOnce(true);
+        }
+
+        user.setVerifiedMfaCode(true);
+        userRepository.save(user);
+        return responseDto;
+    }
+
+    public ResponseDto verifyReCaptchaToken(VerificationReCaptchaRequestDto verificationRequest) {
+        ResponseDto responseDto = new ResponseDto();
+
+        ReCaptchaResponseDto reCaptchaResponseDto = reCaptchaService.verifyReCaptchaToken(verificationRequest);
+
+        System.out.println("RECAPTCHA RESPONSE:");
+        System.out.println("RECAP SUCC: " + reCaptchaResponseDto.isSuccess());
+        System.out.println("RECAP HOST: " + reCaptchaResponseDto.getHostname());
+        System.out.println("RECAP ERROR: " + reCaptchaResponseDto.getError_codes());
+
+        if (reCaptchaResponseDto.isSuccess()) {
+            responseDto.setResponseMessage("Successful verification using ReCaptcha.");
+            responseDto.setFlag(true);
+            return responseDto;
+        }
+
+        responseDto.setResponseMessage("ReCaptcha verification failed.");
+        responseDto.setFlag(false);
+        return responseDto;
+    }
 }
 //kada hocu da proverim da li mi je korisnik uneo dobru lozinku
 //onda uzmem njehovu lozinku, uzmem salt koji imam u bazi spojim ih HESIRAM i poredim onda HESOVE

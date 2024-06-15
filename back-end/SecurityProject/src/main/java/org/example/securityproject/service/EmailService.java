@@ -36,9 +36,9 @@ public class EmailService {
     private LoginTokenRepository loginTokenRepository;
     private UserRepository userRepository;
     private ConfirmationTokenRepository confirmationTokenRepository;
+    private UserDataEncryptionService userDataEncryptionService;
 
-
-    public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws NoSuchAlgorithmException, InvalidKeyException {
+    public void sendRegistrationEmail(RegistrationRequestResponseDto responseData) throws Exception {
         String userEmail = responseData.getEmail();
         String subject = "";
         String text = "";
@@ -105,20 +105,9 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
-    /*
-    private String generateToken(String userEmail) {
-        User user = userRepository.findByEmail(userEmail);
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(user);
-        confirmationTokenRepository.save(confirmationToken);
-
-        return confirmationToken.getToken();
-    }
-
-     */
-
-    private String generateToken(String userEmail) throws NoSuchAlgorithmException, InvalidKeyException {
-        User user = userRepository.findByEmail(userEmail);
+    private String generateToken(String userEmail) throws Exception {
+        //User user = userRepository.findByEmail(userEmail);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(userEmail);
 
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 

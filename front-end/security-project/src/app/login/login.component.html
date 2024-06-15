@@ -8,10 +8,31 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" [(ngModel)]="password" required>
   </div>
+  <br/>
   <button type="submit">Login</button>
 </form>
 
-<div *ngIf="messageLogin" class="messageLogin">{{ messageLogin }}</div>
+<div *ngIf="showVerificationCode">{{ "Enter the 6-digit authentication code." }}</div>
+
+<div *ngIf="showVerificationCode">
+  <form (ngSubmit)="verifyCode()">
+    <div>
+      <label for="verificationCode">Verification Code:</label>
+      <input type="text" id="verificationCode" name="verificationCode" [(ngModel)]="verificationCode" required>
+    </div>
+    <button type="submit">Verify</button>
+  </form>
+  <div *ngIf="messageVerification">{{ messageVerification }}</div>
+</div>
+
+<div *ngIf="isEmployeed">
+  <div id="recaptcha-container" class="g-recaptcha" [attr.data-sitekey]="siteKey"></div>
+  <button type="button" (click)="recaptcha()">Continue logging in</button>
+</div> 
+
+
+<div *ngIf="messageLogin && !messageVerification" class="messageLogin">{{ messageLogin }}</div>
+
 <div *ngIf="resetPasswordFlag"><button class="resetPassword" (click)="resetPassword()">Forgot password</button></div>
 
 <div *ngIf="changePasswordFlag">

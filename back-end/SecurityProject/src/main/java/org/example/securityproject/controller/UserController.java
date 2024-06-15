@@ -7,6 +7,7 @@ import org.example.securityproject.enums.UserRole;
 import org.example.securityproject.model.User;
 import org.example.securityproject.repository.ConfirmationTokenRepository;
 import org.example.securityproject.repository.UserRepository;
+import org.example.securityproject.service.UserDataEncryptionService;
 import org.example.securityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,19 +31,21 @@ public class UserController {
     private UserService userService;
     private ConfirmationTokenRepository confirmationTokenRepository;
     private UserRepository userRepository;
+    private UserDataEncryptionService userDataEncryptionService;
 
 
     //TEST DA LI ROLE MOGU DA SE MENJAJU IZ KODA
 
     @PostMapping("/editUserRole")
     public String editUserRole() {
-       User user = userRepository.findByEmail("pmilica990@gmail.com");
+       User user = userRepository.findByEmail("HVFOd+SCu8hlKStqkdYEcvwIwlDygx2Bb0FJo3NKlot3YZZLB5TAwpoqcyrOBYBoffwJdVaWvHOzpS8g+BoSuOfq/XL4QrWoymy3+d2CaZY=");
        int userId = user.getId();
 
        List<UserRole> roles = new ArrayList<>();
        roles.add(UserRole.ADMINISTRATOR);
 
        roles.remove(UserRole.CLIENT);
+       //roles.add(UserRole.EMPLOYEE);
 
        user.setRoles(roles);
 
@@ -69,7 +72,7 @@ public class UserController {
     }
 
     @PostMapping("/tryLogin")
-    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData)  {
+    public ResponseEntity<LoginReponseDto> loginUser(@RequestBody UserLoginData loginData) throws Exception {
         return new ResponseEntity<>(userService.loginUser(loginData), HttpStatus.OK);
     }
 
@@ -79,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/registerUser")
-    public ResponseEntity<ResponseDto> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<RegistrationResponseDto> registerUser(@RequestBody UserDto userDto) throws Exception {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.OK);
     }
 
@@ -94,7 +97,7 @@ public class UserController {
     }
 
     @PutMapping("/updatePassword")
-    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws NoSuchAlgorithmException {
+    public ResponseEntity<ResponseDto> updateUserPassword (@RequestBody PasswordDataDto passwordDataDto) throws Exception {
         ResponseDto response = new ResponseDto();
         response.setResponseMessage(userService.updateUserPassword(passwordDataDto));
         logger.info("Password update response: {}", response.getResponseMessage());
@@ -104,7 +107,8 @@ public class UserController {
     @DeleteMapping("/deleteUserData/{email}")
     public ResponseEntity<ResponseDto> deleteUserData(@PathVariable String email) {
         try {
-            userService.deleteUserDataByEmail(email);
+            String encryptedEmail = userDataEncryptionService.encryptData(email);
+            userService.deleteUserDataByEmail(encryptedEmail);
             ResponseDto response = new ResponseDto();
             response.setResponseMessage("You have successfully delete all data.");
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -117,7 +121,7 @@ public class UserController {
 
 
     @GetMapping("/getLoggedInUser")
-    public ResponseEntity<UserDto> getLogegdInUser() {
+    public ResponseEntity<UserDto> getLogegdInUser() throws Exception {
         logger.info("Fetching logged in user details.");
         User loggedInUser = userService.getLoggedInUser();
         if (loggedInUser == null) {
@@ -125,20 +129,25 @@ public class UserController {
             return ResponseEntity.notFound().build(); // Vrati 404 Not Found ako korisnik nije prijavljen
         }
         logger.info("Logged in user found: {}", loggedInUser.getEmail());
-        UserDto userDto = new UserDto(loggedInUser);
+        User decryptedUser = userDataEncryptionService.decryptUserData(loggedInUser);
+        UserDto userDto = new UserDto(decryptedUser);
         return ResponseEntity.ok(userDto);
     }
 
     @PutMapping("/updateClient")
-    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> updateClient(@RequestBody UserDto userDto) throws Exception {
         userService.updateUser(userDto);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
+    //NAPOMENA!!!
     @GetMapping("/findUserByEmail/{email}")
-    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) {
+    public ResponseEntity<UserDto> findUserByEmail(@PathVariable String email) throws Exception {
+        //User user = userRepository.findByEmail(email);
         logger.debug("Fetching user details by email: {}", email);
-        User user = userRepository.findByEmail(email);
+        User user = userDataEncryptionService.findEncryptedUserByEmail(email);
+
+        //OVO AKO SE KORISTI ZA PRIKAZ NEKIH INFORMACIJA POTREBNO JE DEKRIPTOVATI --- VIDETI
         if (user != null) {
             logger.info("User found with email {}: {}", email, user);
             UserDto userDto = new UserDto(user);
@@ -147,5 +156,16 @@ public class UserController {
             logger.warn("User not found with email: {}", email);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<ResponseDto> verifyCode(@RequestBody VerificationRequestDto verificationRequest) throws Exception {
+        return new ResponseEntity<>(userService.verifyCode(verificationRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyReCaptchaToken")
+    public ResponseEntity<ResponseDto> verifyReCaptchaToken(@RequestBody VerificationReCaptchaRequestDto verificationRequest)
+    {
+        return new ResponseEntity<>(userService.verifyReCaptchaToken(verificationRequest), HttpStatus.OK);
     }
 }

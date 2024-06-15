@@ -21,6 +21,7 @@ public class UserDto {
     private ClientType clientType;
     private ServicesPackage servicesPackage;
     private RegistrationStatus registrationStatus;
+    private boolean mfaEnabled;
 
     public UserDto() {}
 
@@ -37,6 +38,7 @@ public class UserDto {
         this.roles = user.getRoles();
         this.clientType = user.getClientType();
         this.servicesPackage = user.getServicesPackage();
+        this.mfaEnabled = user.isMfaEnabled();
     }
 
     public RegistrationStatus getRegistrationStatus() {
@@ -133,5 +135,13 @@ public class UserDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setMfaEnabled(boolean mfaEnabled) {
+        this.mfaEnabled = mfaEnabled;
+    }
+
+    public boolean isMfaEnabled() {
+        return mfaEnabled;
     }
 }
