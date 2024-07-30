@@ -20,18 +20,18 @@ In this project, my primary responsibilities included:
 ### Project Specifications
 This project includes various features and functionalities:
 1. *User Types and Access Control*:
-*Clients can update personal data, request advertisements, and change service packages.
-*Employees can create advertisements, update personal data, and view ads created by others.
-*Administrators have full access to the system, including managing user permissions.
+* Clients can update personal data, request advertisements, and change service packages.
+* Employees can create advertisements, update personal data, and view ads created by others.
+* Administrators have full access to the system, including managing user permissions.
 2. *Security Features*:
-*Registration and Authentication: Secure registration and login processes, including password hashing, two-factor authentication, and CAPTCHA.
-*Access Control: Implementation of Role-Based Access Control (RBAC) to manage permissions and roles.
-*Data Protection: Encryption of sensitive data in compliance with GDPR guidelines.
-*Logging and Monitoring: Comprehensive logging and real-time alerts for monitoring system events and potential security threats.
-*Advanced Features:
-*HTTPS Communication: Ensured secure communication between client and server through HTTPS.
-*Single Sign-On (SSO): Integrated SSO for streamlined user authentication across the system.
-*Penetration Testing and Security Analysis: Conducted thorough testing and analysis of the system's security, including third-party components.
+* Registration and Authentication: Secure registration and login processes, including password hashing, two-factor authentication, and CAPTCHA.
+* Access Control: Implementation of Role-Based Access Control (RBAC) to manage permissions and roles.
+* Data Protection: Encryption of sensitive data in compliance with GDPR guidelines.
+* Logging and Monitoring: Comprehensive logging and real-time alerts for monitoring system events and potential security threats.
+* Advanced Features:
+* HTTPS Communication: Ensured secure communication between client and server through HTTPS.
+* Single Sign-On (SSO): Integrated SSO for streamlined user authentication across the system.
+* Penetration Testing and Security Analysis: Conducted thorough testing and analysis of the system's security, including third-party components.
 
 ### Application Setup
 To set up the project locally:
