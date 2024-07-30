@@ -17,7 +17,7 @@ In this project, my primary responsibilities included:
 * **Real-Time Logging and Alerts**: Integrating logging mechanisms and real-time alerts to monitor and respond to critical security events.
 * **Penetration Testing**: Conducting comprehensive vulnerability assessments using tools like OWASP ZAP to identify and resolve security weaknesses.
 
-#### Project Specifications
+### Project Specifications
 This project includes various features and functionalities:
 1. *User Types and Access Control*:
 *Clients can update personal data, request advertisements, and change service packages.
