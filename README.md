@@ -1,21 +1,21 @@
 # Security Web Application for Client and Employee Management
 
 ### Overview
-This project was developed as part of the Security in Electronic Business course, focusing on creating a secure web application to manage client and employee information for a marketing agency. The application addresses several security challenges and implements robust measures to protect against potential threats and vulnerabilities.
+This project was developed as part of the Security in Electronic Business course, focusing on creating a secure web application to manage client and employee information for a marketing agency. The application handles security problems and uses strong defenses against potential threats and vulnerabilities.
 
 ### Technologies
 * Back-end: Java with Spring Boot
 * Front-end: Angular with TypeScript, HTML, and CSS
-* Database: PostgreSQL for relational data storage
+* Database: PostgreSQL
 
 ### Personal Contributions
 In this project, my primary responsibilities included:
 
-- **Data Encryption**: Applying encryption techniques to secure sensitive client and employee data, ensuring compliance with GDPR guidelines.
+- **Data Encryption**: Applying encryption techniques to secure sensitive client and employee data
 - **Certificate Management**: Utilizing Public Key Infrastructure (PKI) services for efficient handling and management of certificates.
-- **JWT Authentication**: Implementing JSON Web Tokens (JWT) for secure and efficient authentication of clients and employees.
-- **Real-Time Logging and Alerts**: Integrating logging mechanisms and real-time alerts to monitor and respond to critical security events.
-- **Penetration Testing**: Conducting comprehensive vulnerability assessments using tools like OWASP ZAP to identify and resolve security weaknesses.
+- **JWT Authentication**: Implementing JSON Web Tokens (JWT)  with Spring Security for secure and efficient authentication of clients and employees.
+- **Real-Time Logging and Alerts**: Integrating logging mechanisms and real-time alerts to monitor and respond to critical security events, including Grafana.
+- **Penetration Testing**:Using OWASP ZAP to find and fix security issues. Successfully resolved high-level vulnerabilities found during testing.
 
 ### Project Specifications
 This project includes various features and functionalities:
@@ -28,7 +28,6 @@ This project includes various features and functionalities:
 * Access Control: Implementation of Role-Based Access Control (RBAC) to manage permissions and roles.
 * Data Protection: Encryption of sensitive data in compliance with GDPR guidelines.
 * Logging and Monitoring: Comprehensive logging and real-time alerts for monitoring system events and potential security threats.
-* Advanced Features:
 * HTTPS Communication: Ensured secure communication between client and server through HTTPS.
 * Single Sign-On (SSO): Integrated SSO for streamlined user authentication across the system.
 * Penetration Testing and Security Analysis: Conducted thorough testing and analysis of the system's security, including third-party components.
