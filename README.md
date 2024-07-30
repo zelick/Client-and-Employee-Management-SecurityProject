@@ -11,11 +11,11 @@ This project was developed as part of the Security in Electronic Business course
 ### Personal Contributions
 In this project, my primary responsibilities included:
 
-* **Data Encryption**: Applying encryption techniques to secure sensitive client and employee data, ensuring compliance with GDPR guidelines.
-* **Certificate Management**: Utilizing Public Key Infrastructure (PKI) services for efficient handling and management of certificates.
-* **JWT Authentication**: Implementing JSON Web Tokens (JWT) for secure and efficient authentication of clients and employees.
-* **Real-Time Logging and Alerts**: Integrating logging mechanisms and real-time alerts to monitor and respond to critical security events.
-* **Penetration Testing**: Conducting comprehensive vulnerability assessments using tools like OWASP ZAP to identify and resolve security weaknesses.
+- **Data Encryption**: Applying encryption techniques to secure sensitive client and employee data, ensuring compliance with GDPR guidelines.
+- **Certificate Management**: Utilizing Public Key Infrastructure (PKI) services for efficient handling and management of certificates.
+- **JWT Authentication**: Implementing JSON Web Tokens (JWT) for secure and efficient authentication of clients and employees.
+- **Real-Time Logging and Alerts**: Integrating logging mechanisms and real-time alerts to monitor and respond to critical security events.
+- **Penetration Testing**: Conducting comprehensive vulnerability assessments using tools like OWASP ZAP to identify and resolve security weaknesses.
 
 ### Project Specifications
 This project includes various features and functionalities:
